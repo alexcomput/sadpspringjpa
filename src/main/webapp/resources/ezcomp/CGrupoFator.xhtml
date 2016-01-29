@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <cc:interface>
+        <cc:attribute name="valor" required="true"/>
+
+    </cc:interface>
+
+    <cc:implementation>
+        <p:outputLabel    for="grupoFator" title="Grupo Fator" value="Grupo Fator:  "   />
+        <!--select para o grupo de fator aqui é setado o valor do atributo nomeGrupoFator. Para ser visualizado 
+        o valor do atributo controlador2 deve ser igual a true.-->
+        <p:selectOneMenu   required="true" id="grupoFator" value="#{quadroController.idGrupoFator}"    >
+            <!--opção nula: padrão para forçar o usuário a selecionar outro valor válido-->
+            <f:selectItem itemValue="#{null}" noSelectionOption="true" itemLabel="Selecione um grupo..."/>
+            <!--aqui o jsf se encarrega de criar uma lista de opções para o usuário através da listaGrupo-->
+            <f:selectItems  value="#{quadroController.listaGrupo}" var="grupo" itemLabel="#{grupo.nome}" itemValue="#{grupo.id}"/>
+            <!--aqui é definida uma chamada ao método mudaControlador2 quando o usuário selecionar uma opção do select de quadro.
+            O retorno é aplicado em uma ação ajax.-->
+            <p:ajax update=":form1 :form2 :form3" listener="#{quadroController.controlador1()}" event="change" />
+        </p:selectOneMenu>
+    </cc:implementation>
+</html>

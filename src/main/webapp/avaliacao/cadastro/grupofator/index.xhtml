@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="/template/index.xhtml">
+        <f:metadata>
+            <f:viewAction action="#{grupoFatorController.init()}" />
+        </f:metadata>
+        <!--Substituir o Título padrão da Página-->
+        <ui:define name="titulo">
+            Cadastro de Grupo de Fatores
+        </ui:define>
+        <!--Conteúdo da página-->
+        <ui:define name="conteudo">
+            <f:facet  name="header"> 
+                <h:outputText value="   Cadastro Grupo de Fatores "/>
+            </f:facet> 
+            <!--form com o objetivo de adicionar instâncias na listaPreviaGrupo (verificar adicionarListaPrevia() em GrupoFatorController)-->
+            <p:panel header="Cadastro de Grupo de Fator " id="paienl">
+
+                <h:form id="grupoFator_form1">
+                    <!--componente com o objetivo de mostrar as mensagens de retorno para esse formulário-->
+                    <p:growl id="grupoFator_messages" /> 
+                    <!--inicio da tabela de selects do cadastro-->
+                    <h:panelGrid  columns="2" id="grupoFator_quadro_grid">
+                        <p:outputLabel for="quadro" title="quadro" value="Quadro:  "/>    
+                        <!--select para o quadro profissional aqui é setado o valor do atributo nomeQuadro-->
+                        <p:selectOneMenu filter="true" filterMatchMode="contains"  id="quadro" value="#{grupoFatorController.nomeQuadro}">
+                            <!--opção nula: padrão para forçar o usuário a selecionar outro valor válido-->
+                            <f:selectItem itemValue="#{null}" noSelectionOption="true" itemLabel="Selecione um quadro..."/>
+                            <!--aqui o jsf se encarrega de criar uma lista de opções para o usuário através da listaQuadro-->
+                            <f:selectItems value="#{grupoFatorController.listaQuadro}" var="quadro" itemLabel="#{quadro.sigla}" itemValue="#{quadro}"/>
+                            <!--aqui é definida uma chamada ao método mudaControlador1 quando o usuário selecionar uma opção do select de quadro.
+                            O retorno é aplicado em uma ação ajax. -->
+                            <p:ajax update="grupoFator_form1 :grupoFator_form2 :grupoFator_form3" listener="#{grupoFatorController.mudaControlador1()}" process="@this"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="formulario" title="Formulário" value="Formulário:"/>    
+                        <!--select para o formulário aqui é setado o valor do atributo idFormulario. Para ser visualizado 
+                        o valor do atributo controlador1 deve ser igual a true.-->
+                        <p:selectOneMenu filter="true" filterMatchMode="contains"  id="formulario" value="#{grupoFatorController.idFormulario}" >
+                            <!--opção nula: padrão para forçar o usuário a selecionar outro valor válido-->
+                            <f:selectItem itemValue="#{null}" noSelectionOption="true" itemLabel="Selecione um formulário..."/>
+                            <!--aqui o jsf se encarrega de criar uma lista de opções para o usuário através da listaFormulario-->
+                            <f:selectItems value="#{grupoFatorController.listaFormulario}" var="formulario" itemLabel="#{formulario.nome}" itemValue="#{formulario.id}"/>
+                            <!--aqui é definida uma chamada ao método mudaControlador2 quando o usuário selecionar uma opção do select de quadro.
+                            O retorno é aplicado em uma ação ajax.-->
+                            <p:ajax update="grupoFator_form1 :grupoFator_form2 :grupoFator_form3 " listener="#{grupoFatorController.mudaControlador2()}" process="@this"/>
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                </h:form>
+                <h:form id="grupoFator_form2">
+                    <!--inicio da tabela de inputs do cadastro. Esse elemento só será exibido se o atributo controlador2 estiver com 
+                   valor igual a true-->
+                    <h:panelGrid id="grupoFator_cadastra_grid" columns="2">
+
+                        <p:outputLabel for="nome" value="Nome:  " />
+                        <!--input para o atributo nome da instancia de grupo de fator. Esse campo é de preenchimento obrigatório-->
+                        <p:inputText placeholder="Nome para o grupo" id="nome" value="#{grupoFatorController.grupoFator.nome}" required="true" requiredMessage="Digite aqui um nome para o grupo"/>
+                        <!--aqui é definida uma marca d'agua para o input anterior.-->
+
+                        <p:outputLabel for="ordem" value="Ordem:  " />
+                        <!--o elemento é um contador aqui definido de 1 até 15. O usuário poderá através de um scroll escolher qual o número dentro
+                        desse intervalo que irá ser o posicionamento do grupo de fator no formulário.-->
+                        <p:spinner id="ordem" min="1" max="15" value="#{grupoFatorController.grupoFator.ordem}" required="true" requiredMessage="Defina a ordem do grupo de fatores no formulário" label="Ordem: "/>
+                        <!--o elemento calendar é uma ferramenta que permite o usuário um calendário para seleção de datas. Aqui o usuário
+                        estará setando o valor do atributo validadeInicial. Esse preenchimento é obrigatório.-->
+                        <p:outputLabel for="validadeInicial" value="Data inicial:  " />
+                        <p:calendar  placeholder="Data Inicial" locale="pt" pattern="dd/MM/yyyy" navigator="true" mask="true" id="validadeInicial" value="#{grupoFatorController.grupoFator.validadeInicial}" required="true" requiredMessage="Validade Inicial é necessária"/>
+
+                        <p:outputLabel for="situacao" value="Situação:  " />
+                        <p:selectOneMenu id="situacao"   value="#{grupoFatorController.grupoFator.ativo}">
+                            <f:selectItem itemValue="true" itemLabel="Ativado" />
+                            <f:selectItem itemValue="false" itemLabel="Desativado"/>
+                        </p:selectOneMenu>                        
+                    </h:panelGrid>
+                    <!--p:panelGrid columns="1" rendered="#//{grupoFatorController.controlador2}"-->
+                    <!--Através deste elemento é possível adicionar a instancia atual na listaPrevia.-->
+                    <!--p:commandButton value="Salvar"   action="#//{grupoFatorController.adicionarGrupoFator()}" update="" ajax="false"/>
+                    </p:panelGrid-->
+                    <p:separator/>
+                    <p:commandButton onclick="history.go(-1);
+                            return false;" value="Voltar" class=" icone2 voltar" />
+                    <p:commandButton disabled="#{!grupoFatorController.controlador2}"  actionListener="#{grupoFatorController.adicionarGrupoFator()}" value="Salvar" update="grupoFator_form2 :grupoFator_form3"  ajax="true" class="icone2 salvar">
+                        <p:confirm header="Confirmação" message="Deseja realmente salvar?"  icon="ui-icon-alert"   />
+                    </p:commandButton>
+                </h:form>
+                <h:form id="grupoFator_form3">
+                    <!--Componente que recebe as mensagens de retorno deste form.-->
+                    <p:growl id="msg_form2"/>
+                    <p:panel>
+                        <!--Componente que apresenta os dados referentes aos elementos da listaPreviaGrupo-->
+                        <p:dataTable id="grupoFator_dataTable" var="grupoFator" value="#{grupoFatorController.listaPreviaGrupo}" 
+                                     rows="10" 
+                                     paginator="true"
+                                     editable="true"
+                                     emptyMessage="Não há registros."
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" >
+
+                            <!--Componente que invoca o método no momento de edição de dados. Após efetuar a edição o componente dataTable é atualizado-->
+                            <p:ajax event="rowEdit" listener="#{grupoFatorController.onEdit}" update="grupoFator_dataTable" />  
+                            <p:ajax event="rowEditCancel" listener="#{grupoFatorController.onCancel}" update="grupoFator_dataTable" />
+                            <!--Construção das colunas da dataTable. Como a dataTable é editável então é necessário para cada coluna usar a marcação
+                            cellEditor e implementar dois facets: uma para input(editar) e outro para output(visualizar)-->
+                            <p:column headerText="Grupo">
+                                <p:cellEditor>
+                                    <!--Saída do valor do atributo nome de grupo de fator-->
+                                    <f:facet name="output">
+                                        <h:outputText value="#{grupoFator.nome}" />
+                                    </f:facet>
+                                    <!--Componente para entrada de dados de edição do atributo nome-->
+                                    <f:facet name="input">
+                                        <p:inputText value="#{grupoFator.nome}" />
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column headerText="Formulário"> 
+                                <!--Saída do valor do atributo do formulário de grupo de fator-->
+                                <h:outputText value="#{grupoFator.formulario.quadro} - #{grupoFator.formulario.nome}" />  
+                            </p:column>
+                            <p:column headerText="Ordem">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{grupoFator.ordem}" />
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:spinner min="1" max="15" value="#{grupoFator.ordem}"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column headerText="Validade Inicial">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{grupoFator.validadeInicial}" >
+                                            <f:convertDateTime pattern="dd-MM-yyyy" />
+                                        </h:outputText>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:calendar locale="pt" value="#{grupoFator.validadeInicial}" navigator="true" pattern="dd/MM/yyyy" mask="true"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column headerText="Validade Final">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{grupoFator.validadeFinal}">
+                                            <f:convertDateTime pattern="dd-MM-yyyy" />
+                                        </h:outputText>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:calendar locale="pt" value="#{grupoFator.validadeFinal}" navigator="true" pattern="dd/MM/yyyy" mask="true"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column headerText="Ativo">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="Sim" rendered="#{grupoFator.ativo}" />
+                                        <h:outputText value="Não" rendered="#{not grupoFator.ativo}" />
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:selectOneMenu value="#{grupoFator.ativo}">
+                                            <f:selectItem itemValue="true" itemLabel="Sim" />
+                                            <f:selectItem itemValue="false" itemLabel="Não"/>
+                                        </p:selectOneMenu>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column id="testeColumn" styleClass="width: 11%">
+                                <!--Componente que ao ser clicado permite a edição da linha a qual pertença. Este componente usa os métodos onEdit e
+                                    onCancel-->
+                                <p:rowEditor id="editorLinha" />
+                                <!--Componente que permite quando clicado a excluir a linha a qual pertença.-->
+                                <p:commandButton actionListener="#{grupoFatorController.removerGrupoFator(grupoFator)}" update=":grupoFator_form3" ajax="true" icon="" class="icone2 excluir">
+                                    <p:confirm header="Confirmação" message="Deseja realmente excluir o registro?"  icon="ui-icon-alert"   />
+                                </p:commandButton>
+                                <!--p:commandButton icon="ui-icon ui-icon-trash" iconPos="right" actionListener="#//{grupoFatorController.removerGrupoFator(grupoFator)}" update="grupoFator_dataTable" ajax="false"/-->
+                            </p:column>
+                        </p:dataTable>
+                        <!--Componente que permite invocar o método para salvar a listaPreviaGrupo-->
+                        <!--p:commandButton value="Salvar" rendered="#//{!(grupoFatorController.listaPreviaGrupo.size()==0)}" action="#//{grupoFatorController.salvarListaPrevia()}" update=":grupoFator_form1:grupoFator_dataTable" ajax="true"/-->
+                    </p:panel>
+                    <p:commandButton onclick="history.go(-1);
+                            return false;" value="Voltar" class=" icone2 voltar" />
+                </h:form>   
+            </p:panel>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                <p:commandButton value="Sim" type="button" icon="ui-icon-check" styleClass="ui-confirmdialog-yes"   />
+                <p:commandButton  value="Não" ignoreAutoUpdate="true" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>
+        </ui:define>
+    </ui:composition>
+</html>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="/template/index.xhtml">
+        <!--Substituir o Título padrão da Página-->
+        <ui:define name="titulo">
+            Tabulando Avaliação
+        </ui:define>
+        <ui:define name="meta">
+            <f:metadata >
+                <f:viewParam name="idAvaliacao" value="#{tabulacaoControllerEdit.idAvaliacao}" />
+                <f:viewAction action="#{tabulacaoControllerEdit.init()}"/>
+            </f:metadata>
+        </ui:define>
+        <!--Conteúdo da página-->
+        <ui:define name="conteudo"> 
+
+            <p:growl id="fator_messages"  />
+            <!--form com o objetivo de adicionar instâncias na listaPreviaGrupo (verificar adicionarListaPrevia() em GrupoFatorController)-->
+            <!--form com o objetivo de adicionar instâncias na listaPreviaFator (verificar adicionarListaPrevia() em FatorController)-->
+            <h:form id="vincular_Formulario_form1"  >
+
+
+                <!--componente com o objetivo de organizar visualmente a página-->
+                <p:panel id="vincular_Formulario_pnl">
+                    <!--componente com o objetivo de mostrar as mensagens de retorno para esse formulário-->
+                    <p:growl id="vincular_Formulario_messages" />
+
+                    <!--inicio da tabela de selects do cadastro-->
+                    <h:panelGrid columns="1" id="vincular_Formulario_quadro_grid">
+                        <h:panelGroup id="pg">
+                            <p:dataTable  value="#{tabulacaoControllerEdit.listaTabulacao}" var="tab"  >
+                                <f:facet name="header">
+                                    Tabulando Avaliação nº #{tabulacaoControllerEdit.idAvaliacao}
+                                </f:facet>
+                                <p:column   >                                    
+
+                                    <p:panel >                                        
+                                        <p:panelGrid columns="1">
+                                            <f:facet name="header">
+                                                <p:outputLabel id="nomeFator"   value="#{tabulacaoControllerEdit.nomeGrupo(tab.fator.grupoFator.nome)}#{tabulacaoControllerEdit.grupoTemporario} " rendered="true" />
+                                            </f:facet>
+                                                
+
+                                            <h:outputText  value="#{tab.fator.ordem} - #{tab.fator.nome} "  />                                           
+                                            <p:column>
+                                                <p:outputLabel for="nota_select" value="Nota: " />
+                                                <p:selectOneMenu id="nota_select" value="#{tab.nota}" >
+                                                    <f:selectItem itemLabel="---" itemValue="0" noSelectionOption="true"/>
+                                                    <f:selectItem itemLabel="1" itemValue="1" />
+                                                    <f:selectItem itemLabel="2" itemValue="2" />
+                                                    <f:selectItem itemLabel="3" itemValue="3" />
+                                                    <f:selectItem itemLabel="4" itemValue="4" />
+                                                    <f:selectItem itemLabel="5" itemValue="5" />
+                                                    <f:selectItem itemLabel="6" itemValue="6" />
+                                                    <f:selectItem itemLabel="7" itemValue="7" />
+                                                    <f:selectItem itemLabel="8" itemValue="8" />
+                                                    <f:selectItem itemLabel="9" itemValue="9" />
+                                                    <f:selectItem itemLabel="10" itemValue="10" />
+                                                    <p:ajax  update="grid" process="@this" listener="#{tabulacaoControllerEdit.alteraConceito(tab)}"/>
+                                                    <p:ajax  update=":vincular_Formulario_form1:tab_grid_base"  listener="#{tabulacaoControllerEdit.verificaLista()}"/>
+                                                </p:selectOneMenu>
+                                                <h:panelGroup id="grid">
+                                                    <p:outputLabel id="conceito" value=" Conceito: #{tab.conceito.descricao}" rendered="#{tab.nota != 0 }"/>
+                                                </h:panelGroup>  
+                                            </p:column>
+
+                                        </p:panelGrid>
+
+                                    </p:panel>
+                                </p:column>
+                                <f:facet name="footer">
+                                    <p:commandButton update=":vincular_Formulario_form1" id="vincular_Formulario_button1" value="Tabular" action="#{tabulacaoControllerEdit.salvar()}"  >
+                                        <p:confirm header="Confirmação" message="Deseja realmente salvar?" />
+                                        <f:param name="idAvaliacao" value="#{tabulacaoControllerEdit.idAvaliacao}" />
+                                    </p:commandButton>
+                                </f:facet>
+                            </p:dataTable>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </p:panel>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="explode" id="tab_dialog">
+                    <p:panelGrid columns="2" id="tab_grid_base">
+                                <p:column>
+                                    <p:panelGrid columns="1">
+                                        <h:outputText value="Fator" />
+                                        <h:outputText value="Nota" />
+                                        <h:outputText value="Total" />
+                                    </p:panelGrid>
+                                </p:column>
+                                <p:column>
+                                     <p:dataGrid id="tabular_previa_grid" value="#{tabulacaoControllerEdit.listaTabulacao}" var="tf" columns="15" >
+                                         <p:column sortBy="#{tf.fator.ordem}">
+                                    <p:panelGrid columns="1">
+                                        <h:outputText value="#{tf.fator.ordem}" />
+                                        <h:outputText value="#{tf.nota}" />
+                                    </p:panelGrid>
+                                             </p:column>
+                                         <f:facet name="footer">
+                                             <p:column><h:outputText value="#{tabulacaoControllerEdit.totalEtapa}" /></p:column>
+                                         </f:facet>
+                            </p:dataGrid>
+                                </p:column>
+                        <f:facet name="footer">
+                            <p:panelGrid columns="1">
+                                    <p:outputLabel value="Art.2º. Considera-se: " rendered="#{tabulacaoControllerEdit.reprovacao}"/>
+                                    <p:outputLabel value="VIII - REPROVADO no estágio probatório o servidor quando:" rendered="#{tabulacaoControllerEdit.reprovacao}"/>
+                                <p:outputLabel value="  b) receber conceito de desempenho insatisfatório, notas 1 ou 2:" rendered="#{tabulacaoControllerEdit.reprovacao}"/>
+                                <p:outputLabel value="1 - em 3 fatores de julgamento numa mesma etapa." rendered="#{tabulacaoControllerEdit.reprovacao}"/>
+                                </p:panelGrid>
+
+                                
+                        </f:facet>
+                                    </p:panelGrid>
+                    <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="Não" ignoreAutoUpdate="true" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+            </h:form>  
+        </ui:define>
+    </ui:composition>
+</html>

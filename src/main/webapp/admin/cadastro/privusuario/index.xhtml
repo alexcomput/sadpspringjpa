@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="/template/index.xhtml">
+        <f:metadata>
+            <f:viewAction action="#{perfilController.init()}"/>   
+        </f:metadata>
+        <!--Substituir o Título padrão da Página-->
+        <ui:define name="titulo">
+            Cadastro de Privilégio para usuário
+        </ui:define>
+        <!--Conteúdo da página-->
+        <ui:define name="conteudo">
+            <p:panel header="Cadastro de perfil para servidor" id="pn1">
+
+                <h:form  >
+                    <h:panelGrid columns="2" id="pn1g">
+                        <p:commandButton value="Adicionar novo"   icon="" title="Adicionar novo" class="icone2 adicionar"
+                                         action="perfilusuarioAdd.xhtml?faces-redirect=true" ajax="false"  immediate="true" >
+                        </p:commandButton>
+                    </h:panelGrid>
+
+                    <p:dataTable value="#{permissaoUsuarioController.list}" lazy="true" 
+                                 var="perfilusuario"  widgetVar="dataTable"
+                                 rowsPerPageTemplate="10,15,20"
+                                 emptyMessage="Nenhum registro encontrado."                                      
+                                 currentPageReportTemplate="Mostrando {startRecord}-{endRecord} de {totalRecords}"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"                                  
+                                 paginator="true" 
+                                 rows="10"                                                                             
+                                 rowKey="#{perfilusuario.id}"  > 
+                        <p:column  sortBy="#{perfilusuario.id}"  headerText="Código">
+                            <h:outputText value="#{perfilusuario.id}" />
+                        </p:column>
+                        <p:column  sortBy="#{perfilusuario.nomeServidor}"  headerText="Nome">
+                            <h:outputText value="#{perfilusuario.nomeServidor}" />
+                        </p:column>
+                        <p:column  filterBy="#{perfilusuario.usuario.cpf}" sortBy="#{perfilusuario.usuario.cpf}"  headerText="CPF">
+                            <h:outputText value="#{perfilusuario.usuario.cpf}" />
+                        </p:column>
+                        <p:column  filterBy="#{perfilusuario.lotadoOrgao}" sortBy="#{perfilusuario.lotadoOrgao}"  headerText="Lotação servidor">
+                            <h:outputText value="#{perfilusuario.lotadoOrgao}" />
+                        </p:column>
+                        <p:column  filterBy="#{perfilusuario.perfil.descricao}" sortBy="#{perfilusuario.perfil.descricao}"  headerText="Perfil">
+                            <h:outputText value="#{perfilusuario.perfil.descricao}" />
+                        </p:column> 
+                    </p:dataTable>
+                    <p:commandButton onclick="history.go(-1);
+                            return false;" value="Voltar" class=" icone2 voltar" />
+                </h:form> 
+            </p:panel>
+        </ui:define>
+    </ui:composition>
+</html>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="/template/index.xhtml">
+        <f:metadata >
+            <f:viewParam name="idAvaliacao" value="#{avaliacaoController.idAvaliacao}" />
+            <f:viewAction action="#{avaliacaoController.init()}"/>
+        </f:metadata>
+        <!--Substituir o Título padrão da Página-->
+        <ui:define name="titulo">
+            Informação sobre servidores
+        </ui:define>
+        <!--Conteúdo da página-->
+        <ui:define name="conteudo"> 
+            <!--form com o objetivo de adicionar instâncias na listaPreviaGrupo (verificar adicionarListaPrevia() em GrupoFatorController)-->
+            <h:form id="vincular_Formulario_form1" target="_blank"> 
+                <p:panel id="vincular_Formulario_pnl">
+                    <p:growl id="fator_messages"  />
+                    <f:facet  name="header"> 
+                        <h:outputText value=" Imprimir avaliação do servidores"/>
+                    </f:facet> 
+                    <h:panelGrid  columns="3" class="lista" id="formulario_quadro_grid">
+                        <p:outputLabel for="quadro" title="quadro" value="Quadro:"/>
+                        <p:selectOneMenu id="quadro" value="#{avaliacaoController.nomeQuadro}">
+                            <f:selectItem  itemValue="" noSelectionOption="true" itemLabel="Selecione um quadro..."/>
+                            <f:selectItems value="#{avaliacaoController.listaQuadro}" var="quadro" itemLabel="#{quadro.sigla}" itemValue="#{quadro}"/>
+                            <p:ajax update="vincular_Formulario_form1 "  listener="#{avaliacaoController.findByAvaliacaoStatusProcessadaRecurso()}" />
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                    <!-- <p:dataTable id="lista_avaliacoes_dtb" rendered="#{avaliacaoController.controlador2}" var="avaliacao" -->
+                    <p:dataTable  id="lista_avaliacoes_dtb" var="avaliacao" 
+                                  value="#{avaliacaoController.listaAvaliacoes}" selection="#{avaliacaoController.listaPreviaAvaliacao}" rowKey="#{avaliacao.id}"
+                                  rows="10"  
+                                  paginator="true"
+                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                  emptyMessage="Nada encontrado."
+                                  >
+                        <f:facet name="header">
+                            Lista de servidores
+                        </f:facet> 
+                        <p:column selectionMode="multiple" width="20"  />
+                        <p:column headerText="Código" width="40">
+                            #{avaliacao.id}
+                        </p:column>
+                        <p:column headerText="E"  width="20">
+                            <f:facet name="header">
+                                <h:outputText value="E" title="Etapa"/>
+                            </f:facet>
+                            #{avaliacao.etapa}
+                        </p:column>
+                        <p:column headerText="Matrícula" width="110">
+                            #{avaliacao.numFunc}-#{avaliacao.numVinc}
+                        </p:column>
+                        <p:column headerText="Servidor">
+                            #{avaliacao.nomeServidor} -  #{avaliacao.formulario.id}
+                        </p:column>
+                        <p:column headerText="Cargo">
+                            #{avaliacao.cargoNome}
+                        </p:column>
+                        <p:column headerText="Etapa" width="40">
+                            <p:commandLink  ajax="false" actionListener="#{avaliacaoController.imprimirEspecifico(avaliacao.id, avaliacao.formulario.id)}" value="#{avaliacao.etapa}"  /> 
+                        </p:column>
+                        <f:facet name="footer"> 
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form> 
+        </ui:define>
+    </ui:composition>
+</html>

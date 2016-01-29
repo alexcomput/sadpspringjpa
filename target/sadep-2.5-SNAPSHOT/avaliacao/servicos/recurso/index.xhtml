@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/index.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"   
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+    <ui:define name="titulo">
+        Recursos para análise
+    </ui:define>
+    <f:metadata >        
+        <f:viewAction action="#{recursoController.init()}"/>
+    </f:metadata>
+    <ui:define name="conteudo">
+        <p:panel>
+            <f:facet  name="header"> 
+                <h:outputText value="Recurso"/>
+            </f:facet>
+            <h:form id="frmListaRecurso"> 
+                <p:messages showDetail="false" showSummary="true" autoUpdate="true" 
+                            closable="true"/>
+
+                <f:facet  name="header"> 
+                    <h:outputText value="Recursos"/>
+                </f:facet>  
+                <p:dataTable id="tabela_listarecurso" var="recurso" value="#{recursoController.listaRecursos}" 
+                             rows="10" 
+                             paginator="true"
+                             editable="true"
+                             emptyMessage="Não há registros."
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" >
+                    <p:column headerText="Número Funcional"> 
+                        <h:outputText value="#{recurso.avaliacao.numFunc} - #{recurso.avaliacao.numVinc}" />  
+                    </p:column>
+                    <p:column headerText="Servidor">
+                        <h:outputText value="#{recurso.avaliacao.nomeServidor}" />
+                    </p:column>
+                    <p:column headerText="Etapa">
+                        <h:outputText value="#{recurso.avaliacao.etapa}" />
+                    </p:column>
+                    <p:column headerText="Nota Final">
+                        <h:outputText value="#{recurso.avaliacao.nota}" />
+                    </p:column>
+                    <p:column>
+                        <h:link value="Gerar Parecer" outcome="parecerrecurso" class="botao botao2 icone2 formulario">
+                            <f:param name="id" value="#{recurso.id}" />
+                        </h:link>
+                    </p:column>
+                    <p:column rendered="#{recurso.retabular}">
+                        <h:link value="Retabular" outcome="tabular"></h:link>
+                    </p:column>
+                </p:dataTable>
+            </h:form> 
+        </p:panel>
+
+    </ui:define>
+</ui:composition>

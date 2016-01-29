@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>CUSTOM-tomcat:run</actionName>
+            <displayName>tomcat:run</displayName>
+            <goals>
+                <goal>tomcat:run</goal>
+            </goals>
+        </action>
+        <action>
+            <actionName>CUSTOM-package</actionName>
+            <displayName>package</displayName>
+            <goals>
+                <goal>package</goal>
+            </goals>
+        </action>
+        <action>
+            <actionName>CUSTOM-debug tomcat:run</actionName>
+            <displayName>debug tomcat:run</displayName>
+            <goals>
+                <goal>tomcat:run</goal>
+            </goals>
+            <properties>
+                <jpda.listen>maven</jpda.listen>
+                <netbeans.deploy.debugmode>true</netbeans.deploy.debugmode>
+            </properties>
+        </action>
+        <action>
+            <actionName>CUSTOM-tomcat7:run-war</actionName>
+            <displayName>tomcat7:run-war</displayName>
+            <goals>
+                <goal>tomcat7:run-war</goal>
+            </goals>
+        </action>
+        <action>
+            <actionName>CUSTOM-clean tomcat7:run-war</actionName>
+            <displayName>clean tomcat7:run-war</displayName>
+            <goals>
+                <goal>clean</goal>
+                <goal>tomcat7:run-war</goal>
+            </goals>
+        </action>
+        <action>
+            <actionName>CUSTOM-clean jetty:run</actionName>
+            <displayName>clean jetty:run</displayName>
+            <goals>
+                <goal>clean</goal>
+                <goal>jetty:run</goal>
+            </goals>
+        </action>
+    </actions>

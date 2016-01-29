@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="a_avaliacao_notificacao" language="groovy" pageWidth="590" pageHeight="842" columnWidth="590" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0076398c-5323-4282-9072-0b0be42e61f3">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="New Dataset 1" uuid="08d27db8-8b35-4566-b690-72b7d30f55c0">
+		<queryString language="SQL">
+			<![CDATA[select *from aede.fator]]>
+		</queryString>
+		<field name="nome" class="java.lang.String">
+			<fieldDescription><![CDATA[Nome do Sistema]]></fieldDescription>
+		</field>
+		<field name="id" class="java.lang.Integer"/>
+		<field name="validade_inicial" class="java.sql.Date"/>
+		<field name="validade_final" class="java.sql.Date"/>
+		<field name="ativo" class="java.lang.Boolean"/>
+		<field name="grupo_fator" class="java.lang.Integer"/>
+		<field name="ordem" class="java.lang.Integer"/>
+		<field name="datacadastro" class="java.sql.Timestamp"/>
+		<group name="id">
+			<groupExpression><![CDATA[$F{id}]]></groupExpression>
+		</group>
+		<group name="nome">
+			<groupExpression><![CDATA[$F{nome}]]></groupExpression>
+		</group>
+		<group name="validade_inicial">
+			<groupExpression><![CDATA[$F{validade_inicial}]]></groupExpression>
+		</group>
+		<group name="validade_final">
+			<groupExpression><![CDATA[$F{validade_final}]]></groupExpression>
+		</group>
+	</subDataset>
+	<parameter name="nun_funcional" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select a.etapa, a.numfunc as nun_funcional from aede.avaliacao a
+where a.numfunc = $P{nun_funcional}]]>
+	</queryString>
+	<field name="etapa" class="java.lang.Integer"/>
+	<field name="nun_funcional" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="612" splitType="Stretch">
+			<staticText>
+				<reportElement x="278" y="482" width="277" height="37" uuid="96095615-8b24-4c51-ac83-86282676ac83"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[___________________________________ Assinatura]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="1" y="462" width="554" height="20" backcolor="#CCCCCC" uuid="3acaa2d0-4c06-4217-9aba-8e0718a0aa40"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="1" y="462" width="554" height="20" uuid="385d515a-150c-4b10-b795-462809e64bd4"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ciente do servidor avaliado]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="370" y="341" width="185" height="62" uuid="52d8dfd4-9fbf-414e-be5f-3db20f72c17b"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="370" y="341" width="185" height="62" uuid="80a34e0f-9fcd-4726-b12c-f78d487cdd21"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[__________________________ Servidor Indicado]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="321" width="555" height="20" backcolor="#CCCCCC" uuid="094227ff-4b4f-4fd5-8341-2fa93d186a27"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="321" width="555" height="20" uuid="2331841d-9d15-4530-9ef7-33e47b25edf0"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nomes e assinaturas dos membros da Comissão Especial de Desempenho]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="45" y="1" width="511" height="27" backcolor="#CCCCCC" uuid="7d1b26bb-1f21-45ac-971a-04b0371013bc"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="1" width="45" height="27" backcolor="#CCCCCC" uuid="2d60783c-25b8-43c6-90f5-bb5b0d907172"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="1" width="45" height="27" uuid="c512a300-3c68-45cd-b635-8571d48f033f"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOTAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="1" width="510" height="27" uuid="9bf43f4b-4058-4818-81ee-9059efd651ea"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONCEITO DAS NOTAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="259" width="556" height="59" uuid="7eff6597-9f76-4608-a380-3c4130ea6294"/>
+				<textElement textAlignment="Justified">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[		Senhor Servidor, em cumprimento ao Decreto __________, de ________ de ___________________ de 2015, vimos por meio desta notificá-lo do resultado de sua Avaliação Especial de Desempenho, correspondente à ____ etapa.]]></text>
+			</staticText>
+			<elementGroup>
+				<elementGroup>
+					<elementGroup/>
+				</elementGroup>
+			</elementGroup>
+			<staticText>
+				<reportElement x="45" y="28" width="511" height="37" uuid="4d024dfa-a186-4b13-991a-a5bd2e55ca0d"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="12" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[    DESEMPENHO INSATISFATÓRIO: que está abaixo do mínimo exigido pelo cargo  que não pode ser tolerado.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="65" width="511" height="32" uuid="16f0bdab-5cf1-405a-b855-88512713234a"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[   DESEMPENHO REGULAR: desenpenho no qual o servidor atende em partes as necessidades do cargo, mas ainda assim, insuficiente.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="97" width="511" height="34" uuid="1883042a-7912-47f7-bf33-e61cbeeb2407"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[   DESEMPENHO BOM: desempenho adequado, firme, confiável e que atende as necessidades do cargo.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="131" width="511" height="32" uuid="1b528b2d-2fff-4108-8f51-f3cc80b8034c"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[   DESEMPENHO EXCELENTE: é o nível mais alto de desempenho. Atribuído aos servidores que se destacam na unidade.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="131" width="45" height="32" uuid="ae757d47-2548-469d-9107-030de6ddf8af"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[9 e 10]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="97" width="45" height="34" uuid="4f031428-fe7b-459b-866a-d468d2783662"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[6, 7 e 8]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="28" width="45" height="37" uuid="7efa01fe-7d98-42ab-adf4-c87db5b35bdc"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[1 e 2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="65" width="45" height="32" uuid="21d46aa6-e72c-4e6b-a989-1c6595fd959a"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[3, 4 e 5]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="341" width="185" height="62" uuid="790d5f8a-78f0-452b-b398-98b89ba1856e"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="185" y="341" width="185" height="62" uuid="d5dba9a4-1059-4889-b9c4-2350b5adaae2"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="341" width="185" height="62" uuid="c4c35209-d80c-465f-8d6d-67eb0dc96e9c"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[__________________________ Chefe Imediato]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="185" y="341" width="185" height="62" uuid="84bf2a89-09b3-4ddf-b49d-dbc7cc9750e4"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[__________________________ Chefe Mediato/Presidente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="414" width="554" height="34" uuid="d40c8eff-c4f1-4a13-a55f-0942ee2e76d0"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[____________________________, em _____ de _____________________ de 20_____.]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="1" y="482" width="277" height="37" uuid="b68a48f3-2140-4009-a86a-56bb0c78a328"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="278" y="482" width="277" height="37" uuid="650da477-f218-4705-bbb7-9a37ef7d6c23"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="1" y="482" width="277" height="37" uuid="23db8f68-5789-4068-8a96-886c4531bcf4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[___________________, em ____/_____/20___.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="531" width="554" height="63" uuid="37cbe272-1605-412e-9f1f-15353e80786e"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MANIFESTAÇÃO DO SERVIDOR AVALIADO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="169" width="556" height="81" uuid="a54d667e-1aa7-44f8-baa5-30c14d5347ec"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Top" markup="none">
+					<font fontName="Arial" size="12" isBold="false"/>
+					<paragraph lineSpacing="Single" tabStopWidth="40"/>
+				</textElement>
+				<text><![CDATA[COMISSÃO DE AVALIAÇÃO: elaborar parecer descritivo acerca do desempenho do servidor, procurando destacar suas qualidades, bem como os aspectos, em sua atuação, que precisam ser melhorados. Dê, também, sugestões de ações para a melhoria do desempenho do servidor:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="240" y="290" width="25" height="14" uuid="cb8d2916-9d68-4eb6-b14d-5eb6deb1228e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{etapa}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

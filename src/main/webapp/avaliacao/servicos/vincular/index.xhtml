@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="/template/index.xhtml">
+        <f:metadata >
+            <f:viewAction action="#{avaliacaoController.init()}"/>
+        </f:metadata>
+        <!--Substituir o Título padrão da Página-->
+        <ui:define name="titulo">
+            Vincular Formulários
+        </ui:define>
+        <!--Conteúdo da página-->
+        <ui:define name="conteudo"> 
+            <p:growl id="fator_messages"  />
+            <p:panel   header="Vincular servidor à Avaliação" id="pn1">
+
+                <!--form com o objetivo de adicionar instâncias na listaPreviaGrupo (verificar adicionarListaPrevia() em GrupoFatorController)-->
+                <h:form id="vincular_Formulario_form1">
+
+                    <!--componente com o objetivo de organizar visualmente a página-->
+
+                    <!--componente com o objetivo de mostrar as mensagens de retorno para esse formulário-->
+                    <p:growl id="vincular_Formulario_messages" />
+                    <f:facet  name="header"> 
+                        <h:outputText value="Vincular Servidor no formulários"/>
+                    </f:facet>  
+                    <!--inicio da tabela de selects do cadastro-->
+                    <h:panelGrid columns="4" id="vincular_Formulario_quadro_grid">
+                        <!--select para o quadro profissional aqui é setado o valor do atributo nomeQuadro-->
+                        <h:panelGrid columns="2">
+                            <p:outputLabel for="nomeQuadro_select" value="Quadro Profissional: " />
+                            <p:selectOneMenu  required="true" filter="true" filterMatchMode="contains" id="nomeQuadro_select" value="#{avaliacaoController.nomeQuadro}">
+                                <!--opção nula: padrão para forçar o usuário a selecionar outro valor válido-->
+                                <f:selectItem itemValue="#{null}" noSelectionOption="true" itemLabel="Selecione um quadro..."/>
+                                <!--aqui o jsf se encarrega de criar uma lista de opções para o usuário através da listaQuadro-->
+                                <f:selectItems value="#{avaliacaoController.listaQuadro}" var="quadro" itemLabel="#{quadro.sigla}" itemValue="#{quadro}"/>
+                                <!--aqui é definida uma chamada ao método mudaControlador1 quando o usuário selecionar uma opção do select de quadro.
+                                O retorno é aplicado em uma ação ajax. -->
+                                <p:ajax update="vincular_Formulario_form1" listener="#{avaliacaoController.mudaControlador1()}" />
+                            </p:selectOneMenu>
+
+                            <p:outputLabel for="formulario_select" value="Formulário: " />
+                            <p:selectOneMenu   filter="true" filterMatchMode="contains" required="true" requiredMessage="O campo fonulário é obrigatório!"  id="formulario_select" value="#{avaliacaoController.idFormulario}" >
+                                <!--opção nula: padrão para forçar o usuário a selecionar outro valor válido-->
+                                <f:selectItem itemValue="#{null}" noSelectionOption="true" itemLabel="Selecione um formulário..."/>
+                                <!--aqui o jsf se encarrega de criar uma lista de opções para o usuário através da listaFormulario-->
+                                <f:selectItems value="#{avaliacaoController.listaFormulario}" var="formulario" itemLabel="#{formulario.nome}" itemValue="#{formulario.id}"/>
+                                <!--aqui é definida uma chamada ao método mudaControlador2 quando o usuário selecionar uma opção do select de quadro.
+                                O retorno é aplicado em uma ação ajax.-->
+                                <p:ajax update="lista_avaliacoes_dtb" listener="#{avaliacaoController.mudaControlador2()}" />
+                            </p:selectOneMenu>
+                        </h:panelGrid>
+                        <!--select para o formulário aqui é setado o valor do atributo nomeFormulario. Para ser visualizado 
+                        o valor do atributo controlador1 deve ser igual a true.-->
+
+                    </h:panelGrid>
+
+                    <p:dataTable  id="lista_avaliacoes_dtb" var="avaliacao" 
+                                  value="#{avaliacaoController.listaAvaliacoes}" selection="#{avaliacaoController.listaPreviaAvaliacao}" rowKey="#{avaliacao.id}"
+                                  rows="10" 
+                                  paginator="true"
+                                  currentPageReportTemplate="Mostrando {startRecord}-{endRecord} de {totalRecords}"
+                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                  emptyMessage="Nada encontrado."
+                                  >
+                        <f:facet name="header">
+                            Avaliações sem formulário vinculado
+                        </f:facet>
+
+                        <p:ajax event="rowSelect"  async="true" listener="#{avaliacaoController.adicionarListaPrevia(avaliacao)}" update=":vincular_Formulario_form2 btvinc"/>
+                        <p:ajax event="rowSelectCheckbox" listener="#{avaliacaoController.adicionarListaPrevia(avaliacao)}" update=":vincular_Formulario_form2 btvinc"/>
+                        <p:ajax event="rowUnselectCheckbox" listener="#{avaliacaoController.removerListaPrevia(avaliacao)}" update=":vincular_Formulario_form2 btvinc"/>
+                        <p:ajax event="rowUnselect" listener="#{avaliacaoController.removerListaPrevia(avaliacao)}" update=":vincular_Formulario_form2 btvinc"/>
+
+                        <p:column selectionMode="multiple" width="20"    />
+                        <p:column headerText="E"  width="20">
+                            <f:facet name="header">
+                                <h:outputText value="E" title="Etapa"/>
+                            </f:facet>
+                            #{avaliacao.etapa}
+                        </p:column>
+                        <p:column headerText="Matrícula" width="110">
+                            #{avaliacao.numFunc}-#{avaliacao.numVinc}
+                        </p:column>
+                        <p:column headerText="Servidor">
+                            #{avaliacao.nomeServidor}
+                        </p:column>
+
+                        <f:facet name="footer">
+                            <p:commandButton id="btvinc"  update=":vincular_Formulario_form1, :vincular_Formulario_form2 " 
+                                             value="Vincular" action="#{avaliacaoController.salvarListaPrevia}" class="icone2 vinculo">
+                                <p:confirm header="Confirmação" message="Deseja realmente salvar?" />
+                            </p:commandButton>
+                        </f:facet>
+                    </p:dataTable>
+
+                </h:form>
+                <p:separator />
+                <h:form id="vincular_Formulario_form2">
+                    <!--inicio da tabela de inputs do cadastro. Esse elemento só será exibido se o atributo controlador2 estiver com 
+                   valor igual a true--> 
+                    <p:growl id="fator_messages"  />
+
+                    <p:outputPanel id="vincular_Formulario_dlg_pnl" >
+                        <p:dataTable id="lista_previa_dtb" var="aval" scrollable="true" scrollHeight="350"  rows="5"
+                                     value="#{avaliacaoController.listaPreviaAvaliacao}"
+                                     emptyMessage="Nada encontrado.">
+                            <f:facet name="header">
+                                Servidores selecionados
+                            </f:facet> 
+                            <p:column headerText="Nº. Etapa">
+                                #{aval.etapa}
+                            </p:column>
+                            <p:column headerText="Nº. Func.">
+                                #{aval.numFunc}
+                            </p:column>
+                            <p:column headerText="Nº. Vinc.">
+                                #{aval.numVinc}
+                            </p:column>
+                            <p:column headerText="Nome do Servidor">
+                                #{aval.nomeServidor}
+                            </p:column> 
+                            <p:column headerText="#">
+                                <p:commandButton update=":vincular_Formulario_form1, :vincular_Formulario_form2"  id="retirar" value="Retirar" action="#{avaliacaoController.removerListaPrevia(aval)}" >
+                                    <p:confirm header="Confirmação" message="Deseja realmente retirar da lista?" />
+                                </p:commandButton>
+                            </p:column>  
+                        </p:dataTable>
+                    </p:outputPanel> 
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                        <p:commandButton value="Sim" type="button"  styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="Não" ignoreAutoUpdate="true" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
+                </h:form>
+            </p:panel>
+        </ui:define>
+    </ui:composition>
+</html>

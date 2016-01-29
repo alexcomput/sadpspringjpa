@@ -1,0 +1,495 @@
+/*!Jonimar.titan@gmail.com*/
+/*cores:
+verde:
+#00796B
+verde-claro
+#4CAF50
+verde-marinho
+#374046
+
+*/
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+    margin:0;
+    padding:0;
+    border:0;
+    outline:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+html{
+    height: 100%;
+}
+body {
+    line-height:1;
+    height: 100%;
+    background: #ECECEC;
+    font-family: "trebuchet ms",arial,sans-serif;
+}
+article,aside,details,figcaption,figure,
+footer,header,hgroup,menu,nav,section {
+    display:block;
+}
+nav ul {
+    list-style:none;
+}
+blockquote, q {
+    quotes:none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content:'';
+    content:none;
+}
+a {
+    margin:0;
+    padding:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+ins {
+    background-color:#ff9;
+    color:#000;
+    text-decoration:none;
+}
+mark {
+    background-color:#ff9;
+    color:#000;
+    font-style:italic;
+    font-weight:bold;
+}
+del {
+    text-decoration: line-through;
+}
+abbr[title], dfn[title] {
+    border-bottom:1px dotted;
+    cursor:help;
+}
+table {
+    border-collapse:collapse;
+    border-spacing:0;
+}
+hr {
+    display:block;
+    height:1px;
+    border:0;
+    border-top:1px solid #cccccc;
+    margin:1em 0;
+    padding:0;
+}
+input, select {
+    vertical-align:middle;
+}
+
+header{
+    background: #00796B;
+    width: 100%;
+    height: 50px;
+}
+header a{
+    color: #fff;
+}
+main{
+    max-width:1000px;
+    margin: 50px auto 0;
+    clear: both;
+}
+section{
+    width: 100%;
+    margin: 0 auto 30px;
+}
+footer{
+    background:#DADADA;
+    width: 100%;
+    position: fixed;
+    bottom:0;
+    text-align: center;
+    font-size: 11px;
+}
+footer p{
+    padding: 3px 5px;
+}
+aside{
+    width: 150px;
+    background:#374046;
+    color: #fff;
+}
+
+
+
+/*Secad*/
+.esquerda{
+    float: left;
+}
+.direita{
+    float: right;
+}
+.esq{
+    text-align: left;
+}
+.centro{
+    text-align: center;
+}
+.dir{
+    text-align: right;
+}
+.meio{
+    margin: 0 auto;
+}
+
+.gov{
+    height: 50px;
+    width: 50px;
+    float: left;
+    background: #fff url("#{resource['images/brasao-tocantins.png']}") no-repeat center;
+    background-size: 60%;
+}
+.logo{
+    height: 50px;
+    width: 50px;
+    float: left;
+    background: #fff url("#{resource['images/aede.svg']}") no-repeat center;                                                                                                                     
+    background-size: 150%;
+}
+.gov:hover, .logo:hover{
+    background-color: #FFFAD7;
+}
+.sistema{
+    padding-top: 10px;
+    margin-left: 5px;
+    float: left;
+    font-family: calibri;
+}
+.sistema h1{
+    font-size: 20px;
+}
+.sistema h1 a{
+   color: #fff;
+   text-decoration: none;
+   display: block;
+}
+.sistema:hover h1 a{
+    color: #FFC107;
+}
+.sistema h2{
+   color: #FFF;
+   font-weight: normal;
+}
+.sistema:hover h2{
+    color: #FFC107;
+}
+.versao{
+font-weight:normal;
+font-size:50%;
+padding-left: 5px;
+}
+
+.perfil .ui-panel-content{
+    padding: 0 !important;
+}
+.perfil{
+    display: block;
+    height: 45px;
+    width: 150px;
+    right: 0;
+    background: #2B9E90;
+    position: absolute;
+    font-size: 13px;
+    overflow: hidden;
+    transition:  all .5s;
+    z-index: 3;
+    border: 0;
+}
+    .perfil:hover{
+        height: 200px;
+        box-shadow: 0 0 10px #000;
+        background:#2B9E90;
+    }
+    .perfil:focus, .perfil:active{
+        background: #fd0;
+        color: #000;
+    }
+    .perfil li{
+        padding-left: 7px;
+        list-style: none;
+        color: #fff;
+        margin-bottom: 10px;
+    }
+    .perfil:focus li, .perfil:active li{
+        color: #000;
+    }
+    .perfil .sair a{
+        display: none;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        padding: 5px 7px;
+        color: #000;
+        text-decoration: none;
+        background: #374046;
+        color: #fff;
+    }
+    .perfil:hover .sair a{
+        display: block;
+    }
+    .perfil .usuario{
+        text-transform: capitalize !important;
+        line-height: 15px;
+        color: #fff;
+    }
+.sair a:hover{
+    background: #fd0;
+    color: #000;
+}
+.sair a:focus, .sair a:active{
+    background: #000;
+    color: #fff;
+}
+.perfil .avatar{
+    background-image: url("#{resource['images/perfil.svg']}");
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: 50px;
+    width: 50px;
+    height: 50px;
+    float: right;
+    transition:  all .3s;
+}
+.perfil:hover .avatar{
+    background-position: center;
+    background-size: 50px;
+}
+.perfil:focus .avatar,.perfil:active .avatar{
+    background-position: bottom;
+    background-size: 50px;
+}
+.funcao{
+    
+}
+@media only screen and (max-width:749px){
+
+main {
+width:100%;
+}
+}
+
+/*PrimeFaces*/
+.ui-datatable .ui-paginator, .ui-datatable .ui-paginator{
+    background: #00796B;
+    color: #fff;
+}
+.ui-paginator .ui-paginator-page, .ui-paginator .ui-paginator-next, .ui-paginator .ui-paginator-last, .ui-paginator .ui-paginator-first, .ui-paginator .ui-paginator-prev{
+    background: #374046 !important;
+    color: #fff !important;
+}
+.ui-paginator .ui-paginator-page:hover,
+.ui-paginator .ui-paginator-next:hover,
+.ui-paginator .ui-paginator-last:hover,
+.ui-paginator .ui-paginator-first:hover,
+.ui-paginator .ui-paginator-prev:hover{
+    background: #4caf50 !important;
+}
+.ui-menu{
+    padding: 0;
+    margin: 0 auto;
+}
+.ui-menu-list{
+}
+.ui-menu, .ui-menu .ui-menu-child{
+    background: #00796B;
+    border: 0;
+}
+.ui-state-hover,
+.ui-widget-content .ui-state-hover,
+.ui-widget-header .ui-state-hover,
+.ui-state-focus,
+.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus {
+    background: #4CAF50;
+    color: #fff;
+    border: 0;
+    box-shadow: none;
+    border-radius: 0;
+}
+.ui-menubar .ui-menuitem-link{
+    line-height: 25px;
+    color: #fff;
+}
+.ui-corner-all{
+    border-radius: 0;
+}
+@media only screen and (min-width: 947px){
+    .ui-menu-list {
+
+    }
+}
+
+/*Color*/
+.red{
+    color: #C62F38;
+}
+
+
+/*widget*/
+.ui-widget-header,
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default{
+    border: 0;
+    background: #ECECEC;
+    color: #000;
+    text-shadow: none;
+}
+.ui-selectonemenu .ui-selectonemenu-trigger{
+    background: #00796B;
+}
+.ui-selectonemenu:hover .ui-selectonemenu-trigger{
+    background: #4CAF50;
+}
+.ui-selectonemenu:active .ui-selectonemenu-trigger{
+    background: #374046;
+}
+/*focus*/
+.ui-inputfield.ui-state-focus, .ui-widget-content .ui-inputfield.ui-state-focus, .ui-widget-header .ui-inputfield.ui-state-focus{
+
+}
+
+.ui-widget-header .ui-inputfield, .ui-widget-content .ui-inputfield{
+    background: #FFFAD7;
+    line-height: 30px;
+
+}
+
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight{
+    background: #FD0;
+    text-shadow: none;
+    color: #000;
+}
+
+
+.ui-panel{
+    margin-bottom: 105px;
+}
+
+/*table*/
+label{
+    padding:10px;
+}
+table tbody tr{
+    line-height: 45px;
+}
+.ui-fieldset{
+    margin-bottom: 15px;
+}
+
+label {
+    padding: 10px;
+}
+
+/*botões*/
+.ui-button, .botao{
+    background-color: #00796B !important;
+    color: #fff !important;
+}
+
+.ui-button:hover, .botao:hover{
+    background-color: #4CAF50 !important;
+    color: #fff !important;
+}
+.ui-button:active,  .botao:active{
+    background-color: #216DA9 !important;
+    color: #fff !important;
+}
+/*icones brancos*/
+.ui-state-default .ui-icon,
+.ui-widget-content .ui-icon{
+    background-image: url("#{facesContext.externalContext.requestContextPath}/javax.faces.resource/images/ui-icons_ffffff_256x240.png.xhtml?ln=primefaces-aristo");
+}
+/*Login*/
+#welcome{
+    max-width: 450px;
+    padding: 10px;
+    margin: 0 auto;
+    margin-top: 200px;
+}
+/*radiobutton*/
+.ui-state-active .ui-icon{
+    background-color:#216DA9;
+}
+/*ícones*/
+.iconebt{
+    background-position: center top 4px !important;
+    background-size: 80% auto !important;
+    background-repeat: no-repeat !important;
+    transition: all 0.3s ease 0s !important;
+    height: 40px;
+    width: 40px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.icone2{
+    background-position: top 2px left !important;
+    background-size: 30px auto !important;
+    background-repeat: no-repeat !important;
+    transition: all 0.3s ease 0s !important;
+}
+.icone3{
+    background-position: top -1px left !important;
+    background-size: 35px auto !important;
+    background-repeat: no-repeat !important;
+    transition: all 0.3s ease 0s !important;
+    padding-left: 30px !important;
+}
+.editar{
+    background-image: url("#{resource['images/editar.svg']}") !important;
+}
+.excluir{
+    background-image: url("#{resource['images/excluir.svg']}") !important;
+}
+.novo{
+    background-image: url("#{resource['images/novo.svg']}") !important;
+}
+.salvar{
+    background-image: url("#{resource['images/salvar.svg']}") !important;
+}
+.voltar{
+    background-image: url("#{resource['images/voltar.svg']}") !important;
+}
+.pesquisar{
+    background-image: url("#{resource['images/pesquisar.svg']}") !important;
+}
+.limpar{
+    background-image: url("#{resource['images/limpar.svg']}") !important;
+}
+.aede{
+    background-image: url("#{resource['images/aede.svg']}") !important;
+}
+*::-moz-selection,
+*::-webkit-selection,
+*::selection{
+    background: #fd0 !important;
+}
+
+/*temporários*/
+.ui-datatable .ui-row-editor .ui-icon-pencil{
+    background-color: #00796B;
+}
+.ui-datatable .ui-row-editor .ui-icon-pencil:hover{
+    background-color: #4caf50;
+}
+
+.ui-inputtextarea{
+    width: 100% !important;
+}

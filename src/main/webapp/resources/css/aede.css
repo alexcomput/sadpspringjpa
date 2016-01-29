@@ -1,0 +1,236 @@
+/*!treedbox@gmail.com*/
+/*
+colors
+verde:
+#00796B
+verde-claro
+#4CAF50
+verde-marinho
+#374046
+*/
+
+header h1{
+color:#00796B;
+}
+footer,
+.ui-menu, .ui-menu .ui-menu-child,
+.ui-selectonemenu .ui-selectonemenu-trigger,
+.perfil,
+.perfil .sair a,
+.ui-state-default, .ui-widget-content .ui-state-default{
+background:#00796B;
+}
+.ui-datatable .ui-row-editor .ui-icon-pencil,
+.acesso,
+.box,
+a:active .box{
+background-color:#00796B;
+}
+.ui-datatable .ui-row-editor .ui-icon-pencil:hover,
+.acesso:hover,
+.box:hover,
+a:active .box:hover{
+background-color:#4caf50;
+}
+.ui-button, .botao{
+background-color:#00796B !important;
+}
+
+.ui-selectonemenu:active .ui-selectonemenu-trigger{
+background:#216DA9;
+}
+.ui-state-active .ui-icon{
+background-color:#216DA9;
+}
+.ui-button:active,  .botao:active{
+background-color:#216DA9 !important;
+}
+footer a:active,
+h1,
+.red{
+color:#4CAF50;
+}
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-widget-header .ui-state-focus,
+.sair a:hover{
+background:#fd0;
+}
+.ui-selectonemenu:hover .ui-selectonemenu-trigger{
+background:#4CAF50;
+}
+.redbg,
+.ui-paginator .ui-paginator-page:hover, .ui-paginator .ui-paginator-next:hover, .ui-paginator .ui-paginator-last:hover, .ui-paginator .ui-paginator-first:hover, .ui-paginator .ui-paginator-prev:hover,
+a:hover .box, a:focus .box,
+.ui-button:hover, .botao:hover{
+background-color:#4CAF50 !important;
+}
+header a,
+nav ul li a,
+nav ul ul li a,
+nav ul ul li a:hover,nav ul ul li a:focus,
+.ui-widget-header,
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight,
+.perfil:hover li,
+.perfil:focus, .perfil:active,
+.perfil:focus li, .perfil:active li{
+color:#000;
+}
+.ui-state-focus, .ui-widget-content .ui-state-focus,
+.ui-state-hover, .ui-widget-content .ui-state-hover,
+.ui-paginator .ui-paginator-rpp-options,
+.ui-messages-info, .ui-message-info{
+    color:#000 !important;
+}
+nav ul li:hover,nav ul li:focus,
+nav ul li a:focus,
+nav ul ul,
+.sair a:focus, .sair a:active{
+background:#000;
+}
+.perfil:hover{
+box-shadow:0 0 10px #000;
+}
+th.ui-state-default span,
+.ui-datatable .ui-sortable-column,
+nav ul li:hover a,nav ul li:focus a,
+nav ul li a:focus,
+footer,
+footer a,
+.ui-widget-header .ui-state-hover, .ui-widget-header .ui-state-focus,
+.ui-menubar .ui-menuitem-link,
+.perfil li,
+.perfil .sair a,
+.perfil .usuario,
+.sair a:hover,
+.sair a:focus, .sair a:active,
+.ui-datepicker .ui-datepicker-header,
+.box,
+.ui-selectonemenu-panel .ui-selectonemenu-list-item:hover{
+color:#fff;
+}
+.ui-button, .botao,
+.ui-button:hover, .botao:hover,
+.ui-button:active,  .botao:active{
+color:#fff !important;
+}
+nav ul,
+.perfil:hover{
+background:#fff;
+}
+.ui-datepicker td:hover{
+background-color:#fd0;
+}
+.ui-messages-info, .ui-message-info{
+    background-color: #fd0 !important;
+}
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight,
+nav ul ul li a:hover,nav ul ul li a:focus,
+.perfil:focus, .perfil:active{
+background:#fd0;
+}
+details,
+*::-moz-selection,
+*::-webkit-selection,
+*::selection{
+background:#fd0 !important;
+}
+html{
+background:#E8E0DD;
+}
+header,
+table label,
+#welcome{
+background:#F9F9F9;
+}
+header h2{
+color:#AFAFAF;
+}
+nav ul ul li{
+border-bottom:1px solid #353535;
+}
+table label{
+color:#424242;
+}
+.ui-widget-header .ui-inputfield, .ui-widget-content .ui-inputfield,
+.ui-paginator .ui-paginator-current, .ui-paginator .ui-paginator-rpp-options,
+.ui-widget input{
+background-color:#FFFAD7;
+}
+main .acesso, .acesso:hover{
+    background-color: rgba(255,255,255,.8);
+}
+main .acesso, .acesso:hover{
+    box-shadow:0 5px 10px rgba(0,0,0,.8);
+}
+.ui-widget input,
+.ui-widget input:hover{
+    box-shadow: 0px 2px 2px #8F8F8F inset;
+}
+.ui-radiobutton .ui-radiobutton-box{
+}
+.ui-radiobutton .ui-radiobutton-box,
+.ui-radiobutton .ui-radiobutton-box:hover{
+    box-shadow: 0px 2px 5px #000 inset;
+}
+.ui-radiobutton .ui-radiobutton-box:hover{
+    background-color: #4CAF50;
+}
+.ui-state-active .ui-icon{
+    background-color: #00796B;
+    background-image: none !important;
+}
+.ui-widget input:hover,
+.ui-widget input:focus{
+    background-color: #FFF6B7;
+}
+.subox .box{
+    background-color: #009688;
+}
+.ui-widget-header, .ui-fieldset-legend{
+background:#ECECEC !important;
+}
+.ui-datepicker .ui-datepicker-header,
+.ui-paginator .ui-paginator-page, .ui-paginator .ui-paginator-next, .ui-paginator .ui-paginator-last, .ui-paginator .ui-paginator-first, .ui-paginator .ui-paginator-prev{
+    background:#00796B !important;
+    color: #fff;
+}
+
+.ui-radiobutton .ui-radiobutton-box{
+    background: #fff;   
+}
+.azulbg{
+    background-color: #2E8EF9!important;
+}
+.ui-datatable .ui-row-editor .ui-icon-pencil,
+.ui-datatable .ui-row-editor .ui-icon-check,
+.ui-datatable .ui-row-editor .ui-icon-close,
+.ui-icon.ui-icon-check,
+.ui-icon-circle-triangle-e,
+.ui-icon-circle-triangle-s{
+    background-color: #00796B;
+}
+footer a{
+    background: #fff;
+    padding: 3px 7px;
+    color: #00796B;
+    text-decoration: none;
+}
+footer a:hover{
+    background:#4CAF50;
+    color: #fff;
+}
+.otimo .ui-state-default .ui-icon {
+    background: #4285F4 !important;
+}
+.bom .ui-state-default .ui-icon {
+    background: #34A853 !important;
+}
+.regular .ui-state-default .ui-icon {
+    background: #FBBC05 !important;
+}
+.ruim .ui-state-default .ui-icon {
+    background: #EA4335 !important;
+}
+.erros td{
+    background: #fd0;
+    border: 1px solid #000;
+}

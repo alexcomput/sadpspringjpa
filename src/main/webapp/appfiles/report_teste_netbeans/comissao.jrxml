@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="comissao" language="groovy" pageWidth="595" pageHeight="842" columnWidth="523" leftMargin="0" rightMargin="72" topMargin="20" bottomMargin="20" uuid="0302c88b-8094-4c27-966e-e75127f91a23">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="1"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/appfiles/report/\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="idavaliacaop" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     av.id AS idavaliacao,
+     av.nome_servidor
+FROM
+     "aede"."avaliacao" av
+WHERE
+     av.id = $P{idavaliacaop}]]>
+	</queryString>
+	<field name="idavaliacao" class="java.lang.Integer"/>
+	<field name="nome_servidor" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="702" splitType="Stretch">
+			<rectangle>
+				<reportElement x="6" y="0" width="555" height="476" uuid="9f320292-98bb-4b24-9294-7efb06288592"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="6" y="1" width="555" height="84" uuid="2a43cb54-c4cc-40da-9a1c-64686d805880"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="14" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[COMISSÃO DE AVALIAÇÃO: elaborar parecer descritivo acerca do desempenho do servidor, procurando destacar suas qualiddades, bem como, os pontos, em sua atuação, que precisam ser melhorados. Dê também, sugestões de ações para a melhoria do desempenho do servidor:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="86" y="453" width="146" height="1" uuid="50165ecb-3652-4cf6-940f-1a112e5b7d96"/>
+			</line>
+			<line>
+				<reportElement x="255" y="453" width="40" height="1" uuid="a5120de0-6b21-49ce-8ef2-8b81c1300114"/>
+			</line>
+			<line>
+				<reportElement x="308" y="454" width="40" height="1" uuid="14d52620-4017-465f-890c-0e07b5a32881"/>
+			</line>
+			<staticText>
+				<reportElement x="348" y="436" width="22" height="19" uuid="7d536250-3d8f-4a66-b6d3-2e53ef499af9"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[de]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="501" y="436" width="48" height="19" uuid="105795c0-381e-4afc-8ae3-9641029f4ae3"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[200___]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="479" y="436" width="22" height="19" uuid="6ea2654e-af84-4623-82a9-d77806a9e48d"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[de]]></text>
+			</staticText>
+			<line>
+				<reportElement x="370" y="453" width="109" height="1" uuid="6aede961-680c-497e-93d5-6e959f19251e"/>
+			</line>
+			<line>
+				<reportElement x="239" y="449" width="6" height="1" uuid="81816946-f69b-4b0c-860a-ccaf4c7119bc"/>
+			</line>
+			<staticText>
+				<reportElement x="292" y="436" width="22" height="19" uuid="12b7c3db-9d03-404b-b7af-ddde7387dff7"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[,]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="505" width="193" height="63" uuid="90b67ea2-184a-4264-acbe-030e0787dcbb"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="485" width="555" height="20" uuid="6d8fbe8b-4098-4275-92d4-265e89db2588"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[  Carimbo e assinatura dos membros da Comissão de Avaliação:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="379" y="505" width="176" height="63" uuid="fffa1e16-8db7-43eb-aed1-2f02ff7610fe"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="193" y="505" width="186" height="63" uuid="455e2eb3-75e9-4fc0-9249-ed0f6ec70675"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="-1" y="580" width="555" height="20" uuid="ea58cb5d-d596-4ca7-a4b7-eeba7043655a"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[  Ciente do servidor avaliado:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="600" width="275" height="60" uuid="e038dc92-e514-4053-86d9-7b03a5dd5056"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[  Assinatura e nome:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="275" y="600" width="280" height="60" uuid="bced6d04-246c-4072-bf58-de7e4e9fbd84"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[  Data:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="208" y="580" width="341" height="20" uuid="d780b34f-a9db-4236-b162-e4f6fe4dde83"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome_servidor}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

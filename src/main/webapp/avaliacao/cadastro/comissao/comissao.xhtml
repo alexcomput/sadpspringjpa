@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/index.xhtml" 
+                xmlns="http://www.w3.org/1999/xhtml"   
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:stella="http://stella.caelum.com.br/faces2">
+    <f:metadata >
+        <f:viewParam name="idComissao" value="#{comissaoController.idComissao}" />
+        <f:viewAction action="#{comissaoController.init()}"/>
+        <f:viewAction action="#{avaliacaoController.init()}"/>
+    </f:metadata>
+    <ui:define name="titulo">
+        Notificação de Comissão
+    </ui:define>
+    <ui:define name="conteudo"> 
+        <f:facet  name="header"> 
+            <h:outputText value=" Notificação de Comissão"/>
+        </f:facet> 
+        <h:form id="notificar_comissao_form1" target="_blank" >
+            <p:panel header="Criar Comissão">
+                <p:growl id="comissao_messages"  />
+                <p:wizard showNavBar="true"  backLabel="Anterior" nextLabel="Próximo" flowListener="#{comissaoController.fluxoWizard}" id="comissao_wizard" widgetVar="wiz" >
+                    <p:messages />
+                    <p:tab  title="Selecionar Servidores" id="selecionar_servidores" >
+                        <p:messages />
+                        <h:panelGrid columns="2" id="comissao_quadro_grid" >
+                            <p:outputLabel for="quadro" title="Quadro" value="Quadro:"/>
+                            <p:selectOneMenu disabled="#{comissaoController.confirma_comissao}" filter="true" filterMatchMode="contains"  id="quadro" value="#{avaliacaoController.nomeQuadro}" required="true" requiredMessage="Obrigatório escolher Quadro">
+                                <f:selectItem  noSelectionOption="true" itemLabel="Selecione um quadro..."/>
+                                <f:selectItems value="#{avaliacaoController.listaQuadro}" var="quadro" itemLabel="#{quadro.sigla}" itemValue="#{quadro}"/>
+                                <p:ajax update="notificar_comissao_form1 selecionar_servidores" listener="#{avaliacaoController.mudaControlador3()}"  process="quadro" /> 
+                            </p:selectOneMenu> 
+                            <p:outputLabel   for="cbSetor" title="Setor" value="Setor:" />
+                            <p:selectOneMenu disabled="#{comissaoController.confirma_comissao}" filter="true" filterMatchMode="contains"  id="cbSetor" value="#{avaliacaoController.nomeSetor}" >
+                                <f:selectItem noSelectionOption="true" itemLabel="Selecione um setor..."/>
+                                <f:selectItems value="#{avaliacaoController.listaSetores}" var="setor" itemLabel="#{setor.setorNome}" itemValue="#{setor.setorId}"/>
+                                <p:ajax update="lista_avaliacoes_dtb" listener="#{avaliacaoController.findToCriarComissao2()}" />
+                            </p:selectOneMenu>
+                        </h:panelGrid>
+                            <!-- <p:dataTable id="lista_avaliacoes_dtb" rendered="#{avaliacaoController.controlador2}" var="avaliacao" scrollable="true" scrollHeight="300" -->
+                        <p:dataTable    disabledSelection="#{comissaoController.confirma_comissao}"  id="lista_avaliacoes_dtb" var="avaliacao"
+                                        value="#{avaliacaoController.listaAvaliacoes}" selection="#{avaliacaoController.listaPreviaAvaliacao}" rowKey="#{avaliacao.id}"                                  
+                                        rows="10" emptyMessage="Não há registros filtrados."
+                                        paginator="true"
+                                        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                        >
+                            <f:facet name="header">
+                                Lista de servidores
+                            </f:facet> 
+                            <p:column selectionMode="multiple" width="20"    />
+                            <p:column headerText="E"  width="20" filterBy="#{avaliacao.etapa}">
+                                <f:facet name="header">
+                                    <h:outputText value="E" title="Etapa"/>
+                                </f:facet>
+                                #{avaliacao.etapa}
+                            </p:column>
+                            <p:column headerText="Matrícula" width="110">
+                                #{avaliacao.numFunc}-#{avaliacao.numVinc}
+                            </p:column>
+                            <p:column headerText="Servidor">
+                                #{avaliacao.nomeServidor}
+                            </p:column>
+                            <p:column headerText="Cargo">
+                                #{avaliacao.cargoNome}
+                            </p:column>
+                            <p:column headerText="Setor">
+                                #{avaliacao.setorNome}
+                            </p:column>
+                            <p:column headerText="Regional">
+                                #{avaliacao.regionalNome}
+                            </p:column>                                                    
+                            <p:column headerText="">
+                                <p:commandButton id="manter_comissao_btn" value="Manter Comissão" 
+                                                 actionListener="#{comissaoController.manterComissao(avaliacao)}"  
+                                                 rendered="#{comissaoController.precisaManterComissao(avaliacao)}" 
+                                                 update=":notificar_comissao_form1:comissao_wizard" onsuccess="PF('wiz').next()" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:tab>
+
+                    <p:tab  title="Montar Comissão" id="membros">
+                        <p:messages />
+                        <p:growl id="messages2"  /> 
+                        <h:panelGrid columns="3" cellpadding="2">
+
+                            <p:outputLabel for="cpf" value="CPF:" />
+                            <p:inputMask disabled="#{comissaoController.confirma_comissao}" mask="99999999999" id="cpf"  maxlength="11" value="#{comissaoController.membroComissao.cpf}" />
+                            <p:commandButton  disabled="#{comissaoController.confirma_comissao}" value="Buscar" id="buscar" actionListener="#{comissaoController.consultaMembroComissao()}" 
+                                              update="membro_comissao_panel  comissao_messages   incluir_membro_comissao " />
+                        </h:panelGrid>
+
+                        <p:panel id="membro_comissao_panel" visible="#{comissaoController.tipoMembro}" >                          
+                            <h:panelGrid columns="4" cellpadding="2">
+
+                                <p:outputLabel for="num_func" value="Nº Funcional:" />
+                                <p:outputLabel id="num_func" value="#{comissaoController.membroComissao.numFunc}-#{comissaoController.membroComissao.numVinc}"  />
+
+                                <p:outputLabel for="nome_membro_comissao" value="Nome:" />
+                                <p:outputLabel id="nome_membro_comissao" value="#{comissaoController.membroComissao.nome}"  />
+
+                                <p:outputLabel for="orgao_id" value="Orgão:" />
+                                <p:outputLabel id="orgao_id" value="#{comissaoController.membroComissao.orgao_sigla}"  />  
+
+                                <p:outputLabel for="orgao_descricao" value="Descrição:" />
+                                <p:outputLabel id="orgao_descricao" value="#{comissaoController.membroComissao.orgao_descricao}"  />   
+
+                            </h:panelGrid>    
+                            <p:panelGrid columns="3" >
+                                <p:outputLabel for="tipo_membro_comissao" value="Tipo do Membro: "/>
+                                <p:selectOneMenu  disabled="#{comissaoController.confirma_comissao}" filter="true" filterMatchMode="contains"  
+                                                  id="tipo_membro_comissao" value="#{comissaoController.membroComissao.tipoMembroComissao}"
+                                                  label="TIPO DA SOLICITAÇÃO" >
+                                    <f:selectItem itemLabel="Selecione..." noSelectionOption="true" value="#{null}" />
+                                    <f:selectItems value="#{comissaoController.tiposMembroComissao}" var="tiposMembro"
+                                                   itemLabel="#{tiposMembro.descricao}"/>
+                                </p:selectOneMenu> 
+                                <p:commandButton  disabled="#{comissaoController.confirma_comissao}" icon="" value="Incluir" id="incluir_membro_comissao"  actionListener="#{comissaoController.incluirMembroComissao}" 
+                                                  styleClass="ui-priority-primary" update="lista_membros_comissao, membro_comissao_panel, comissao_messages " class="icone2 adicionar" />
+                            </p:panelGrid>
+                            <p:dataTable  id="lista_membros_comissao" var="membrocomissao" 
+                                          value="#{comissaoController.listaMembroComissao}" rowKey="#{membroComissao.id}" rows="10" 
+                                          paginator="true" emptyMessage="Não registros filtrados."
+                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} 
+                                          {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" >
+                                <f:facet name="header">
+                                    Lista de Membros da Comissão
+                                </f:facet> 
+
+                                <p:column headerText="No Funcional" width="110">
+                                    #{membrocomissao.numFunc}-#{membrocomissao.numVinc}
+                                </p:column>
+                                <p:column headerText="Servidor">
+                                    #{membrocomissao.nome}
+                                </p:column>
+                                <p:column headerText="Orgão">
+                                    #{membrocomissao.orgao_sigla}
+                                </p:column>   
+                                <p:column headerText="Cargo">
+                                    #{membrocomissao.cargo_descricao}
+                                </p:column>
+                                <p:column headerText="Ações">      
+                                    <p:commandButton immediate="true" disabled="#{comissaoController.confirma_comissao}" rendered="#{comissaoController.editarComissao == false}" icon="" iconPos="right" 
+                                                     update=" lista_membros_comissao"    actionListener="#{comissaoController.removeMembroComissaoDaLista(membrocomissao)}" class="iconebt lixeira">
+                                    </p:commandButton>    
+                                    <!--p:commandButton rendered="#//{comissaoController.editarComissao == true and membroComissao.excluido == false}" icon="ui-icon ui-icon-trash" 
+                                                     iconPos="right" actionListener="#//{comissaoController.setMembroComissaoExcluido(membroComissao)}" 
+                                                     action="#//{comissaoController.listaMembroComissao.remove(membro)}" update="lista_membros_comissao" /--> 
+
+                                    <p:commandButton rendered="#{comissaoController.editarComissao == true and membroComissao.excluido == true}" icon="ui-icon ui-icon-closethick"
+                                                     iconPos="right" actionListener="#{comissaoController.setMembroComissaoExcluido(membroComissao)}" 
+                                                     update="lista_membros_comissao" /> 
+
+                                    <p:commandButton rendered="#{membroComissao.ativo == false and membroComissao.excluido == false}" icon="ui-icon ui-icon-closethick" 
+                                                     iconPos="right" actionListener="#{comissaoController.setMembroComissaoAtivo(membroComissao)}" 
+                                                     update="lista_membros_comissao" />
+
+                                    <p:commandButton rendered="#{comissaoController.semChefeImediato == true and membroComissao.ativo == true and membroComissao.excluido == false}" 
+                                                     icon="ui-icon ui-icon-person" iconPos="right" 
+                                                     actionListener="#{comissaoController.setMembroComissaoChefeImediato(membroComissao)}" 
+                                                     update="lista_membros_comissao" />
+                                </p:column>
+                            </p:dataTable>
+                        </p:panel>
+                    </p:tab>
+
+                    <p:tab title="Confirmar Comissão" id="confirmacao">
+                        <p:messages />
+                        <p:growl id="messages3"  /> 
+
+                        <p:dataTable  id="lista_avaliacoes_conf" var="avaliacao"
+                                      value="#{avaliacaoController.listaPreviaAvaliacao}"
+                                      rows="5"  
+                                      paginator="true"
+                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                      emptyMessage="Nada encontrado."
+                                      >
+                            <f:facet name="header">
+                                Lista de servidores
+                            </f:facet> 
+
+                            <p:column headerText="E"  width="20">
+                                <f:facet name="header">
+                                    <h:outputText value="E" title="Etapa"/>
+                                </f:facet>
+                                #{avaliacao.etapa}
+                            </p:column>
+                            <p:column headerText="Matrícula" width="110">
+                                #{avaliacao.numFunc - avaliacao.numVinc}
+                            </p:column>
+                            <p:column headerText="Servidor">
+                                #{avaliacao.nomeServidor}
+                            </p:column>
+                            <p:column headerText="Cargo">
+                                #{avaliacao.cargoNome}
+                            </p:column>
+                            <p:column headerText="Setor">
+                                #{avaliacao.setorNome}
+                            </p:column>
+                            <p:column headerText="Regional">
+                                #{avaliacao.regionalNome}
+                            </p:column>                                                    
+                            <p:column headerText="Imprimir">
+                                <p:commandButton disabled="#{comissaoController.confirma_comissao == false}" immediate="true" class="botao iconebt imprimir" 
+                                                 actionListener="#{comissaoController.imprimirEspecifico(avaliacao)}" ajax="false"  value="" >
+                                </p:commandButton>                                
+                            </p:column>                                                    
+                        </p:dataTable>
+
+                        <p:dataTable  id="tblista_membros_comissao" var="membro"
+                                      value="#{comissaoController.listaMembroComissao}" 
+                                      rows="3" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                      emptyMessage="Nada encontrado.">
+                            <f:facet name="header">
+                                Lista de Membros da Comissão #{comissaoController.listaMembroComissao.size()}
+                            </f:facet> 
+
+                            <p:column headerText="Servidor">
+                                #{membro.nome}
+                            </p:column>
+                            <p:column headerText="Cargo">
+                                #{membro.cargo_descricao}
+                            </p:column>
+                            <!--p:column headerText="Chefe Imediato">
+                                <h:outputText rendered="#//{membro.tipoMembroComissao.descricao eq "CHEFE IMEDIATO"}" value="SIM" />
+
+                                <h:outputText rendered="#//{membro.tipoMembroComissao.descricao ne "CHEFE IMEDIATO"}" value="NÃO" />
+                            </p:column-->
+
+                            <p:column headerText="Status">
+                                <h:outputText rendered="#{membro.excluido == true}" value="EXCLUÍDO" />
+
+                                <h:outputText rendered="#{membro.excluido == false and membroComissao.ativo == false}" value="INATIVO" />
+
+                                <h:outputText rendered="#{membro.ativo == true}" value="ATIVO" />
+                            </p:column> 
+
+                        </p:dataTable>
+                        <p:panelGrid columns="2" >
+                            <p:commandButton disabled="#{comissaoController.confirma_comissao}" immediate="true" update="outra_btn, outra_btn2, @this, :notificar_comissao_form1"  
+                                             id="confirmar_btn" value="Salvar" actionListener="#{comissaoController.salvarComissao}" class="icone2 visto" >
+                                <p:confirm header="Confirmação" message="Deseja Realmente Salvar?"  icon="ui-icon-alert"   />
+
+                            </p:commandButton> 
+
+                            <p:button rendered="#{comissaoController.editarComissao == false}" outcome="comissao.xhtml" disabled="#{comissaoController.confirma_comissao == false}" 
+                                      value="Criar outra Comissão" id="outra_btn" class="icone2 adicionar"/>
+                        </p:panelGrid>
+                        <p:button rendered="#{comissaoController.editarComissao == true}" outcome="index.xhtml" disabled="#{comissaoController.confirma_comissao == false}" class="icone2 editar"
+                                  value="Editar outra Comissão" id="outra_btn2"/>
+
+                    </p:tab>
+                </p:wizard>
+            </p:panel>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                <p:commandButton value="Sim" type="button" icon="ui-icon-check" styleClass="ui-confirmdialog-yes"   />
+                <p:commandButton  value="Não" ignoreAutoUpdate="true" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>
+        </h:form>
+    </ui:define>
+</ui:composition>

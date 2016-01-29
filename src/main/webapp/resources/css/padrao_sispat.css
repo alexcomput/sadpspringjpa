@@ -1,0 +1,330 @@
+/*!Jonimar.titan@gmail.com*/
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+    margin:0;
+    padding:0;
+    border:0;
+    outline:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+html{
+    height: 100%;
+}
+body {
+    line-height:1;
+    height: 100%;
+    background: #ECECEC;
+    font-family: "trebuchet ms",arial,sans-serif;
+}
+article,aside,details,figcaption,figure,
+footer,header,hgroup,menu,nav,section {
+    display:block;
+}
+nav ul {
+    list-style:none;
+}
+blockquote, q {
+    quotes:none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content:'';
+    content:none;
+}
+a {
+    margin:0;
+    padding:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+ins {
+    background-color:#ff9;
+    color:#000;
+    text-decoration:none;
+}
+mark {
+    background-color:#ff9;
+    color:#000;
+    font-style:italic;
+    font-weight:bold;
+}
+del {
+    text-decoration: line-through;
+}
+abbr[title], dfn[title] {
+    border-bottom:1px dotted;
+    cursor:help;
+}
+table {
+    border-collapse:collapse;
+    border-spacing:0;
+}
+hr {
+    display:block;
+    height:1px;
+    border:0;
+    border-top:1px solid #cccccc;
+    margin:1em 0;
+    padding:0;
+}
+input, select {
+    vertical-align:middle;
+}
+
+header{
+    background: #DADADA;
+    width: 100%;
+    height: 50px;
+}
+header a{
+    color: #000;
+}
+main{
+    max-width:750px;
+    margin: 10px auto 0;
+    clear: both;
+}
+section{
+    width: 100%;
+    margin: 0 auto;
+}
+footer{
+    background:#DADADA;
+    width: 100%;
+    position: absolute;
+    bottom:0;
+    text-align: center;
+    font-size: 11px;
+}
+footer p{
+    padding: 3px 5px;
+}
+aside{
+    width: 150px;
+    background:#017cc2;
+    color: #fff;
+}
+
+
+
+/*Secad*/
+.esquerda{
+    float: left;
+}
+.direita{
+    float: right;
+}
+
+
+.gov{
+    height: 50px;
+    width: 50px;
+    float: left;
+    background: #fff url("#{resource['img/brasao-tocantins.png']}") no-repeat center;
+    background-size: auto 45px;
+}
+.logo{
+    height: 50px;
+    width: 50px;
+    float: left;
+    background: #C0C0C0 url("#{resource['img/logo.png']}") no-repeat center;                                                                                                                     
+    background-size: auto 45px;
+/*caminho das imagens
+url("/ces/javax.faces.resource/img/brasao-tocantins.png.xhtml")
+ou
+url("#{resource['img/brasao-tocantins.png']}")
+*/
+}
+.sistema{
+    padding-top: 10px;
+    margin-left: 5px;
+    float: left;
+    font-family: calibri;
+}
+.sistema h1{
+    font-size: 20px;
+}
+.sistema h1 a{
+   color: #7D7D7D;
+   text-decoration: none;
+   display: block;
+}
+.sistema:hover h1 a{
+    color: #000;
+}
+.sistema h2{
+   color: #7D7D7D;
+}
+.sistema:hover h2{
+    color: #000;
+}
+.versao{
+font-weight:normal;
+font-size:50%;
+padding-left: 5px;
+}
+.perfil .ui-panel-content{
+    padding: 0 !important;
+}
+.perfil{
+    display: block;
+    height: 50px;
+    width: 150px;
+    right: 0;
+    background: #C0C0C0;
+    position: absolute;
+    font-size: 13px;
+    overflow: hidden;
+    transition:  all .5s;
+}
+.perfil:hover{
+    height: 200px;
+    box-shadow: 0 0 10px #000;
+    background:#f3f3f3;
+}
+.perfil:focus, .perfil:active{
+    background: #fd0;
+    color: #000;
+}
+.perfil li{
+    line-height: 17px;
+    padding-left: 7px;
+    list-style: none;
+
+}
+.perfil .sair a{
+    display: none;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 5px 7px;
+    color: #000;
+    text-decoration: none;
+    background: #017cc2;
+    color: #fff;
+}
+.perfil:hover .sair a{
+    display: block;
+}
+.sair a:hover{
+    background: #fd0;
+    color: #000;
+}
+.sair a:focus, .sair a:active{
+    background: #000;
+    color: #fff;
+}
+.perfil .avatar{
+    background: url("#{resource['img/perfil.png']}") no-repeat top;
+    background-size: 50px;
+    width: 50px;
+    height: 50px;
+    float: right;
+    transition:  all .3s;
+}
+.perfil:hover .avatar{
+    background: url("#{resource['img/perfil.png']}") no-repeat center;
+    background-size: 50px;
+}
+.perfil:focus .avatar,.perfil:active .avatar{
+    background: url("#{resource['img/perfil.png']}") no-repeat bottom;
+    background-size: 50px;
+}
+.funcao{
+    
+}
+@media only screen and (max-width:749px){
+
+main {
+width:100%;
+}
+}
+
+/*primefaces*/
+
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default{
+    background: #fff;
+    color: #017cc2;
+}
+.ui-state-hover,
+.ui-widget-content .ui-state-hover,
+.ui-widget-header .ui-state-hover,
+.ui-state-focus, .ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus{
+    background: #fff;
+}
+
+.ui-widget-header{
+    background: #fff;
+}
+
+ a.ui-commandlink{
+    padding: .4em 1em;
+    color: #fff;
+    text-decoration: none;
+    line-height: 1.4;
+    border: 1px outset buttonface;
+}
+.ui-button-text-only .ui-button-text, .ui-commandlink{
+    background: #017cc2;
+    color: #fff;
+}
+.ui-button-text-only .ui-button-text:hover, .ui-commandlink:hover{
+    background: #00796B;
+    color: #fff;
+}
+
+.ui-messages-error, .ui-message-error{
+    background: #D42828;
+    color:#fff;
+}
+
+.ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited{
+    color: #017cc2;
+}
+
+.ui-corner-all, .ui-corner-top{
+-moz-border-radius: 0;
+-webkit-border-radius: 0;
+border-radius: 0;
+}
+
+.ui-paginator .ui-paginator-page,
+.ui-paginator .ui-paginator-next,
+.ui-paginator .ui-paginator-last,
+.ui-paginator .ui-paginator-first,
+.ui-paginator .ui-paginator-prev{
+    color: #017cc2;
+}
+
+span{
+    vertical-align: middle;
+}
+
+
+.ui-radiobutton {
+    margin-right: 5px !important;
+    
+}
+.ui-selectoneradio label {
+margin-right: 15px;
+}
+
+.ui-state-default .ui-icon {
+background-image: url("/sispat-2014/javax.faces.resource/images/ui-icons_3d80b3_256x240.png.xhtml?ln=primefaces-cupertino");
+}

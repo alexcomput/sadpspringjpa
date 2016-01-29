@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formulario1_subreport1" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5b70caf0-8d06-4390-be23-2ed493057f1c">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="lista_membros" class="java.util.List"/>
+	<field name="membro" class="br.gov.to.secad.seg.domain.Membro"/>
+	<variable name="ITEM_COUNT" class="java.math.BigDecimal" calculation="Count">
+		<variableExpression><![CDATA[$V{ITEM_COUNT}.add(new BigDecimal(1))]]></variableExpression>
+		<initialValueExpression><![CDATA[new BigDecimal(0)]]></initialValueExpression>
+	</variable>
+	<detail>
+		<band height="46" splitType="Stretch">
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="24" y="0" width="464" height="46" uuid="b43ed46e-a726-4263-872b-d4a63d83b199"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA[$F{membro}.getMembroDataForm()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="24" height="46" uuid="ab5af588-dd26-4391-b57e-e87c4cd6204d"/>
+				<textFieldExpression><![CDATA[$V{ITEM_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

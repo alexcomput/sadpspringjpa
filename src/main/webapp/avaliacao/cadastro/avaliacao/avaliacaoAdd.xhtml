@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="/template/index.xhtml">
+        <f:metadata >
+            <f:viewParam name="idAvaliacao" value="#{avaliacaoController.idAvaliacao}" />  
+            <f:viewParam name="condicao" value="#{avaliacaoController.condicao}" />  
+            <f:viewAction action="#{avaliacaoController.init()}"/>  
+        </f:metadata>
+        <!--Substituir o Título padrão da Página-->
+        <ui:define name="titulo">
+            Importar Avaliações
+        </ui:define>
+        <!--Conteúdo da página-->
+        <ui:define name="conteudo"> 
+            <p:panel header="Habilitar para 2° via" >
+                <h:form id="form1">
+                    <p:messages showDetail="false" showSummary="true" autoUpdate="true" 
+                                closable="true" />
+                    <p:growl id="mensagem1" /> 
+                    <h:panelGrid    columns="2" id="grid2" >    
+                        <p:outputLabel for="idavaliaaco"  value="Código" />
+                        <p:inputText  disabled="true"  id="idavaliaaco" value="#{avaliacaoController.avaliacao.id}" label="Matrícula" /> 
+
+                        <p:outputLabel for="matricula"  value="Matrícula" />
+                        <p:inputText  disabled="true"  id="matricula" value="#{avaliacaoController.avaliacao.matricula}" /> 
+
+                        <p:outputLabel value="Nome" for="nome" />
+                        <p:inputText disabled="true" id="nome" value="#{avaliacaoController.avaliacao.nome}" />
+
+                        <p:outputLabel value="Etapa" for="etapa" />
+                        <p:inputText id="etapa" value="#{avaliacaoController.avaliacao.numeroav}" />
+
+                        <p:outputLabel value="Código Cargo" for="cdcargo" />
+                        <p:inputText id="cdcargo" value="#{avaliacaoController.avaliacao.cdcargo}" />
+
+                        <p:outputLabel value="Descrição cargo" for="dccargoefetivo" />
+                        <p:inputText id="dccargoefetivo" value="#{avaliacaoController.avaliacao.dccargoefetivo}" />
+
+                        <p:outputLabel  value="Descrição do órgão" for="orgaoSe" />
+                        <p:selectOneMenu required="true" filter="true" filterMatchMode="contains"   
+                                         converter="#{orgaoSetorConverter}"  value="#{avaliacaoController.orgaoSetor}" id="orgaoSe"  >
+                            <f:selectItem value="#{null}" noSelectionOption="true" itemLabel="Selecione um órgão" /> 
+                            <f:selectItems value="#{avaliacaoController.orgaoSetorList}" var="orgaoSeto"  itemLabel="#{orgaoSeto.dcorgao}" itemValue="#{orgaoSeto}"/> 
+                            <p:ajax event="change" listener="#{avaliacaoController.adicionarOrgao()}"  process="orgaoSe" update="grid2"  />
+                        </p:selectOneMenu>  
+                        <p:outputLabel value="Código unidade" for="uni" />
+                        <p:inputText id="uni" value="#{avaliacaoController.avaliacao.cdunidade}" />
+
+                        <p:outputLabel value="Localização Unidade" for="idlocali" />
+                        <p:inputText required="true"  id="idlocali" value="#{avaliacaoController.avaliacao.cdunidlocalizacaoatual}" />
+                        <p:outputLabel value="Via" for="via" />
+                        <p:inputText required="true"  id="via" value="#{avaliacaoController.avaliacao.via}" />
+
+                        <p:outputLabel value="Cenário " for="cena" />
+                        <p:inputText required="true"  id="cena"  title="Precisa está com o valor 1" value="#{avaliacaoController.avaliacao.cdcenario}" />
+
+                        <p:outputLabel value="Questionário" for="questio" />
+                        <p:inputText id="questio"  title="Precisa está preenchido" value="#{avaliacaoController.avaliacao.cdquestionario}" />
+
+                        <p:outputLabel  value="Período inicial" for="pinicial" />
+                        <p:calendar required="true" id="pinicial" locale="pt" value="#{avaliacaoController.avaliacao.periodoinicial}" />
+
+                        <p:outputLabel value="Período final" for="pfinal" />
+                        <p:calendar  required="true"  id="pfinal" locale="pt" value="#{avaliacaoController.avaliacao.periodofinal}" />
+
+                        <p:outputLabel value="Nota final" for="notafinal" />
+                        <p:inputText id="notafinal" value="#{avaliacaoController.avaliacao.notafinal}" />
+
+                    </h:panelGrid>
+                    <p:commandButton onclick="history.go(-1);
+                            return false;" value="Voltar" class=" icone2 voltar"  >  
+                    </p:commandButton>
+                    <p:commandButton id="b"  icon="" class="salvar icone2" action="#{avaliacaoController.salvar()}"   value="Salvar" update="form1" >
+                        <p:confirm header="Confirmação" message="Deseja realmente salvar?" /> 
+                    </p:commandButton> 
+                </h:form>                
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                    <p:commandButton value="Sim" type="button" icon="ui-icon-check" styleClass="ui-confirmdialog-yes"   />
+                    <p:commandButton value="Não" ignoreAutoUpdate="true" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+            </p:panel>
+        </ui:define>
+    </ui:composition>
+</html>

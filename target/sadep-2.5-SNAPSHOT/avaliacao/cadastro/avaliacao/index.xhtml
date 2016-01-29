@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="/template/index.xhtml">
+        <f:metadata >
+           <!-- <f:viewAction action="#{avaliacaoController.init()}"/> -->
+        </f:metadata>
+        <!--Substituir o Título padrão da Página-->
+        <ui:define name="titulo">
+            Importar Avaliações
+        </ui:define>
+        <!--Conteúdo da página-->
+        <ui:define name="conteudo"> 
+            <p:panel header="Gerar Segunda via" >
+                <h:form id="form1">
+                    <h:panelGrid    columns="5" id="grid2" >    
+                        <p:outputLabel for="matricula"  value="Matrícula" />
+                        <p:inputText id="matricula" value="#{avaliacaoController.matricula}" label="Matrícula" /> 
+                        <p:commandButton update=":form2" actionListener="#{avaliacaoController.buscarMatricula()}"  
+                                         icon="" title="Importar usuário!"  class="iconebt pesquisar"> 
+                        </p:commandButton> 
+                    </h:panelGrid>
+                </h:form>
+                <h:form id="form2"   >
+                    <p:growl id="mensagem1" />
+                    <p:panel header="Importação servidores para a Avaliação" id="pn1">
+
+
+
+                        <p:dataTable id="tbl1" value="#{avaliacaoController.listasAvaliacoes}"   
+                                     var="avaliacao"                                 
+                                     rowsPerPageTemplate="50,100,200"
+                                     emptyMessage="Nenhum registro encontrado."                                      
+                                     currentPageReportTemplate="Mostrando {startRecord}-{endRecord} de {totalRecords}"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"                                  
+                                     paginator="true" 
+                                     rows="50"                                                                             
+                                     >
+
+                            <p:column   headerText="NumFunc/NumVinc">
+                                <h:outputText value="#{avaliacao.matricula}" />
+                            </p:column>                        
+
+                            <p:column    headerText="Nome">
+                                <h:outputText value="#{avaliacao.nome}" />
+                            </p:column>  
+                            <p:column    headerText="Etapa">
+                                <h:outputText value="#{avaliacao.numeroav}" />
+                            </p:column>  
+                            <p:column    headerText="Cargo">
+                                <h:outputText value="#{avaliacao.dccargoefetivo}" />
+                            </p:column>  
+                            <p:column    headerText="Órgão">
+                                <h:outputText value="#{avaliacao.dcorgao}" />
+                            </p:column>  
+                            <p:column    headerText="Data Inic.">
+                                <p:calendar  disabled="true" locale="pt"  value="#{avaliacao.periodoinicial}" />                                
+                            </p:column>  
+                            <p:column    headerText="Órgão">
+                                <p:calendar disabled="true" locale="pt"  value="#{avaliacao.periodofinal}" />
+                            </p:column>   
+                            <p:column    headerText="#"> 
+                                <p:commandButton id="b"  icon="" class="iconebt adicionar"    action="#{avaliacaoController.adicionarAvali(avaliacao.id)}"  value="" title="Adicionar uma nova com base nessa selecionada" update=":form2" >
+
+                                </p:commandButton>  
+                                <br/>
+                                <p:commandButton id="b2"   icon="" class="iconebt editar"   action="#{avaliacaoController.atualizar(avaliacao.id)}"  value="" title="Atualizar" update=":form2" >
+
+                                </p:commandButton>  
+                            </p:column>  
+                        </p:dataTable>
+                        <p:commandButton onclick="history.go(-1);
+                                    return false;" value="Voltar" class=" icone2 voltar"  />
+                    </p:panel>
+                   
+                </h:form> 
+            </p:panel>
+        </ui:define>
+    </ui:composition>
+</html>

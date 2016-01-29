@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:stella="http://stella.caelum.com.br/faces2">
+
+    <ui:composition template="/template/index.xhtml">
+        <!--Substituir o Título padrão da Página-->
+        <ui:define name="titulo">
+            Login - Consulta Dados
+        </ui:define>
+        <ui:define name="menus">
+        </ui:define>
+        <ui:define name="perfil">
+        </ui:define>
+        <ui:define name="blocos">
+        </ui:define>
+        <ui:define name="conteudo">
+            <h:form prependId="false" id="form1">
+                <p:growl id="login_messages" /> 
+                <p:panel id="welcome"> 
+                    <h:panelGrid columns="2">
+                        <p:outputLabel value="CPF" for="userCpf" />
+                        <h:inputText id="userCpf" value="#{loginController.userCpf}" required="true" maxlength="11">
+                            <f:validateLength minimum="11" maximum="11" />
+                            <stella:validateCPF />
+                        </h:inputText>
+                        <p:outputLabel value="Senha" for="password" />
+                        <h:inputSecret id="password" required="true" maxlength="8" value="#{loginController.password}"/>
+                        <p:commandButton   update="form1"  value="Entrar" action="#{loginController.logar()}"  class="icone2 usuario"/>
+                        <p:commandButton oncomplete="PF('pbAjax').cancel();PF('entrar').enable();PF('modalPro').visibility = false"   value="Cancelar" class="icone2 excluir"  actionListener="#{progressBarView.cancel()}"/>
+                    </h:panelGrid>   
+
+                </p:panel>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

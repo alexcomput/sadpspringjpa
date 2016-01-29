@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+          http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+          http://www.springframework.org/schema/security
+          http://www.springframework.org/schema/security/spring-security.xsd
+">
+    <!--<security:debug />-->
+    <!--BANCO DE DADOS-->
+    <bean id="dataSourceAede" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="url" value="jdbc:postgresql://10.121.0.9:5433/bcoproducao"/> 
+        <property name="username" value="sadep_user"/>
+        <property name="password" value="sadep_user"/>
+        
+         <!--<property name="url" value="jdbc:postgresql://10.121.1.61:5433/bcoproducao"/> 
+         <property name="username" value="alex_santos"/>
+        <property name="password" value="alex_santos"/>-->
+    
+        <property name="driverClassName" value="org.postgresql.Driver"/>
+
+    </bean>
+    <bean id="dataSourceErgon" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="url" value="jdbc:oracle:thin:@10.121.0.10:1521:producao"/>
+        <property name="username" value="c_dti"/>
+        <property name="password" value="c_dti123"/>
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+
+    </bean>
+    <!--PostProcessor-->
+    <bean id="jtaPersistenceUnitPostProcessor1" class="br.gov.to.secad.seg.util.JtaPersistenceUnitPostProcessor">
+        <property name="jtaDataSource" ref="dataSourceAede" />
+    </bean>
+    <bean id="jtaPersistenceUnitPostProcessor2" class="br.gov.to.secad.seg.util.JtaPersistenceUnitPostProcessor">
+        <property name="jtaDataSource" ref="dataSourceErgon" />
+    </bean>
+    <bean id="entityManagerFactoryAede" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml" />
+        <property name="persistenceUnitName" value="segPU"/>
+        <property name="dataSource" ref="dataSourceAede" />
+        <property name="persistenceUnitPostProcessors">
+            <bean parent="jtaPersistenceUnitPostProcessor1"/>
+        </property>
+    </bean>
+    <!-- if no datasource is specified, use this one -->
+    <bean id="entityManagerFactoryErgon" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml" />
+        <property name="persistenceUnitName" value="ergonPU"/>
+        <property name="dataSource" ref="dataSourceErgon" />
+        <property name="persistenceUnitPostProcessors">
+            <bean parent="jtaPersistenceUnitPostProcessor2"/>
+        </property>
+    </bean>
+    <!--Gerente de Transações do BD-->
+    <bean id="transactionManagerAede" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactoryAede" />
+    </bean>
+    <!---->
+    <bean id="transactionManagerErgon" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactoryErgon" />
+    </bean>
+    <!--Componentes da Aplicação: Classes e Serviços-->
+    <context:component-scan base-package="br.gov.to.secad.seg" />
+    <!--Repositórios de Persistências(Spring-data-jpa)-->
+    <jpa:repositories base-package="br.gov.to.secad.seg.repository" entity-manager-factory-ref="entityManagerFactoryAede" transaction-manager-ref="transactionManagerAede"/>
+    <jpa:repositories base-package="br.gov.to.secad.seg.ergon.repository" entity-manager-factory-ref="entityManagerFactoryErgon" transaction-manager-ref="transactionManagerErgon" />
+    
+
+    <!--SPRING SECURITY-->
+    <!--fluxo das páginas-->
+    <security:http auto-config="true" use-expressions="true"  >
+        <security:intercept-url pattern="/login.xhtml" access="!isAuthenticated()" />
+        <security:intercept-url pattern="/404.xhtml" access="permitAll" />
+        <security:intercept-url pattern="/admin/cadastro/privusuario/*" access="hasAnyRole('Administrativo SECAD','Administrador')"/>
+        <security:intercept-url pattern="/admin/**" access="hasAnyRole('Administrador')"/>
+        <security:intercept-url pattern="/index.xhtml" access="hasAnyRole('Avaliador','Administrativo SECAD', 'RH Setor','Gestor Orgao', 'Gestor Central', 'Administrador')"/>        
+        <security:intercept-url pattern="/template/**" access="hasAnyRole('Avaliador','Administrativo SECAD', 'RH Setor','Gestor Orgao', 'Gestor Central', 'Administrador')"/>        
+        <security:intercept-url  pattern="/avaliacao/cadastro/avaliacao/**" access="hasAnyRole('Gestor Central','Administrador')"/>          
+        <security:intercept-url pattern="/avaliacao/**" access="hasAnyRole('Comissão de revisão','Gestor Orgao','Administrativo SECAD', 'RH Setor', 'Gestor Central', 'Administrador')"/>                        
+        <security:form-login login-page="/login.xhtml" default-target-url="/index.htm" 
+                             always-use-default-target="true" authentication-failure-url="/semPermissao.xhtml" /> 
+        
+        <security:access-denied-handler error-page="/semPermissao.xhtml" />
+        <!--gerenciador de sessão-->
+        <security:session-management invalid-session-url="/sessaoExpirada.xhtml" >
+            <!-- Permite o usuário logar apenas 1 vez no sistema com o mesmo LOGIN-->
+            <security:concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />  
+        </security:session-management> 
+            
+        
+    </security:http>
+    <!--informações do BD-->
+    <security:authentication-manager  alias="authenticationManager">
+        <security:authentication-provider user-service-ref="usuarioService"  />  
+    </security:authentication-manager>
+    <!--INFORMANDO EL PARA SECURITY NOS MÉTODOS-->
+    <security:global-method-security pre-post-annotations="enabled"/>
+    <!--Informações para geração de relatório JASPERREPORTS
+    <import resource="ireport-view.xml" />
+    <bean id="pdfResolver" class="org.springframework.web.servlet.view.XmlViewResolver">
+        <property name="location" value="classpath:ireport-view.xml" />
+        <property name="order" value="0" />
+    </bean>-->
+</beans>

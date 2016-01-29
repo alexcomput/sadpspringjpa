@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="avaliacao" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0076398c-5323-4282-9072-0b0be42e61f3">
+	<property name="ireport.zoom" value="1.4641000000000013"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="New Dataset 1" uuid="08d27db8-8b35-4566-b690-72b7d30f55c0">
+		<field name="nome" class="java.lang.String">
+			<fieldDescription><![CDATA[Nome do Sistema]]></fieldDescription>
+		</field>
+		<field name="id" class="java.lang.Integer"/>
+		<field name="validade_inicial" class="java.sql.Date"/>
+		<field name="validade_final" class="java.sql.Date"/>
+		<field name="ativo" class="java.lang.Boolean"/>
+		<field name="grupo_fator" class="java.lang.Integer"/>
+		<field name="ordem" class="java.lang.Integer"/>
+		<field name="id_avaliacao" class="java.lang.Integer"/>
+		<field name="datacadastro" class="java.sql.Timestamp"/>
+		<group name="id">
+			<groupExpression><![CDATA[$F{id}]]></groupExpression>
+		</group>
+		<group name="nome">
+			<groupExpression><![CDATA[$F{nome}]]></groupExpression>
+		</group>
+		<group name="validade_inicial">
+			<groupExpression><![CDATA[$F{validade_inicial}]]></groupExpression>
+		</group>
+		<group name="validade_final">
+			<groupExpression><![CDATA[$F{validade_final}]]></groupExpression>
+		</group>
+	</subDataset>
+	<parameter name="idavaliacao" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/appfiles/report/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT (SELECT AVG(nota) FROM aede.tabulacao as ta WHERE ta.avaliacao = $P!{idavaliacao}) as media,f.nome as formulario,a.id,a.nome_servidor, a.cargo, a.quadro,a.orgao,a.setor,a.regional, a.num_func, a.num_vinc, a.nota,a.etapa,a.dt_ini_etapa,dt_fim_etapa 
+FROM aede.avaliacao AS a , aede.formulario f 
+WHERE a.status = 'TABULADA' 
+      AND a.id= $P!{idavaliacao}
+      AND a.formulario= f.id]]>
+	</queryString>
+	<field name="media" class="java.math.BigDecimal"/>
+	<field name="formulario" class="java.lang.String"/>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="nome_servidor" class="java.lang.String"/>
+	<field name="cargo" class="java.lang.String"/>
+	<field name="quadro" class="java.lang.String"/>
+	<field name="orgao" class="java.lang.String"/>
+	<field name="setor" class="java.lang.String"/>
+	<field name="regional" class="java.lang.String"/>
+	<field name="num_func" class="java.lang.Integer"/>
+	<field name="num_vinc" class="java.lang.Integer"/>
+	<field name="nota" class="java.math.BigDecimal"/>
+	<field name="etapa" class="java.lang.Integer"/>
+	<field name="dt_ini_etapa" class="java.sql.Date"/>
+	<field name="dt_fim_etapa" class="java.sql.Date"/>
+	<detail>
+		<band height="597">
+			<rectangle>
+				<reportElement mode="Transparent" x="1" y="293" width="547" height="240" uuid="fe999b40-19e4-48fc-927b-16945685b591"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="1" y="533" width="547" height="42" uuid="57cca553-f1eb-4cb6-843d-c95f6cc13e71"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[   Data da notificação:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="239" y="533" width="112" height="20" uuid="9e39bbd4-b6a0-452b-acb4-f1f810aa46fa"/>
+				<textElement verticalAlignment="Bottom"/>
+				<text><![CDATA[Nome Servidor:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="552" width="100" height="20" uuid="345694b9-7a5e-4af1-8f00-0cce93db320b"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[___/___/_____]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="321" width="154" height="20" uuid="cf31c46d-a09e-42d3-b95e-cc1a2a6586cd"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Senhor(a) Servidor(a):]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="341" width="541" height="66" uuid="e8da2d55-c96f-413c-942a-8ae16791c59a"/>
+				<textElement textAlignment="Justified">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[     Em cumprimento ao Decreto _______________, de __________ de _________ de 2005, vimos por meio deste informa-lo(a) do resultado de sua Avaliação Especial de desempenho, correspondente a ___  etapa, interstício avaliatório de __/__/____ a __/__/____, no qual vossa senhoria  teve seu desempenho avaliado.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="428" width="363" height="20" uuid="12cb23bd-7893-4b6c-8326-e084630172d9"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Média final obtida:_______.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="462" width="441" height="20" uuid="2bdd95fe-2559-451f-9988-2ae2fce34d92"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[________________________ --____,____ de _______________200__]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="503" width="441" height="20" uuid="ac1a4426-1860-4ef9-b53a-f3928de8bb73"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Ass: e carimbo membros da Comissão de Avaliação:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="234" y="533" width="2" height="42" uuid="e4e0b562-a337-4db1-aec8-9f7018b58ea6"/>
+			</line>
+			<textField>
+				<reportElement x="110" y="367" width="59" height="20" uuid="d68cad58-5250-4288-8ae0-e478e19d633a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{etapa}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="140" y="422" width="100" height="20" uuid="b685d167-7cc2-4871-9b10-fa2c1a52e76c"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{media}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="100" uuid="6d137264-ae77-4e9f-9103-e7993688f36c"/>
+				<subreportParameter name="idavaliacao">
+					<subreportParameterExpression><![CDATA[$P{idavaliacao}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "notficacao_Cabecalho.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

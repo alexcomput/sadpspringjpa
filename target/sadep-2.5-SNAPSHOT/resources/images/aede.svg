@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="120.65mm" height="120.65mm" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 12065 12065"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <!-- Created by: Treedbox, treedbox.com.br -->
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .fil0 {fill:none}
+    .fil1 {fill:#00796B}
+    .fil2 {fill:#FFC107}
+    .fil3 {fill:#00796B}
+   ]]>
+  </style>
+ </defs>
+ <g id="geo">
+  <g id="_593604688">
+   <rect class="fil0" transform="matrix(2.64845E-014 -1 1 2.64845E-014 0.00046514 12065)" width="12065" height="12065"/>
+   <g>
+    <path class="fil1" d="M6832 3038l374 834 868 201 -250 880 536 711 -757 513 -47 889 -910 -93 -607 651 -637 -657 -884 109 -66 -912 -747 -485 536 -742 -260 -851 887 -224 348 -819 823 399 793 -404zm-229 637c876,316 1330,1282 1014,2157 -316,876 -1281,1330 -2157,1015 -876,-316 -1330,-1282 -1015,-2158 316,-876 1282,-1330 2158,-1014z"/>
+    <circle class="fil2" cx="6055" cy="5265" r="1457"/>
+    <polygon class="fil3" points="5348,7113 5348,7857 6030,7508 6762,7857 6762,7120 7168,7148 7168,9027 6016,8478 4943,9027 4943,7146 "/>
+   </g>
+  </g>
+ </g>
+</svg>

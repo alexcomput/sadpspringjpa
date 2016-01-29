@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="/template/index.xhtml">
+        <f:metadata>
+            <f:viewAction action="#{formularioController.init()}" /> 
+        </f:metadata>
+        <!--Substituir o Título padrão da Página-->
+        <ui:define name="titulo">
+            Cadastro de Formulários
+        </ui:define>
+        <!--Conteúdo da página-->
+        <ui:define name="conteudo">
+
+            <p:panel id="formulario_pnl" header="Cadastro de Formulários" >
+                <h:form id="formulario_form1">
+
+                    <p:growl id="formulario_messages"/>
+                    <f:facet  name="header"> 
+                        <h:outputText value="Cadastro de Fomulário "/>
+                    </f:facet>
+                    <h:panelGrid    columns="2"    >                        
+                        <p:outputLabel for="quadro" title="quadro" value="Quadro:"/>                                                                                 
+                        <p:selectOneMenu required="true" filter="true" filterMatchMode="contains"  id="quadro" value="#{formularioController.quadro}">
+                            <f:selectItem  itemValue="" noSelectionOption="true" itemLabel="Selecione um quadro..."/>
+                            <f:selectItems value="#{formularioController.listaQuadroProfissional}" var="quadroProfissional" itemLabel="#{quadroProfissional.sigla}" itemValue="#{quadroProfissional}"/>
+                            <p:ajax update=":formulario_form2 formulario_form1 "  listener="#{formularioController.mudaControlador1()}" />
+                        </p:selectOneMenu> 
+                        <p:outputLabel for="ocupantes" title="Ocupantes" value="Ocupantes do Formulário:"/>    
+                        <p:inputText id="ocupantes" placeholder="Ocupantes:" value="#{formularioController.formulario.ocupantes}" required="true"/>                            
+
+                        <p:outputLabel for="nome" title="nome" value="Nome do Formulário:" />    
+                        <p:inputText id="nome"  value="#{formularioController.formulario.nome}" placeholder="Nome:" required="true"/>                            
+                    </h:panelGrid>
+                    <h:panelGrid columns="2" >
+                        <p:outputLabel for="validadeInicial" title="validadeInicial" value="Data de início/Fim:"/>                        
+
+                        <p:calendar placeholder="Data Inicial" id="validadeInicial" locale="pt"   value="#{formularioController.formulario.validadeInicial}" size="10" required="true" requiredMessage="Validade Inicial é necessária" pattern="dd/MM/yyyy" navigator="true" mask="true"/>
+
+                       <!--  <p:calendar placeholder="Data Final" id="validadeFinal" locale="pt"  value="#{formularioController.formulario.validadeFinal}" size="10" required="false" requiredMessage="Validade final é necessária" pattern="dd/MM/yyyy" navigator="true" mask="true"/>
+                        -->
+                        <p:outputLabel for="desativar" title="desativar" value="Situação:"/>     
+
+                        <p:selectOneMenu id="desativar"   value="#{formularioController.formulario.ativo}">
+                            <f:selectItem itemValue="true" itemLabel="Ativado" />
+                            <f:selectItem itemValue="false" itemLabel="Desativado"/>
+                        </p:selectOneMenu>
+
+                        <!-- <p:selectBooleanButton id="desativar" offLabel="Desativado" onLabel="Ativado" value="#{formularioController.formulario.ativo}" />
+                        -->
+                    </h:panelGrid>
+                    <p:commandButton onclick="history.go(-1);
+                            return false;" value="Voltar" class=" icone2 voltar" />
+                    <p:commandButton value="Salvar" update=":formulario_form1 :formulario_form2 :formulario_form1:formulario_messages" disabled="#{!formularioController.controlador1}" action="#{formularioController.adicionarListaPrevia()}" class="icone2 salvar" >
+                        <p:confirm header="Confirmação" message="Deseja realmente salvar?"  icon="ui-icon-alert"  />
+
+                    </p:commandButton>
+
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="Não" ignoreAutoUpdate="true" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
+
+
+
+                </h:form>
+                <p:separator />
+                <h:form id="formulario_form2" >
+                    <p:growl id="msg_form2" />
+                    <p:panel  >       
+                        <p:dataTable emptyMessage="Nenhum registro cadastrado!" id="formulario_dataTable" var="formulario" value="#{formularioController.listaPreviaFormulario}"  
+                                     rows="10" 
+                                     paginator="true"
+                                     editable="true"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" >
+
+                            <p:ajax event="rowEdit" listener="#{formularioController.onEdit}" update=":formulario_form2:formulario_dataTable" />  
+                            <p:ajax event="rowEditCancel" listener="#{formularioController.onCancel}" update=":formulario_form2:formulario_dataTable" />
+                            <p:column >
+                                <h:outputText value="#{formulario.id}" />
+                            </p:column>
+                            <p:column headerText="Formulário">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{formulario.nome}" />
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText value="#{formulario.nome}" />
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column headerText="Quadro">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{formulario.quadro}" />
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:selectOneMenu value="#{formulario.quadro}">
+                                            <f:selectItem itemValue="" noSelectionOption="true" itemLabel="Selecione um quadro..."/>
+                                            <f:selectItems value="#{formularioController.listaQuadroProfissional}" var="quadroProfissional" itemLabel="#{quadroProfissional.sigla}" itemValue="#{quadroProfissional}" />
+                                        </p:selectOneMenu>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column headerText="Validade Inicial">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{formulario.validadeInicial}" >
+                                            <f:convertDateTime pattern="dd-MM-yyyy" />
+                                        </h:outputText>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:calendar locale="pt"  value="#{formulario.validadeInicial}" size="10" navigator="true" pattern="dd/MM/yyyy" mask="true"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column headerText="Validade Final">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{formulario.validadeFinal}">
+                                            <f:convertDateTime pattern="dd-MM-yyyy" />
+                                        </h:outputText>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:calendar locale="pt"  value="#{formulario.validadeFinal}" size="10" navigator="true" pattern="dd/MM/yyyy" mask="true"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column headerText="Ativo">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="Sim" rendered="#{formulario.ativo}" />
+                                        <h:outputText value="Não" rendered="#{not formulario.ativo}" />
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:selectOneMenu value="#{formulario.ativo}">
+                                            <f:selectItem itemValue="true" itemLabel="Sim" />
+                                            <f:selectItem itemValue="false" itemLabel="Não"/>
+                                        </p:selectOneMenu>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column id="testeColumn" styleClass="width: 11%">
+                                <p:rowEditor id="editorLinha" />
+                                <p:commandButton actionListener="#{formularioController.removerListaFormulario(formulario)}" update=":formulario_form2" icon="" class="iconebt lixeira">
+                                    <p:confirm header="Confirmação" message="Deseja realmente excluir?" icon="ui-icon-alert" />
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable> 
+
+                    </p:panel>
+
+                </h:form>  
+            </p:panel> 
+        </ui:define>
+    </ui:composition>
+</html>

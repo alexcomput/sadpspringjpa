@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/index.xhtml" 
+                xmlns="http://www.w3.org/1999/xhtml"   
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:stella="http://stella.caelum.com.br/faces2">
+    <f:metadata >
+        <f:viewParam name="idComissaoRevisao" value="#{comissaoRevisaoController.idComissaoRevisao}" />
+        <f:viewAction action="#{comissaoRevisaoController.init()}"/>
+    </f:metadata>
+    <ui:define name="titulo">
+        Criação de Comissão de Revisão
+    </ui:define>
+    <ui:define name="conteudo"> 
+        <f:facet  name="header"> 
+            <h:outputText value="Criação de Comissão de Revisão"/>
+        </f:facet> 
+        <h:form id="form1" target="_blank" >
+            <p:panel header="Criar Comissão de Revisão" id="pan1">
+                <p:growl id="comissao_messages"  />
+                <p:wizard backLabel="Anterior" nextLabel="Próximo" flowListener="#{comissaoRevisaoController.fluxoWizard}" id="comissaoRevisaoWizard">
+                    <p:tab title="Dados da Publicação" id="dadosPublicacao" >
+                        <p:messages />
+                        <h:panelGrid columns="2"  id="comissaorevisao__grid" > 
+                            <p:outputLabel for="orgaoList" title="perfil" value="Órgão:   "/>                                 
+                            <p:selectOneMenu  required="true"  requiredMessage="Selecione um Órgão!"  filter="true" filterMatchMode="contains" 
+                                              id="orgaoList" value="#{comissaoRevisaoController.orgao}" converter="#{orgaoConverter}" >
+                                <f:selectItem  noSelectionOption="true" itemLabel="Selecione um Órgão..."/>
+                                <f:selectItems   value="#{comissaoRevisaoController.listaOrgao}" var="orgaop" itemLabel="#{orgaop.id} - #{orgaop.nome}"  itemValue="#{orgaop}" />    
+                                <p:ajax listener="#{comissaoRevisaoController.verificarOrgaoComissao()}" update="pan1" />
+                            </p:selectOneMenu>    
+                            <p:outputLabel value="Descrição" for="txtDescricao" />
+                            <p:inputText id="txtDescricao" value="#{comissaoRevisaoController.comissaoRevisao.descricao}" title="Descrição da comissão" label="DESCRICAO" required="true" />
+
+                            <p:outputLabel value="Publicação" for="txtPublicacao" />
+                            <p:inputText id="txtPublicacao" type="number" title="publicação" value="#{comissaoRevisaoController.comissaoRevisao.publicacao}" label="PUBLICACAO" required="true" />
+
+                            <p:outputLabel value="Data de Publicação" for="dtPublicacao" />
+                            <p:calendar id="dtPublicacao" locale="pt" title="Data da publicação" value="#{comissaoRevisaoController.comissaoRevisao.dtPublicacao}" size="10" navigator="true" pattern="dd/MM/yyyy" mask="true"/>
+
+                            <p:outputLabel value="Diario Oficial" for="txtDiarioOficial" />
+                            <p:inputText id="txtDiarioOficial"  title="Diário oficioal" value="#{comissaoRevisaoController.comissaoRevisao.diarioOficial}" label="DIARIO OFICIAL" required="true" />
+
+                            <p:outputLabel value="Data de Pub do Diário Oficial" for="dtDiarioOficial" />
+                            <p:calendar id="dtDiarioOficial" locale="pt"  title="Data da publicação do diário oficial" value="#{comissaoRevisaoController.comissaoRevisao.dtDiarioOficial}" size="10" navigator="true" pattern="dd/MM/yyyy" mask="true"/>
+
+                            <p:outputLabel value="Data Inicial" for="dtInicial" />
+                            <p:calendar id="dtInicial" locale="pt"  title="Data de inicio da comissão" value="#{comissaoRevisaoController.comissaoRevisao.dtInicial}" size="10" navigator="true" pattern="dd/MM/yyyy" mask="true"/>
+                        </h:panelGrid>
+
+                        <p:panel header="Membro da comissão" id="membro_comissao_panel" >    
+                            <p:panelGrid columns="3" >
+                                <p:outputLabel for="cpf" value="CPF:" />
+                                <p:inputText id="cpf" value="#{comissaoRevisaoController.cpfdoMembroComissaoDeRevisao}" maxlength="11" size="20"    />
+                                  <!-- <p:inputMask id="cpf" mask="999.999.999-99" value="#{comissaoRevisaoController.cpfdoMembroComissaoDeRevisao}" size="20" maxlength="15"/> -->
+
+                                <p:commandButton   value="Buscar" id="buscar" actionListener="#{comissaoRevisaoController.consultaMembroComissaoRevisao()}" 
+                                                   styleClass="ui-priority-primary" update="membro_comissao_panel, comissao_messages" class="icone2 pesquisar" />
+                            </p:panelGrid>
+                            <p:panelGrid columns="4"  >
+                                <p:outputLabel for="nome_membro_comissao" value="Nome:" />
+                                <p:outputLabel id="nome_membro_comissao" value="#{comissaoRevisaoController.membroComissaoRevisao.nome}" />
+
+                                <p:outputLabel for="orgao_id" value="Orgão:" />
+                                <p:outputLabel id="orgao_id" value="#{comissaoRevisaoController.membroComissaoRevisao.siglaOrgao}" />  
+
+                                <p:outputLabel for="setor_id" value="Setor:" />
+                                <p:outputLabel id="setor_id" value="#{comissaoRevisaoController.membroComissaoRevisao.setor}"/>
+
+                                <p:outputLabel for="cargo_id" value="Cargo:" />
+                                <p:outputLabel id="cargo_id" value="#{comissaoRevisaoController.membroComissaoRevisao.nomeCargo}" />
+
+                                <p:outputLabel for="num_func" value="Matrícula:" />
+                                <p:outputLabel id="num_func" value="#{comissaoRevisaoController.membroComissaoRevisao.numFunc}/#{comissaoRevisaoController.membroComissaoRevisao.numVinc}"/>
+
+                            </p:panelGrid>    
+                            <p:panelGrid columns="2" >
+                                <p:outputLabel for="ckbPresidente" value="Presidente da Comissão?:" />
+                                <p:selectBooleanCheckbox id="ckbPresidente" value="#{comissaoRevisaoController.membroComissaoRevisao.presidenteDaComissao}">
+                                    <p:ajax listener="#{comissaoRevisaoController.destivarSuplente}" update="membro_comissao_panel" />
+                                </p:selectBooleanCheckbox>
+
+                                <p:outputLabel for="ckbSuplente" value="Suplente?:" />
+                                <p:selectBooleanCheckbox  id="ckbSuplente" value="#{comissaoRevisaoController.membroComissaoRevisao.suplente}">
+                                    <p:ajax listener="#{comissaoRevisaoController.destivarPresidente()}" update="membro_comissao_panel" />
+                                </p:selectBooleanCheckbox>
+                            </p:panelGrid>
+                            <p:commandButton value="Adicionar" id="adicionarMembroComissaoRevisao"  actionListener="#{comissaoRevisaoController.incluirMembroComissaoRevisao()}" 
+                                             update="lista_membros_comissao, membro_comissao_panel, comissao_messages" class="icone2 adicionar" />
+                            <p:dataTable  id="lista_membros_comissao" var="membroComissaoRevisao" scrollable="true" scrollHeight="150" 
+                                          value="#{comissaoRevisaoController.listaMembroComissaoDeRevisao}" emptyMessage="Não há registros." 
+                                          rowKey="#{membroComissaoRevisao.id}" rows="10" 
+                                          paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} 
+                                          {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" >
+                                <f:facet name="header">
+                                    Lista de Membros da Comissão de Revisão
+                                </f:facet> 
+
+                                <p:column headerText="Matrícula" width="110">
+                                    #{membroComissaoRevisao.numFunc}-#{membroComissaoRevisao.numVinc}
+                                </p:column>
+                                <p:column headerText="Servidor">
+                                    #{membroComissaoRevisao.nome}
+                                </p:column>
+                                <p:column headerText="Orgão">
+                                    #{membroComissaoRevisao.siglaOrgao}
+                                </p:column>                            
+                                <p:column headerText="Setor">
+                                    #{membroComissaoRevisao.setor}
+                                </p:column>
+                               
+                                <p:column headerText="#">  
+                                    <p:commandButton  icon=""  actionListener="#{comissaoRevisaoController.removerListaMembroComissao(membroComissaoRevisao)}" 
+                                                      update="lista_membros_comissao"   class="iconebt lixeira">
+                                        <p:confirm header="Confirmação" message="Deseja realmente remover Membro?" /> 
+                                    </p:commandButton>
+                                </p:column>
+                            </p:dataTable> 
+                        </p:panel>
+                    </p:tab>
+                    <p:tab title="Confirmar Comissão de Revisão" id="confirmacao">
+                        <p:messages />
+                        <p:dataTable  id="listaMembrosComissaoRevisao" var="membroComissaoRevisao"
+                                      value="#{comissaoRevisaoController.listaMembroComissaoDeRevisao}" 
+                                      rows="3" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" >
+                            <f:facet name="header">
+                                Lista de Membros da Comissão #{comissaoRevisaoController.listaMembroComissaoDeRevisao.size()}
+                            </f:facet> 
+
+                            <p:column headerText="Servidor">
+                                #{membroComissaoRevisao.nome}
+                            </p:column>
+                            <p:column headerText="Cargo">
+                                #{membroComissaoRevisao.nomeCargo}
+                            </p:column>
+                            <p:column headerText="Presidente">
+                                <h:outputText rendered="#{membroComissaoRevisao.presidenteDaComissao == true}" value="SIM" />
+                                <h:outputText rendered="#{membroComissaoRevisao.presidenteDaComissao == false}" value="NÃO" />
+                            </p:column>
+                        </p:dataTable>
+                        <p:panelGrid columns="3" > 
+                            <p:commandButton disabled="#{comissaoRevisaoController.confirmaComissaoDeRevisao}" immediate="true" update="outra_btn, outra_btn2, @this"
+                                             id="confirmar_btn" value="Confirmar" actionListener="#{comissaoRevisaoController.salvarComissao}" class="icone2 visto" >
+                            </p:commandButton>
+                            <p:button rendered="#{comissaoRevisaoController.editarComissaoDeRevisao == false}" outcome="comissaorevisao.xhtml" disabled="#{comissaoRevisaoController.confirmaComissaoDeRevisao == false}" 
+                                      value="Criar outra Comissão de Revisão" id="outra_btn" class="icone2 adicionar"/>
+
+                            <p:button rendered="#{comissaoRevisaoController.editarComissaoDeRevisao == true}" outcome="index.xhtml" disabled="#{comissaoRevisaoController.confirmaComissaoDeRevisao == false}"
+                                      value="Editar outra Comissão de Revisão" id="outra_btn2"/>
+                        </p:panelGrid>
+
+                    </p:tab>
+                </p:wizard>
+
+            </p:panel>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                <p:commandButton value="Sim" type="button" icon="ui-icon-check" styleClass="ui-confirmdialog-yes"   />
+                <p:commandButton  value="Não" ignoreAutoUpdate="true" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>
+        </h:form>
+    </ui:define>
+</ui:composition>

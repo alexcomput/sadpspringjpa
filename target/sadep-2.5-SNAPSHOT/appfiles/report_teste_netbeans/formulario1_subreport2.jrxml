@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formulario1_subreport2" language="groovy" pageWidth="555" pageHeight="802" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="9561c955-b96f-4526-bbb5-871f5626cde7">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="membro" class="br.gov.to.secad.seg.domain.Membro"/>
+	<field name="chefe" class="java.lang.Boolean"/>
+	<detail>
+		<band height="57" splitType="Stretch">
+			<printWhenExpression><![CDATA[new Boolean($F{chefe})]]></printWhenExpression>
+			<rectangle>
+				<reportElement x="0" y="28" width="555" height="28" uuid="4fd15108-9050-40e5-9351-2624af0aa406"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="28" uuid="dde3d098-826d-4477-9d55-eec519f44a92"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="2" y="28" width="553" height="15" uuid="768a665b-50db-435a-af5d-30d479176119"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CARGO DA CHEFIA IMEDIATA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="0" width="553" height="15" uuid="c85efb9d-9c4e-4293-8244-96da317d8c2c"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOME DA CHEFIA IMEDIATA:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="2" y="11" width="553" height="20" uuid="ecc23984-34b2-49a0-8356-860243cb69c9"/>
+				<textFieldExpression><![CDATA[$F{membro}.getNome()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="38" width="553" height="18" uuid="d6dbbf24-4123-4803-a158-bd68a9b2760b"/>
+				<textFieldExpression><![CDATA[$F{membro}.getNome_cargo()]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

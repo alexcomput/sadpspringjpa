@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core" >
+    <ui:composition template="/template/index.xhtml">
+        <f:metadata>
+            <f:viewAction action="#{fatorController.init()}" /> 
+        </f:metadata>
+        <!--Substituir o Título padrão da Página-->
+        <ui:define name="titulo">
+            Cadastro de Fatores
+        </ui:define>
+        <!--Conteúdo da página-->                
+        <ui:define name="conteudo">
+            <p:panel header="Cadastro de Fator " id="pn1">
+                <f:facet  name="header"> 
+                    <h:outputText value=" Cadastro de Fator"/>
+                </f:facet> 
+                <!--form com o objetivo de adicionar instâncias na listaPreviaFator (verificar adicionarListaPrevia() em FatorController)-->
+                <h:form id="form1"     >      
+                    <!--componente com o objetivo de organizar visualmente a página-->
+                    <!--componente com o objetivo de mostrar as mensagens de retorno para esse formulário-->
+                    <p:growl id="fator_messages" /> 
+
+                    <!-- Componentes ainda não está funcionando devido a atualização
+                    dos componentes abaixos 
+                    <ex:CQuadroGeral  valor="true"  />                         
+                    <ex:CFormulario valor="true"  />                                     
+                    -->
+                    <p:panelGrid   columns="2" id="fator_quadro_grid"  > 
+                        <p:outputLabel for="quadro" title="Quadro" value="Quadro:  "/>
+                        <!--select para o quadro profissional aqui é setado o valor do atributo nomeQuadro-->
+                        <p:selectOneMenu  filter="true" filterMatchMode="contains"  value="#{fatorController.nomeQuadro}" id="quadro"  >
+                            <!--opção nula: padrão para forçar o usuário a selecionar outro valor válido-->
+                            <f:selectItem itemValue="#{null}" noSelectionOption="true" itemLabel="Selecione um quadro..."/>
+                            <!--aqui o jsf se encarrega de criar uma lista de opções para o usuário através da listaQuadro-->
+                            <f:selectItems value="#{fatorController.listaQuadro}" var="quadro" itemLabel="#{quadro.sigla}" itemValue="#{quadro}"/>
+                            <!--aqui é definida uma chamada ao método mudaControlador1 quando o usuário selecionar uma opção do select de quadro.
+                            O retorno é aplicado em uma ação ajax. -->
+                            <p:ajax update="form1 :form2 :form3"  listener="#{fatorController.mudaControlador1()}"  process="quadro" />
+                        </p:selectOneMenu> 
+
+                        <p:outputLabel   for="listFormulario" title="Formulario" value="Formulário:  "  rendered="#{fatorController.controlador1}" />
+                        <!--select para o formulário aqui é setado o valor do atributo nomeFormulario. Para ser visualizado 
+                        o valor do atributo controlador1 deve ser igual a true.-->
+                        <p:selectOneMenu filter="true" filterMatchMode="contains"  id="listFormulario" value="#{fatorController.idFormulario}" rendered="#{fatorController.controlador1}" >
+                            <!--opção nula: padrão para forçar o usuário a selecionar outro valor válido-->
+                            <f:selectItem itemValue="#{null}" noSelectionOption="true" itemLabel="Selecione um formulário..."/>
+                            <!--aqui o jsf se encarrega de criar uma lista de opções para o usuário através da listaFormulario-->
+                            <f:selectItems value="#{fatorController.listaFormulario}" var="formulario" itemLabel="#{formulario.nome}" itemValue="#{formulario.id}"/>
+                            <!--aqui é definida uma chamada ao método mudaControlador2 quando o usuário selecionar uma opção do select de quadro.
+                            O retorno é aplicado em uma ação ajax. 
+                            -->
+                            <p:ajax update="form1 :form2 :form3" listener="#{fatorController.mudaControlador2()}" event="change" />
+
+                        </p:selectOneMenu>
+                        <p:outputLabel    for="grupoFator" title="Grupo Fator" value="Grupo Fator:  "    />
+                        <!--select para o grupo de fator aqui é setado o valor do atributo nomeGrupoFator. Para ser visualizado 
+                        o valor do atributo controlador2 deve ser igual a true.-->
+                        <p:selectOneMenu filter="true" filterMatchMode="contains"   id="grupoFator" value="#{fatorController.idGrupoFator}"  >
+                            <!--opção nula: padrão para forçar o usuário a selecionar outro valor válido-->
+                            <f:selectItem itemValue="#{null}" noSelectionOption="true" itemLabel="Selecione um grupo..."/>
+                            <!--aqui o jsf se encarrega de criar uma lista de opções para o usuário através da listaGrupo-->
+                            <f:selectItems  value="#{fatorController.listaGrupo}" var="grupo" itemLabel="#{grupo.nome}" itemValue="#{grupo.id}"/>
+                            <!--aqui é definida uma chamada ao método mudaControlador2 quando o usuário selecionar uma opção do select de quadro.
+                            O retorno é aplicado em uma ação ajax.-->
+                            <p:ajax update="form1 :form2 :form3" listener="#{fatorController.mudaControlador3()}" event="change" />
+                        </p:selectOneMenu>
+
+                    </p:panelGrid> 
+                    <p:separator />
+                </h:form>
+                <h:form  id="form2"  >
+                    <!--inicio da tabela de inputs do cadastro. Esse elemento só será exibido se o atributo controlador3 estiver com 
+                    valor igual a true
+                    <h:panelGrid    id="fator_cadastra_grid" columns="2"   >
+                        <p:outputLabel  for="livre" title="livre" value="Livre    "/>                           
+                         <p:selectOneMenu disabled="#{!fatorController.controlador3}" required="true" id="livre" value="#{fatorController.fator.livre}">
+                            <f:selectItem itemLabel="Sim" itemValue="true" />
+                            <f:selectItem itemLabel="Não" itemValue="false" />                            
+                            <p:ajax event="change" update="form2" listener="#{fatorController.mudaControlador4()}" />
+                        </p:selectOneMenu>
+                    </h:panelGrid>--> 
+                    <h:panelGrid columns="3" >
+                        <p:outputLabel  rendered="#{fatorController.controlador1}"  for="nome" title="nome" value="Nome    "/>
+                        <!--input para o atributo nome da instancia de fator. Esse campo é de preenchimento obrigatório-->
+                        <p:inputText  placeholder="descrição do fator" disabled="#{fatorController.mudaControlador4()}"  rendered="#{fatorController.controlador1}" id="nome"  value="#{fatorController.fator.nome}" required="true" />
+                        <p:commandButton   disabled="#{fatorController.mudaControlador4()}"  icon="" title="Importar Fatores!" actionListener="#{fatorController.abrirJDialogFator()}"  
+                                           process="@this" update="@none" class="iconebt pesquisar">     
+                            <p:ajax event="dialogReturn" listener="#{fatorController.listaFatorSelecionado}" process="@this" update="nome" /> 
+                            <p:resetInput target="nome" /> 
+                        </p:commandButton>
+                        <!--aqui é definida uma marca d'agua para o input anterior.-->                                
+                    </h:panelGrid>
+                    <h:panelGrid columns="2" >
+                        <p:outputLabel  for="ordem" title="Ordem" value="Ordem   "/>
+                        <!--o elemento é um contador aqui definido de 1 até 15. O usuário poderá através de um scroll escolher qual o número dentro
+                        desse intervalo que irá ser o posicionamento do fator no formulário.-->
+                        <p:spinner id="ordem" min="1" max="15" value="#{fatorController.fator.ordem}" required="true" requiredMessage="Defina a ordem do fator no formulário" label="Ordem: "/>
+
+                        <p:outputLabel  for="validadeInicial" title="validade Inicial" value="Data inicial:  "/>
+                        <!--o elemento calendar é uma ferramenta que permite o usuário um calendário para seleção de datas. Aqui o usuário
+                        estará setando o valor do atributo validadeInicial. Esse preenchimento é obrigatório.-->
+                        <p:calendar placeholder="Validade inicial" id="validadeInicial" locale="pt"  value="#{fatorController.fator.validadeInicial}" size="10" required="true" requiredMessage="Validade Inicial é necessária" navigator="true" pattern="dd/MM/yyyy" mask="true"/>
+
+                        <!--Este elemento permite alterar o valor do atributo ativo da instancia de fator. Aqui o botão assume dois status
+                        ativado ou desativado.-->
+                        <p:outputLabel    title="Click aqui" value="Situação:"/>
+
+                        <p:selectOneMenu   value="#{fatorController.fator.ativo}">
+                            <f:selectItem itemValue="true" itemLabel="Ativado" />
+                            <f:selectItem itemValue="false" itemLabel="Desativado"/>
+                        </p:selectOneMenu>
+                        <!-- <p:selectBooleanButton offLabel="Desativado"  onLabel="Ativado"  value="#{fatorController.fator.ativo}" /> -->
+                    </h:panelGrid> 
+                    <p:separator/>
+                    <p:commandButton onclick="history.go(-1);
+                            return false;" value="Voltar" class=" icone2 voltar" />
+                    <h:panelGroup  id="panelGr"  >
+                        <!--Através deste elemento é possível adicionar a instancia atual na listaPrevia.-->
+                        <p:commandButton disabled="#{!fatorController.controlador3}"  actionListener="#{fatorController.salvarFator()}" value="Salvar" update="form2 :form1 :form3 "  ajax="true" class="icone2 salvar">
+                            <p:confirm header="Confirmação" message="Deseja realmente salvar?"  icon="ui-icon-alert"   />
+                        </p:commandButton> 
+                    </h:panelGroup> 
+                    <p:separator/>
+                </h:form> 
+                <h:form id="form3"   > 
+                    <p:growl id="msg_form2"/> 
+
+
+                    <p:dataTable id="fator_dataTable_vis" var="fator" value="#{fatorController.listaFator}" 
+                                 emptyMessage="Não há registros."
+                                 editable="true">
+                        <!--Componente que invoca o método no momento de edição de dados. Após efetuar a edição o componente dataTable é atualizado-->
+                        <p:ajax event="rowEdit" listener="#{fatorController.onEdit}" update=":form3:fator_dataTable_vis" />
+                        <p:ajax event="rowEditCancel" listener="#{fatorController.onCancel}" update=":form3:fator_dataTable_vis" />
+                        <!--Construção das colunas da dataTable. Como a dataTable é editável então é necessário para cada coluna usar a marcação
+                        cellEditor e implementar dois facets: uma para input(editar) e outro para output(visualizar)-->
+                        <p:column headerText="Código">
+                            <h:outputText value="#{fator.id}" />
+                        </p:column>
+                        <p:column headerText="Fator">
+                            <p:cellEditor>
+                                <!--Saída do valor do atributo nome de fator-->
+                                <f:facet name="output">
+                                    <h:outputText value="#{fatorController.getDescricaoFator(fator)}..." />
+                                </f:facet>
+                                <!--Componente para entrada de dados de edição do atributo nome-->
+                                <f:facet name="input">
+                                    <p:inputText value="#{fator.nome}" />
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        <p:column headerText="Grupo">
+                            <h:outputText value="#{fator.grupoFator.nome}" />
+                        </p:column>
+                        <p:column headerText="Formulário">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{fator.grupoFator.formulario.nome}" />
+                                </f:facet>
+                                <f:facet name="input">
+                                    <h:outputText value="#{fator.grupoFator.formulario.nome}" />
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        <p:column headerText="Ordem" width="50" >
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{fator.ordem}" />
+                                </f:facet>
+                                <f:facet name="input">                                    
+                                    <h:inputText maxlength="2" value="#{fator.ordem}" />
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column> 
+                        <p:column headerText="Validade Inicial">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{fator.validadeInicial}">
+                                        <f:convertDateTime pattern="dd-MM-yyyy" />
+                                    </h:outputText>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:calendar locale="pt"  value="#{fator.validadeInicial}" size="10" required="true" navigator="true" pattern="dd/MM/yyyy" mask="true"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        <p:column headerText="Ativo"  width="50">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="Sim" rendered="#{fator.ativo}" />
+                                    <h:outputText value="Não" rendered="#{not fator.ativo}" />
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:selectOneMenu value="#{fator.ativo}">
+                                        <f:selectItem itemValue="true" itemLabel="Sim" />
+                                        <f:selectItem itemValue="false" itemLabel="Não"/>
+                                    </p:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        <p:column id="testeColumn"  width="30">
+                            <!--Componente que ao ser clicado permite a edição da linha a qual pertença. Este componente usa os métodos onEdit e
+                            onCancel-->
+                            <p:rowEditor id="editorLinha" />
+                            <!--Componente que permite quando clicado a excluir a linha a qual pertença.-->
+                            <p:commandButton actionListener="#{fatorController.deletarFator(fator)}" update=":form3" ajax="true" icon="" class="iconebt lixeira">
+                                <p:confirm header="Confirmação" message="Deseja realmente excluir o registro?"  icon="ui-icon-alert"   />
+                            </p:commandButton> 
+
+                        </p:column>
+                    </p:dataTable>
+                    <!--Componente que permite invocar o método para salvar a listaPreviaFator-->
+                </h:form>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                    <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton  value="Não" ignoreAutoUpdate="true" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+                <p:commandButton onclick="history.go(-1);
+                        return false;" value="Voltar" class=" icone2 voltar" />
+            </p:panel>            
+
+        </ui:define>
+    </ui:composition>
+</html>

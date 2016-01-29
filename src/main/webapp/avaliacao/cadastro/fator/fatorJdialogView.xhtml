@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core" >
+    <ui:composition template="/template/index.xhtml">
+        <!--Substituir o Título padrão da Página-->
+
+        <ui:define name="meta">
+            <f:metadata>
+                <f:viewAction action="#{fatorController.init()}" /> 
+            </f:metadata>
+        </ui:define>
+        <ui:define name="cabecalho"> 
+        </ui:define>
+        <ui:define name="menus"> 
+        </ui:define>
+
+        <ui:define name="blocos"> 
+        </ui:define>
+        <ui:define name="conteudo">
+            <p:panel header="Consulta de Fatores " id="fator_paienl">
+                <f:facet  name="header"> 
+                    <h:outputText value=" Consulta de Fatores"/>
+                </f:facet> 
+                <!--form com o objetivo de adicionar instâncias na listaPreviaFator (verificar adicionarListaPrevia() em FatorController)-->
+                <h:form id="form1"     >      
+                    <!--componente com o objetivo de organizar visualmente a página-->
+                    <!--componente com o objetivo de mostrar as mensagens de retorno para esse formulário-->
+                    <p:growl id="fator_messages" /> 
+                    <f:facet  name="header"> 
+                        <h:outputText value="Consulta de Fatores"/>
+                    </f:facet>  
+                    <h:panelGrid  >   
+                        <!-- Componentes ainda não está funcionando devido a atualização
+                        dos componentes abaixos 
+                        <ex:CQuadroGeral  valor="true"  />                         
+                        <ex:CFormulario valor="true"  />                                     
+                        -->
+
+                        <h:panelGrid  class="lista" columns="2" id="fator_quadro_grid"  > 
+                            <p:outputLabel for="quadro" title="Quadro" value="Quadro:  "/>
+                            <!--select para o quadro profissional aqui é setado o valor do atributo nomeQuadro-->
+                            <p:selectOneMenu value="#{fatorController.nomeQuadro}" id="quadro"  >
+                                <!--opção nula: padrão para forçar o usuário a selecionar outro valor válido-->
+                                <f:selectItem itemValue="#{null}" noSelectionOption="true" itemLabel="Selecione um quadro..."/>
+                                <!--aqui o jsf se encarrega de criar uma lista de opções para o usuário através da listaQuadro-->
+                                <f:selectItems value="#{fatorController.listaQuadro}" var="quadro" itemLabel="#{quadro.sigla}" itemValue="#{quadro}"/>
+                                <!--aqui é definida uma chamada ao método mudaControlador1 quando o usuário selecionar uma opção do select de quadro.
+                                O retorno é aplicado em uma ação ajax. -->
+                                <p:ajax update="form1 :form2"  listener="#{fatorController.mudaControlador1()}"  process="quadro" /> 
+
+                            </p:selectOneMenu> 
+
+                            <p:outputLabel   for="listFormulario" title="Formulario" value="Formulário:  "  rendered="#{fatorController.controlador1}" />
+                            <!--select para o formulário aqui é setado o valor do atributo nomeFormulario. Para ser visualizado 
+                            o valor do atributo controlador1 deve ser igual a true.-->
+                            <p:selectOneMenu  id="listFormulario" value="#{fatorController.idFormulario}" rendered="#{fatorController.controlador1}" >
+                                <!--opção nula: padrão para forçar o usuário a selecionar outro valor válido-->
+                                <f:selectItem itemValue="#{null}" noSelectionOption="true" itemLabel="Selecione um formulário..."/>
+                                <!--aqui o jsf se encarrega de criar uma lista de opções para o usuário através da listaFormulario-->
+                                <f:selectItems value="#{fatorController.listaFormulario}" var="formulario" itemLabel="#{formulario.nome}" itemValue="#{formulario.id}"/>
+                                <!--aqui é definida uma chamada ao método mudaControlador2 quando o usuário selecionar uma opção do select de quadro.
+                                O retorno é aplicado em uma ação ajax. 
+                                -->
+                                <p:ajax update="form1 :form2" listener="#{fatorController.mudaControlador2()}" event="change" />
+
+                            </p:selectOneMenu>
+                            <p:outputLabel    for="grupoFator" title="Grupo Fator" value="Grupo Fator:  "    />
+                            <!--select para o grupo de fator aqui é setado o valor do atributo nomeGrupoFator. Para ser visualizado 
+                            o valor do atributo controlador2 deve ser igual a true.-->
+                            <p:selectOneMenu   id="grupoFator" value="#{fatorController.idGrupoFator}"  >
+                                <!--opção nula: padrão para forçar o usuário a selecionar outro valor válido-->
+                                <f:selectItem itemValue="#{null}" noSelectionOption="true" itemLabel="Selecione um grupo..."/>
+                                <!--aqui o jsf se encarrega de criar uma lista de opções para o usuário através da listaGrupo-->
+                                <f:selectItems  value="#{fatorController.listaGrupo}" var="grupo" itemLabel="#{grupo.nome}" itemValue="#{grupo.id}"/>
+                                <!--aqui é definida uma chamada ao método mudaControlador2 quando o usuário selecionar uma opção do select de quadro.
+                                O retorno é aplicado em uma ação ajax.-->
+                                <p:ajax update="form1 :form2" listener="#{fatorController.mudaControlador3()}" event="change" />
+                            </p:selectOneMenu>
+
+                        </h:panelGrid>
+                    </h:panelGrid> 
+                    <p:separator />
+                    <br/>
+                </h:form> 
+
+                <h:form id="form2"   > 
+                    <p:growl id="msg_form2"/> 
+                    <p:panel> 
+                        <p:dataTable  id="fator_dataTable_vis"  var="fator" value="#{fatorController.listaFator}"   
+                                     rowKey="#{fator.id}"  >
+                          
+                            <f:facet name="header">
+                                Lista de Fatores
+                            </f:facet>                             
+                            <p:column  headerText="Código">
+                                <h:outputText value="#{fator.id}" />
+                            </p:column>
+                            <p:column headerText="Fator"> 
+                                <h:outputText value="#{fatorController.getDescricaoFator(fator)}..." /> 
+                            </p:column>  
+                            <p:column id="testeColumn"  width="30">
+                                <p:commandButton icon="" title="Selecionar" action="#{fatorController.selecionardosFatores(fator)}" process="@this" class="iconebt visto" />
+                            </p:column>
+                        </p:dataTable> 
+                    </p:panel>
+                </h:form> 
+            </p:panel>
+
+        </ui:define>
+    </ui:composition>
+</html>

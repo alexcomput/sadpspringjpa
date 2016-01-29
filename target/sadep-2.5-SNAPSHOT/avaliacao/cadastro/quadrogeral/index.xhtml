@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="/template/index.xhtml">
+        <f:metadata>
+            <f:viewAction action="#{grupoFatorController.init()}"/>
+        </f:metadata>
+        <!--Substituir o Título padrão da Página-->
+        <ui:define name="titulo">
+            Quadro
+        </ui:define>
+        <!--Conteúdo da página-->
+        <ui:define name="conteudo">
+            <!--form com o objetivo de adicionar instâncias na listaPreviaGrupo (verificar adicionarListaPrevia() em GrupoFatorController)-->
+            <h:form id="grupoFator_form1">
+                <f:facet  name="header"> 
+                    <h:outputText value="  Quadro "/>
+                </f:facet> 
+                <!--componente com o objetivo de organizar visualmente a página-->
+                <p:panel id="grupoFator_pnl">
+                    <!--componente com o objetivo de mostrar as mensagens de retorno para esse formulário-->
+
+                    <f:facet  name="header"> 
+                        <h:outputText value="Consultar de Quadro"/>
+                    </f:facet>
+                    <!--inicio da tabela de selects do cadastro--> 
+
+                        <!--Componente que apresenta os dados referentes aos elementos da listaPreviaGrupo-->
+                        <p:dataTable  id="grupo_dataTable" var="quadro" value="#{grupoFatorController.listaQuadro}"   >
+                            <!--Construção das colunas da dataTable. Como a dataTable é editável então é necessário para cada coluna usar a marcação
+                           cellEditor e implementar dois facets: uma para input(editar) e outro para output(visualizar)-->                            
+                            <p:column headerText="Quadro" >  
+                                <!--Saída do valor do atributo nome de grupo de fator-->
+                                #{quadro.sigla}
+                            </p:column> 
+                        </p:dataTable>
+                        <p:separator/>
+            <p:commandButton onclick="history.go(-1);return false;" value="Voltar" class=" icone2 voltar" />
+                </p:panel>
+            </h:form>
+
+        </ui:define>
+    </ui:composition>
+</html>

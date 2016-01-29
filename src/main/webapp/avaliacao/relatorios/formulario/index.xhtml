@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="/template/index.xhtml">
+        <!--Substituir o Título padrão da Página-->
+        <f:metadata >
+            <f:viewAction action="#{avaliacaoController.init()}"/>
+        </f:metadata>
+        <ui:define name="titulo">
+            Relatório de Formulário em Branco
+        </ui:define>
+        <!--Conteúdo da página-->
+        <ui:define name="conteudo"> 
+
+
+            <!--form com o objetivo de adicionar instâncias na listaPreviaGrupo (verificar adicionarListaPrevia() em GrupoFatorController)-->
+            <!--form com o objetivo de adicionar instâncias na listaPreviaFator (verificar adicionarListaPrevia() em FatorController)-->
+            <h:form id="vincular_Formulario_form1"  target="_blank">
+
+                <!--componente com o objetivo de organizar visualmente a página-->
+                <p:panel id="vincular_Formulario_pnl">
+                    <p:growl id="fator_messages"  />
+                    <f:facet  name="header"> 
+                        <h:outputText value="Relatório de Formulário em Branco"/>
+                    </f:facet> 
+                    <!--componente com o objetivo de mostrar as mensagens de retorno para esse formulário-->
+ 
+                    <!--inicio da tabela de selects do cadastro-->
+                    <h:panelGrid columns="2" id="vincular_Formulario_quadro_grid">
+                        <!--select para o quadro profissional aqui é setado o valor do atributo nomeQuadro-->
+                            <p:outputLabel for="nomeQuadro_select" value="Quadro Profissional: "  />
+                            <p:selectOneMenu required="true" requiredMessage="selecione o Quaddro Profissional!" id="nomeQuadro_select" value="#{avaliacaoController.nomeQuadro}" >
+                                <!--opção nula: padrão para forçar o usuário a selecionar outro valor válido-->
+                                <f:selectItem itemValue="#{null}" noSelectionOption="true" itemLabel="Selecione um quadro..."/>
+                                <!--aqui o jsf se encarrega de criar uma lista de opções para o usuário através da listaQuadro-->
+                                <f:selectItems value="#{avaliacaoController.listaQuadro}" var="quadro" itemLabel="#{quadro.sigla}" itemValue="#{quadro}"/>
+                                <!--aqui é definida uma chamada ao método mudaControlador1 quando o usuário selecionar uma opção do select de quadro.
+                                O retorno é aplicado em uma ação ajax. -->
+                                <p:ajax  process="@this" update="formulario_select " event="change" listener="#{avaliacaoController.listarFormulario()}" />
+                            </p:selectOneMenu>
+
+                            <p:outputLabel for="formulario_select" value="Formulário: " />
+                            <p:selectOneMenu required="true"  requiredMessage="Selecione Formulário para ser impresso!" id="formulario_select" value="#{avaliacaoController.idFormulario}"  >
+                                <!--opção nula: padrão para forçar o usuário a selecionar outro valor válido-->
+                                <f:selectItem itemValue="#{null}" noSelectionOption="true" itemLabel="Selecione um formulário..."/>
+                                <!--aqui o jsf se encarrega de criar uma lista de opções para o usuário através da listaFormulario-->
+                                <f:selectItems value="#{avaliacaoController.listaFormulario}" var="formulario" itemLabel="#{formulario.nome}" itemValue="#{formulario.id}"/>
+                                <!--aqui é definida uma chamada ao método mudaControlador2 quando o usuário selecionar uma opção do select de quadro.
+                                O retorno é aplicado em uma ação ajax.-->
+                            </p:selectOneMenu>
+                    </h:panelGrid>
+                    <p:commandButton  action="#{avaliacaoController.imprimeRelatorioBranco()}"  value="Imprimir" ajax="false" class="icone2 imprimir"/>
+                </p:panel> 
+            </h:form>  
+        </ui:define>
+    </ui:composition>
+</html>

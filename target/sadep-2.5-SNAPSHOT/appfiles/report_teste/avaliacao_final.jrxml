@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0e58f1af-6e72-49e7-8413-3f55d82e1e5b">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="525"/>
+	<parameter name="id_formulario" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[$P{id_formulario}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="idavaliacao" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{idavaliacao}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="RETORNO" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{idavaliacao}.equals("ALL") ? ""  : " AND av.id = '" + $P{idavaliacao}+"'"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT 
+	av.nome,
+	av.cargo_nome,
+	av.numfunc,
+	av.numvinc,
+	f.quadro,
+	av.setor_nome,
+	av.regional_nome,
+	av.etapa,
+	f.ocupantes
+FROM aede.avaliacao as av
+	INNER JOIN aede.formulario as f ON av.formulario = f.id
+WHERE
+	f.excluido = 'N' AND
+	f.ativo = true AND
+	f.id = $P{id_formulario} AND 
+	(av.status = 'CRIADA COMISSAO' OR av.status = 'RECURSO')
+	$P!{RETORNO}]]>
+	</queryString>
+	<field name="nome" class="java.lang.String"/>
+	<field name="cargo_nome" class="java.lang.String"/>
+	<field name="numvinc" class="java.lang.Integer"/>
+	<field name="numfunc" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="etapa" class="java.lang.Integer"/>
+	<field name="quadro" class="java.lang.String"/>
+	<field name="setor_nome" class="java.lang.String"/>
+	<field name="regional_nome" class="java.lang.String"/>
+	<field name="ocupantes" class="java.lang.String"/>
+	<variable name="total" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="48" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="16" width="555" height="18" uuid="ba348bf0-2581-44ef-aed6-dc6f18434962"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" markup="none">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INSTRUMENTO DE AVALIAÇÃO DO ESTÁGIO PROVATÓRIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="16" uuid="0b9dfa8d-708a-452b-b644-5ed4070da570"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" markup="none">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FORMULÁRIO II]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="34" width="555" height="14" uuid="1cf568b5-fe16-4c97-aaf2-fe2816e67850"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ocupantes}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="46" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="59" height="46" uuid="8da885c8-c1c4-4ed0-bfbe-3958275fe62c"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" markup="none">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="59" y="0" width="495" height="46" backcolor="#CCCCCC" uuid="e1274c23-e3fb-45ca-ac1c-9cd39f4613b7"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" markup="none">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="59" y="7" width="495" height="16" uuid="a6857e06-32a4-4203-82f1-015fc123521e"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[GOVERNO DO TOCANTINS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="59" y="23" width="495" height="16" uuid="1174c665-54df-4823-932c-455b0bd42c53"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SECRETARIA DA ADMINISTRAÇÃO]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="20" uuid="7d87c71b-49e2-4603-9a5c-f02c11bc76c0"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[INSTRUÇÕES DE PREENCHIMENTO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="611" splitType="Stretch">
+			<staticText>
+				<reportElement x="6" y="268" width="357" height="38" uuid="32b53f14-e2ac-4231-829e-5319797dc0c7"/>
+				<textElement verticalAlignment="Top" markup="none">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOME DO SERVIDOR:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="224" uuid="581cd694-6244-42c3-9eca-f8f868cc382a"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Top" markup="none">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="103" width="552" height="20" uuid="ef3c3b01-fc28-4910-b548-613ca3b1d7c5"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ 4 - Elaborar parecer descritivo;]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="17" width="552" height="20" uuid="eaa062d3-2871-403f-809b-9cef3f883783"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ 1 - Preencher corretamente e com clareza os dados de identificação do servidor;]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="155" width="552" height="20" uuid="e1495a1f-864c-4149-8b08-693f11c3b25f"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ 6 - Certificar o servidor do resultado da AEDE;]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="123" width="552" height="32" uuid="33608cac-4bbb-4cf2-853e-2e414a446a74"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ 5 - Ao término da AEDE, todos os membros da Comissão Especial de Avaliação de Desempenho deverão assinar e datar o formulário;]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="175" width="552" height="20" uuid="4a3f3921-5d54-4726-ab01-b160405caddd"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ 7 - Não serão aceitos formulários rasurados;]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="57" width="552" height="46" uuid="409884ab-3a00-495a-9e9c-be8047a218de"/>
+				<textElement textAlignment="Justified">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ 3 - Analisar e avaliar com imparcialidade o desempenho do servidor, atribuindo nota que poderá variar de 1 até 10 em cada fator avaliatório. A nota deverá ser inteira, não sendo permitido o acréscimo de décimos;]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="37" width="552" height="20" uuid="b14937d1-f36e-4cc3-b0c4-ae825c45a962"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ 2 - Analisar os fatores e respectivas definições;]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="224" width="555" height="122" uuid="8cf441a8-3a03-40b1-b14a-daf6eae0ea9a"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top" markup="none">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[DADOS DE IDENTIFICAÇÃO DO SERVIDOR AVALIADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="224" width="555" height="19" uuid="f55dc5b5-dd5b-4b28-9e4b-c9eacbc1cb16"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top" markup="none">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="308" width="357" height="38" uuid="68d7db22-0449-4afe-b7e7-f16e1791e2fa"/>
+				<textElement verticalAlignment="Top" markup="none">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CARGO EFETIVO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="363" y="268" width="193" height="38" uuid="d5eba121-814f-44ce-abc9-cd37cef22bbf"/>
+				<textElement verticalAlignment="Top" markup="none">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MATRÍCULA Nº:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="363" y="306" width="193" height="38" uuid="fc856408-db2a-45a5-814e-7dbf583fc9fc"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Top" markup="none">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATA DE ADMISSÃO (DIA/MÊS/ANO):]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="346" width="555" height="38" uuid="5b3f7e1f-8a38-43f6-a06b-f622c093c7ad"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Top" markup="none">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[  CARGO EM COMISSÃO (NOME E SÍMBOLO):]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="384" width="555" height="43" uuid="3b387c9d-687a-4a2d-82ff-28593a7ef3f2"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Top" markup="none">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[  ÓRGÃO DE LOTAÇÃO/ UNIDADE ADMINISTRATIVA]]></text>
+			</staticText>
+			<line direction="BottomUp">
+				<reportElement x="338" y="399" width="15" height="20" uuid="6070b42b-cead-473b-a8a7-ecf0bb030405"/>
+			</line>
+			<line direction="BottomUp">
+				<reportElement x="146" y="399" width="15" height="20" uuid="0d564b17-810a-4af0-a0cd-55d0b226b78f"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="427" width="555" height="42" uuid="6903735b-f936-4434-812e-b9c1c4b88d24"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[  INTERSTÍCIO AVALIATÓRIO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="91" y="449" width="14" height="20" uuid="9a21929f-3a4b-4390-9093-f08fefa4d333"/>
+				<textElement verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[A]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="448" width="84" height="20" uuid="bb38b1d7-4d99-448e-83cc-d621d7506e8a"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[___/___/_____]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="102" y="448" width="84" height="20" uuid="799066f1-a249-4651-8606-44d0cab37d99"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[___/___/_____]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="251" y="449" width="112" height="20" uuid="17b771ab-fd69-4604-9e2a-487df3e0af21"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ETAPA AVALIATÓRIA:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="6" y="399" width="139" height="20" uuid="5efd04c0-011e-4e3d-b339-00f78bb3c5f2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{quadro}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="363" y="449" width="181" height="20" uuid="3c56df36-aa8b-4dc8-918a-64878cdf3358"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{etapa}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="7" y="282" width="356" height="20" uuid="1b87802a-c937-4599-94ea-f759b57502f2"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="7" y="320" width="356" height="20" uuid="146e29a7-9e61-42e0-9e65-56e5aec3d039"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cargo_nome}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="363" y="282" width="191" height="20" uuid="7738ae6e-2b6a-4631-97b3-4c563c5fdb69"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{numfunc}+"-"+$F{numvinc}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="161" y="399" width="177" height="20" uuid="20a6cda8-1ba3-4f4b-b6d5-c5f482d3b264"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{setor_nome}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="353" y="399" width="201" height="20" uuid="3601cd74-3f4c-4849-93ee-ba51b3f4f5d2"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{regional_nome}]]></textFieldExpression>
+			</textField>
+			<break>
+				<reportElement x="0" y="474" width="100" height="1" uuid="d1bae1fb-5e15-4bed-b228-f1baf0ad94fc"/>
+			</break>
+			<staticText>
+				<reportElement x="2" y="195" width="552" height="20" uuid="48fa15ec-7090-449f-808f-938afad54b6a"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[8 - Zelar pelo caráter fidedigno e confidencial da AEDE.]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="0" y="479" width="555" height="37" uuid="d057c4ae-a22a-4899-acce-7045ce6d5e2d"/>
+				<subreportParameter name="nun_funcional"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "a_avaliacao.jasper"]]></subreportExpression>
+			</subreport>
+			<break>
+				<reportElement x="0" y="523" width="100" height="1" uuid="8ab4c790-85c9-4a25-8903-b9d21b9c5d1e"/>
+			</break>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="/template/index.xhtml">
+        <!--Substituir o Título padrão da Página-->
+        <f:metadata >
+            <f:viewAction action="#{avaliacaoController.init()}"/>
+        </f:metadata>
+        <ui:define name="titulo">
+            Imprimir avaliação
+        </ui:define>
+        <!--Conteúdo da página-->
+        <ui:define name="conteudo">  
+            <!--form com o objetivo de adicionar instâncias na listaPreviaGrupo (verificar adicionarListaPrevia() em GrupoFatorController)-->
+            <!--form com o objetivo de adicionar instâncias na listaPreviaFator (verificar adicionarListaPrevia() em FatorController)-->
+            <h:form id="vincular_Formulario_form1" target="_blank"> 
+
+                <!--componente com o objetivo de organizar visualmente a página-->
+                <p:panel id="vincular_Formulario_pnl">
+                    <p:growl id="fator_messages"  />
+                    <f:facet  name="header"> 
+                        <h:outputText value="  Imprimir avaliação "/>
+                    </f:facet> 
+                    <!--componente com o objetivo de mostrar as mensagens de retorno para esse formulário-->
+                    <p:growl id="vincular_Formulario_messages" /> 
+                    <!--inicio da tabela de selects do cadastro-->
+                    <h:panelGrid columns="2" id="vincular_Formulario_quadro_grid">
+                        <!--select para o quadro profissional aqui é setado o valor do atributo nomeQuadro-->
+                        <p:outputLabel for="nomeQuadro_select" value="Quadro Profissional: "  />
+                        <p:selectOneMenu id="nomeQuadro_select"  filter="true" filterMatchMode="contains" value="#{avaliacaoController.nomeQuadro}" >
+                            <!--opção nula: padrão para forçar o usuário a selecionar outro valor válido-->
+                            <f:selectItem itemValue="#{null}" noSelectionOption="true" itemLabel="Selecione um quadro..."/>
+                            <!--aqui o jsf se encarrega de criar uma lista de opções para o usuário através da listaQuadro-->
+                            <f:selectItems value="#{avaliacaoController.listaQuadro}" var="quadro" itemLabel="#{quadro.sigla}" itemValue="#{quadro}"/>
+                            <!--aqui é definida uma chamada ao método mudaControlador1 quando o usuário selecionar uma opção do select de quadro.
+                            O retorno é aplicado em uma ação ajax. -->
+                            <p:ajax  process="@this" update="formulario_select " event="change" listener="#{avaliacaoController.listarFormulario()}" />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="formulario_select" value="Formulário: " />
+                        <p:selectOneMenu  id="formulario_select"  filter="true" filterMatchMode="contains" value="#{avaliacaoController.idFormulario}"  >
+                            <!--opção nula: padrão para forçar o usuário a selecionar outro valor válido-->
+                            <f:selectItem itemValue="#{null}" noSelectionOption="true" itemLabel="Selecione um formulário..."/>
+                            <!--aqui o jsf se encarrega de criar uma lista de opções para o usuário através da listaFormulario-->
+                            <f:selectItems value="#{avaliacaoController.listaFormulario}" var="formulario" itemLabel="#{formulario.nome}" itemValue="#{formulario.id}"/>
+                            <!--aqui é definida uma chamada ao método mudaControlador2 quando o usuário selecionar uma opção do select de quadro.
+                            O retorno é aplicado em uma ação ajax.-->
+                            <p:ajax  event="change" process="@this"  update="lista_avaliacoes_dtb" listener="#{avaliacaoController.findByQuadroAvaliacaoStatusProcessadaRecurso}" />
+                        </p:selectOneMenu>
+                        <p:outputLabel for="data_inicia" value="Data: " />
+                        <p:calendar locale="pt" navigator="true" pattern="dd/MM/yyyy" mask="true" placeholder="Data Inicial" id="data_inicia" value="#{avaliacaoController.dataInicial}"    >
+                            <p:ajax  event="change" process="@this"  update="lista_avaliacoes_dtb" listener="#{avaliacaoController.pesquisarData()}" />
+                        </p:calendar>
+
+
+                    </h:panelGrid>
+                    <p:separator/>
+                    <p:commandButton  actionListener="#{avaliacaoController.pesquisarData()}"  value="Pesquisar" ajax="true" class="icone2 pesquisar"/>
+                    <p:separator/>
+                    <h:panelGroup id="pg">
+                <!-- <p:dataTable id="lista_avaliacoes_dtb" rendered="#{avaliacaoController.controlador2}" var="avaliacao" -->
+                        <p:dataTable  id="lista_avaliacoes_dtb" var="avaliacao" 
+                                      value="#{avaliacaoController.listaAvaliacoes}" selection="#{avaliacaoController.listaPreviaAvaliacao}" rowKey="#{avaliacao.id}"
+                                      rows="10" 
+                                      paginator="true"
+                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                      emptyMessage="Nenhum registro encontrado."
+                                      >
+
+                            <f:facet name="header">
+                                Avaliações sem formulário vinculado
+                            </f:facet>
+
+                            <p:column selectionMode="multiple" width="20"    />
+                            <p:column headerText="E"  width="20">
+                                <f:facet name="header">
+                                    <h:outputText value="E" title="Etapa"/>
+                                </f:facet>
+                                #{avaliacao.etapa}
+                            </p:column>
+                            <p:column headerText="Matrícula" width="110">
+                                #{avaliacao.numFunc}-#{avaliacao.numVinc}
+                            </p:column>
+                            <p:column headerText="Servidor">
+                                #{avaliacao.nomeServidor}
+                            </p:column>
+                            <p:column headerText="Cargo">
+                                #{avaliacao.cargoNome}
+                            </p:column>
+                            <p:column headerText="Setor">
+                                #{avaliacao.setorNome}
+                            </p:column>
+                            <p:column headerText="Regional">
+                                #{avaliacao.regionalNome}
+                            </p:column>                        
+                            <p:column headerText="">
+                                <p:commandLink action="#{avaliacaoController.imprimirEspecifico(avaliacao.id)}"  value="" ajax="false" class="botao iconebt imprimir"/> 
+                            </p:column>    
+                        </p:dataTable>
+                    </h:panelGroup>
+                    <p:commandButton  action="#{avaliacaoController.imprimeRelatorio()}" value="Imprimir" ajax="false" class="icone2 imprimir"/>
+                </p:panel> 
+            </h:form>  
+        </ui:define>
+    </ui:composition>
+</html>

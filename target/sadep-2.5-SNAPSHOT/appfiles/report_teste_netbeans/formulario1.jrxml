@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formulario1" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="88bf7ec5-d36c-4c3d-aec6-947cdb414555">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="192"/>
+	<parameter name="id_avaliacao" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[$P{id_avaliacao}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT 
+	av.nome,
+	av.cargo_nome,
+	av.numfunc,
+	av.numvinc,
+	av.dtadmissao,
+	av.dtavaliacao,
+	mc.nome as membro
+FROM aede.avaliacao as av
+INNER JOIN aede.comissao c ON av.comissao = c.id
+INNER JOIN aede.membro_comissao mc ON mc.comissao_id = c.id
+WHERE av.id = $P{id_avaliacao}]]>
+	</queryString>
+	<field name="nome" class="java.lang.String"/>
+	<field name="cargo_nome" class="java.lang.String"/>
+	<field name="numfunc" class="java.lang.Integer"/>
+	<field name="numvinc" class="java.lang.Integer"/>
+	<field name="dtadmissao" class="java.sql.Date">
+		<fieldDescription><![CDATA[Data de admissao da avaliacao]]></fieldDescription>
+	</field>
+	<field name="dtavaliacao" class="java.sql.Date"/>
+	<field name="membro" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="49" splitType="Stretch">
+			<staticText>
+				<reportElement x="11" y="0" width="533" height="16" uuid="5ef1dcb7-a1e8-48ce-a442-0deb4b19bc89"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" markup="none">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FORMULÁRIO I]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="17" width="533" height="18" uuid="4d432cba-978e-4432-aa5a-18a2ff8a83c7"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" markup="none">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COMISSÃO ESPECIAL DE AVALIAÇÃO DE DESEMPENHO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="34" width="533" height="14" uuid="135798f7-d6c6-475e-bb61-1b3b5a0efb26"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" markup="none">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ESTÁGIO PROBATÓRIO]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="73" splitType="Stretch">
+			<staticText>
+				<reportElement x="70" y="11" width="474" height="61" uuid="5277bf13-f42b-437d-8c5f-5a298a415930"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" markup="none">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="11" width="59" height="61" uuid="8ef5525d-c7e8-48b4-86f4-05353e5b676b"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" markup="none">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="40" width="474" height="16" uuid="499c1d8c-75a6-4a1e-acd5-db12698055a0"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SECRETARIA DA ADMINISTRAÇÃO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="24" width="474" height="16" uuid="9abc7e49-7e7c-4565-a902-936506c3cbaf"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[GOVERNO DO TOCANTINS]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="252">
+			<staticText>
+				<reportElement x="11" y="0" width="533" height="252" uuid="0625eb44-c0e5-44e0-8d8c-d05c5e371eb9"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" markup="none">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="66" y="19" width="422" height="61" uuid="c1fb52d3-9b41-4e9a-9fe4-de245538a32a"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="12" isBold="false"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<text><![CDATA[O servidor _________________________________________, em conformidade com o Art.18, inciso I e o Art. 19, do Decreto nº 12345, de  25  de maio de 2015, ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="66" y="190" width="422" height="61" uuid="a48904be-9d8b-4cc2-96ae-56f590fb562e"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="12" isBold="false"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<text><![CDATA[de________________________, matrícula nº_____________________, durante o período do Estágio Probatório, compreendido entre___________________ a ___________________.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="66" y="130" width="422" height="60" uuid="71750185-b0b1-4f69-923c-661b68447699"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="12" isBold="false"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<text><![CDATA[Art. 1º COMPOR a Comissão de Avaliação Especial de Desempenho, responsável pela orientação e avaliação do servidor __________________________________________, ocupante do cargo ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="172" y="24" width="267" height="13" uuid="a28e6a0e-7e2a-433f-a299-a553ae0418ab"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="64" y="96" width="62" height="16" uuid="be18b29f-b63b-4253-8599-d4d53264389b"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[RESOLVE:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="97" y="233" width="120" height="14" uuid="00a88142-9591-4b13-9cde-0457c7a747ce"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dtadmissao}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="82" y="193" width="151" height="14" uuid="0176058f-d459-4522-9051-fef9b8537e9d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cargo_nome}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="435" y="194" width="26" height="14" uuid="43b7969d-02da-4bad-9818-582e27bf0be7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numvinc}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="232" y="232" width="120" height="16" uuid="46e82c29-7b45-4656-a044-78437d222b29"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dtavaliacao}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="372" y="194" width="54" height="14" uuid="a770428e-d1d5-4d83-a9f3-a1e023949374"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numfunc}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="66" y="171" width="273" height="17" uuid="ea8449fc-a01b-4e15-b41f-5ff9cad4e978"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="426" y="194" width="9" height="14" uuid="64356471-25d3-4a57-b685-f76fe3514b1a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="363" splitType="Stretch">
+			<staticText>
+				<reportElement x="11" y="0" width="533" height="363" uuid="35a4263c-0e89-4e81-ab55-ada3e36f60d0"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" markup="none">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="66" y="32" width="422" height="76" uuid="3116c5e1-4e92-43d8-9c3e-4666f99e91c2"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="12" isBold="false"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<text><![CDATA[Art. 2º Compõem a Comissão de Avaliação Especial de Desempenho, sob a presidência do primeiro, os seguintes servidores:
+1 - _____________________________________________, matrícula. nº ____________________, cargo _______________________,
+
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="66" y="126" width="422" height="30" uuid="04a8fe09-c67c-4c38-b15c-7b5375793489"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[2 - _____________________________________________, matrícula. nº ____________________, cargo _______________________,
+
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="66" y="177" width="422" height="30" uuid="8a377b18-0084-4961-99ab-446c93028bab"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[3 - _____________________________________________, matrícula. nº ____________________, cargo _______________________.
+
+]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="70" y="219" width="269" height="20" uuid="3ab4966a-c6a2-4b58-84f0-329d81c74747"/>
+				<textFieldExpression><![CDATA[$F{membro}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement x="66" y="2" width="422" height="51" uuid="7cd6923e-bb50-4fe1-b114-f999bc9a76a3"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[_____________________________________________________________
+Presidente da Comissão Especial de Avaliação de Desempenho
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="-10" width="533" height="63" uuid="af800434-0425-426d-9569-17d940d86b61"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" markup="none">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

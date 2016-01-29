@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="/template/index.xhtml">
+        <!--Substituir o Título padrão da Página-->
+        <ui:define name="titulo">
+            Tabulando Avaliação
+        </ui:define>
+        <ui:define name="meta">
+            <f:metadata >
+                <f:viewParam name="idAvaliacao" value="#{tabulacaoControllerEdit.idAvaliacao}" />
+                <f:viewAction action="#{tabulacaoControllerEdit.init()}"/>
+            </f:metadata>
+        </ui:define>
+        <!--Conteúdo da página-->
+        <ui:define name="conteudo"> 
+
+            <p:growl id="fator_messages"  />
+            <!--form com o objetivo de adicionar instâncias na listaPreviaGrupo (verificar adicionarListaPrevia() em GrupoFatorController)-->
+            <!--form com o objetivo de adicionar instâncias na listaPreviaFator (verificar adicionarListaPrevia() em FatorController)-->
+            <p:panel id="pn1">
+
+                <p:outputLabel value=" Tabular Avaliação nº : #{tabulacaoControllerEdit.idAvaliacao}" />
+                <br/>
+                <p:outputLabel value="Numero Func: #{tabulacaoControllerEdit.avaliacao.numFunc}-#{tabulacaoControllerEdit.avaliacao.numVinc}" />
+                <br/>
+                <p:outputLabel value="Etapa: #{tabulacaoControllerEdit.avaliacao.etapa}" />
+                <br/>
+                <p:outputLabel value="Servidor:  #{tabulacaoControllerEdit.avaliacao.nomeServidor}" />
+
+                <h:form id="form1"   > 
+
+
+
+                    <!--componente com o objetivo de organizar visualmente a página-->
+
+                    <!--componente com o objetivo de mostrar as mensagens de retorno para esse formulário-->
+                    <!--inicio da tabela de selects do cadastro-->
+                    <h:panelGroup id="pg" >  
+                        <p:dataList var="grupoFator"   value="#{tabulacaoControllerEdit.grupoFatoresList}"  > 
+                            <f:facet name="header">
+                                Servidor:  #{tabulacaoControllerEdit.avaliacao.nomeServidor}  
+                            </f:facet>
+                            <h1>#{grupoFator.nome}</h1>
+                            <p:dataList  var="fator"   value="#{grupoFator.fatoresAtivosExcluidosN}"> 
+                                <p:panelGrid columns="2" >
+                                    <p:outputLabel for="nota_select" value="Nota: " />
+                                    <p:selectOneMenu required="true" id="nota_select"  value="#{fator.nota}"   maxlength="21"  >
+                                        <f:selectItem itemLabel="---" itemValue="0" noSelectionOption="true"/>
+                                        <f:selectItem itemLabel="1" itemValue="1" />
+                                        <f:selectItem itemLabel="2" itemValue="2" />
+                                        <f:selectItem itemLabel="3" itemValue="3" />
+                                        <f:selectItem itemLabel="4" itemValue="4" />
+                                        <f:selectItem itemLabel="5" itemValue="5" />
+                                        <f:selectItem itemLabel="6" itemValue="6" />
+                                        <f:selectItem itemLabel="7" itemValue="7" />
+                                        <f:selectItem itemLabel="8" itemValue="8" />
+                                        <f:selectItem itemLabel="9" itemValue="9" />
+                                        <f:selectItem itemLabel="10" itemValue="10" />
+                                        <p:ajax process="nota_select" event="change" listener="#{tabulacaoControllerEdit.adicoinarListaTemporaria(fator)}"  />
+                                    </p:selectOneMenu> 
+                                </p:panelGrid>
+                                <br/>
+                                <p:outputLabel value="#{fator.nome}" />  
+                            </p:dataList>
+                            <f:facet name="footer">
+                                Etapa #{tabulacaoControllerEdit.avaliacao.etapa} 
+                            </f:facet>
+                        </p:dataList> 
+                    </h:panelGroup>
+                    <p:commandButton  id="vincular_Formulario_button1" value="Tabular" update="form1" actionListener="#{tabulacaoControllerEdit.salvar()}"  >
+                        <p:confirm header="Confirmação" message="Deseja realmente salvar?" /> 
+                    </p:commandButton> 
+                </h:form>  
+            </p:panel>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="Não" ignoreAutoUpdate="true" type="button" styleClass="ui-confirmdialog-no"   />
+            </p:confirmDialog>
+        </ui:define>
+    </ui:composition>
+</html>

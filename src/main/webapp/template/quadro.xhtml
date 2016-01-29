@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:form id="quadro_principal">  
+            <p:outputLabel for="quadro_nomeQuadro_select" value="Quadro Profissional: "  />
+            <p:selectOneMenu id="quadro_nomeQuadro_select" value="#{quadroController.nomeQuadro}" >
+                <!--opção nula: padrão para forçar o usuário a selecionar outro valor válido-->
+                <f:selectItem itemValue="#{null}" noSelectionOption="true" itemLabel="Selecione um quadro..."/>
+                <!--aqui o jsf se encarrega de criar uma lista de opções para o usuário através da listaQuadro-->
+                <f:selectItems value="#{quadroController.init()}" var="quadro" itemLabel="#{quadro.sigla}" itemValue="#{quadro}"/>
+                <!--aqui é definida uma chamada ao método mudaControlador1 quando o usuário selecionar uma opção do select de quadro.
+                O retorno é aplicado em uma ação ajax. -->        
+                <p:ajax update=":cformulario"  listener="#{fatorController.mudaControlador1()}"  process="quadro" /> 
+
+            </p:selectOneMenu>
+    </h:form> 
+</html>

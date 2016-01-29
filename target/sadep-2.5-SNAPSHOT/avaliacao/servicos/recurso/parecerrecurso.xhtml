@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/index.xhtml" 
+                xmlns="http://www.w3.org/1999/xhtml"   
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core" 
+                xmlns:o="http://omnifaces.org/ui">
+    <f:metadata>
+        <o:viewParam name="id" value="#{recursoController.recurso}"/>
+    </f:metadata>
+    <ui:define name="titulo">
+        Parecer da Comissão de Revisão para o Recurso
+    </ui:define>
+    <ui:define name="conteudo">
+        <p:panel>
+            <f:facet  name="header"> 
+                <p:outputLabel value="Parecer do recurso"/>
+            </f:facet> 
+            <h:form id="frmParecerRecurso">
+                <f:facet  name="header"> 
+                    <h:outputText value="Gerar Parecer"/>
+                </f:facet>  
+                <p:messages showDetail="false" showSummary="true" autoUpdate="true" closable="true" />
+                <p:outputLabel id="lblArgumentacao" value="Argumentação do Servidor" />
+                <p:inputTextarea id="txtArgumentacaoServidor" value="#{recursoController.recurso.argumentacao}" readonly="true" />
+                <p:outputLabel id="lblParecerComissaoRevisao" value="Parecer da Comissão de Revisão" />
+                <p:inputTextarea id="txtParecerComissaoRevisao" value="#{recursoController.recurso.parecerComissaoRevisao}" />
+                <p:selectOneMenu id="status" value="#{recursoController.recurso.statusDoRecurso}" required="true">
+                    <f:selectItem noSelectionOption="true" itemLabel="Selecione um status..."/>
+                    <f:selectItem itemValue="DEFERIDO" itemLabel="DEFERIDO"/>
+                    <f:selectItem itemValue="INDEFERIDO" itemLabel="INDEFERIDO"/>
+                </p:selectOneMenu>
+                <p:separator />
+                <p:selectBooleanCheckbox id="ckbRetabular" value="#{recursoController.recurso.retabular}" 
+                                         itemLabel="Retabular?"/>
+                <p:separator />
+                <p:commandButton onclick="history.go(-1);
+                        return false;" value="Voltar" class=" icone2 voltar" />
+                <p:commandButton value="Salvar" id="btnSalvar" action="#{recursoController.geraParecer()}" update="@form" class="icone2 salvar"/>
+
+            </h:form>  
+        </p:panel>
+    </ui:define>
+</ui:composition>

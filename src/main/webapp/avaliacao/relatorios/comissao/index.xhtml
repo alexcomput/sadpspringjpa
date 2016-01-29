@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:stella="http://stella.caelum.com.br/faces2">
+    <ui:composition template="/template/index.xhtml">
+        <!--Substituir o Título padrão da Página-->
+        <f:metadata >
+            <f:viewAction action="#{comissaoController.init()}"/>
+            <f:viewAction action="#{avaliacaoController .init()}"/>            
+        </f:metadata>
+        <ui:define name="titulo">
+            Relatório de comissão
+        </ui:define>
+        <!--Conteúdo da página-->
+        <ui:define name="conteudo"> 
+            <f:facet  name="header"> 
+                <h:outputText value="  Relatório de comissão"/>
+            </f:facet> 
+            <!--form com o objetivo de adicionar instâncias na listaPreviaGrupo (verificar adicionarListaPrevia() em GrupoFatorController)-->
+            <h:form id="notificar_comissao_form1" target="_blank" >
+                <p:panel header="Notificar Comissão" id="comissao_painel">
+                    <h:panelGrid  columns="4" id="comissao_quadro_grid">
+                        <p:outputLabel for="matricula" value="Matricula  " />
+                        <!--input para o atributo nome da instancia de grupo de fator. Esse campo é de preenchimento obrigatório-->
+                        <p:inputText placeholder="Numero de Matrícula" id="matricula" value="#{comissaoController.matricula}" />
+                        <!--aqui é definida uma marca d'agua para o input anterior.-->
+                        <p:outputLabel for="nome" value="Nome " />
+                        <!--input para o atributo nome da instancia de grupo de fator. Esse campo é de preenchimento obrigatório-->
+                        <p:inputText placeholder="Nome do servidor" id="nome" value="#{comissaoController.matricula}" />
+                        <!--aqui é definida uma marca d'agua para o input anterior.-->
+
+                        <p:outputLabel for="etapa" value="Etapa " />
+                        <!--input para o atributo nome da instancia de grupo de fator. Esse campo é de preenchimento obrigatório-->
+                        <p:selectOneMenu id="etapa" value="#{comissaoController.etapaSelecionada}">
+                            <!--opção nula: padrão para forçar o usuário a selecionar outro valor válido-->
+                            <f:selectItem itemValue="#{null}" noSelectionOption="true" itemLabel="Selecione um quadro..."/>
+                            <!--aqui o jsf se encarrega de criar uma lista de opções para o usuário através da listaQuadro-->
+                            <f:selectItems value="#{comissaoController.etapas}" var="etapa" itemLabel="#{etapa}" itemValue="#{etapa}"/>    
+                            <p:ajax update="comissao_painel" listener="#{comissaoController.mudaControlador1()}" process="@this"/>
+
+                        </p:selectOneMenu>
+                        <p:outputLabel for="quadro" value="Quadro " />
+                        <!--input para o atributo nome da instancia de grupo de fator. Esse campo é de preenchimento obrigatório-->
+                        <p:selectOneMenu id="quadro" value="#{comissaoController.quadro}">
+                            <!--opção nula: padrão para forçar o usuário a selecionar outro valor válido-->
+                            <f:selectItem itemValue="#{null}" noSelectionOption="true" itemLabel="Selecione um quadro..."/>
+                            <!--aqui o jsf se encarrega de criar uma lista de opções para o usuário através da listaQuadro-->
+                            <f:selectItems value="#{comissaoController.listaQuadro}" var="quadro" itemLabel="#{quadro.sigla}" itemValue="#{quadro}"/>                                 
+                            <p:ajax update="comissao_painel" listener="#{comissaoController.mudaControlador2()}" process="@this"/>
+                        </p:selectOneMenu>
+                        <!--
+                        <h:panelGroup>
+                                    <p:outputLabel for="orgao" value="Orgao " /> 
+                                 input para o atributo nome da instancia de grupo de fator. Esse campo é de preenchimento obrigatório
+                                <p:selectOneMenu id="orgao" value="#{comissaoController.orgao}">
+                               opção nula: padrão para forçar o usuário a selecionar outro valor válido
+                                <f:selectItem itemValue="#{null}" noSelectionOption="true" itemLabel="Selecione um Orgao..."/>
+                                 aqui o jsf se encarrega de criar uma lista de opções para o usuário através da listaQuadro-
+                                <f:selectItems value="#{comissaoController.listaOrgao}" var="quadro_orgao" itemLabel="#{quadro_orgao.avaliacao.orgao}" itemValue="#{quadro_orgao.avaliacao.orgao_id}"/>                               
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        
+                        <h:panelGroup>
+                            <p:outputLabel for="setor" value="Setor " />
+                          input para o atributo nome da instancia de grupo de fator. Esse campo é de preenchimento obrigatório
+                            <p:selectOneMenu id="setor" value="#{comissaoController.setor}">
+                               opção nula: padrão para forçar o usuário a selecionar outro valor válido
+                                <f:selectItem itemValue="" noSelectionOption="true" itemLabel="Selecione um quadro..."/>
+                               aqui o jsf se encarrega de criar uma lista de opções para o usuário através da listaQuadro
+                                <f:selectItems value="#{comissaoController.listaSetor}" var="quadro_setor" itemLabel="#{quadro_setor.avaliacao.setor}" itemValue="#{quadro_setor.avaliacao.setor_id}"/> 
+                            </p:selectOneMenu>
+                        </h:panelGroup>                        
+                        <h:panelGroup>
+                            <p:outputLabel for="regional" value="Regional " />
+                             input para o atributo nome da instancia de grupo de fator. Esse campo é de preenchimento obrigatório
+                            <p:selectOneMenu id="regional" value="#{comissaoController.regional}">
+                              -opção nula: padrão para forçar o usuário a selecionar outro valor válido
+                                <f:selectItem itemValue="#{null}" noSelectionOption="true" itemLabel="Selecione um regional..."/>
+                                 aqui o jsf se encarrega de criar uma lista de opções para o usuário através da listaQuadro
+                                <f:selectItems value="#{comissaoController.listaRegional}" var="lista_regional" itemLabel="#{lista_regional.avaliacao.regional}" itemValue="#{lista_regional.avaliacao.regional_id}"/>
+                            </p:selectOneMenu>
+                        </h:panelGroup>  
+                        -->
+                    </h:panelGrid>
+                    <br/>   
+                    <!--  <p:commandLink    value="Buscar" ajax="false"/>  -->
+                    <p:separator/>
+                    <p:growl id="comissao_messages"  />  
+                    <p:dataTable  id="lista_membros_externos" var="comissao"
+                                  value="#{comissaoController.comissoes}" rowKey="#{comissao.id}" 
+                                  rows="10" paginator="true" 
+                                  paginatorTemplate="{CurrentPageReport}  
+                                  {FirstPageLink} {PreviousPageLink} 
+                                  {PageLinks} {NextPageLink} {LastPageLink} 
+                                  {RowsPerPageDropdown}" >
+                        <f:facet name="header">
+                            Lista de Comissão
+                        </f:facet> 
+
+                        <p:column headerText="Código">
+                            #{comissao.id}
+                        </p:column>
+                        <p:column headerText="Servidor">
+                            #{comissao.avaliacao.nomeServidor}
+                        </p:column>
+                        <p:column headerText="Orgão">
+                            #{comissao.avaliacao.orgaoNome}
+                        </p:column>
+                        <p:column headerText="Setor">
+                            #{comissao.avaliacao.setorNome}
+                        </p:column>                                             
+                        <p:column headerText="Cargo">
+                            #{comissao.avaliacao.cargoNome}
+                        </p:column>                        
+                        <p:column headerText="Etapa">
+                            #{comissao.avaliacao.etapa}
+                        </p:column>                        
+                        <p:column headerText="Regional">
+                            <p:commandLink action="#{comissaoController.imprimirEspecifico(comissao.avaliacao)}" title="Imprimir" value="" ajax="false" class="botao iconebt imprimir"/> 
+                        </p:column>   
+                    </p:dataTable>  
+                </p:panel>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

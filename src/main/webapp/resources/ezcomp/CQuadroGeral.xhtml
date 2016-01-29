@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">  
+    <cc:interface>
+        <cc:attribute name="valor" required="true"/>
+    </cc:interface> 
+
+    <cc:implementation>
+
+            <p:outputLabel for="quadro_nomeQuadro" value="Quadro Profissional: "  />
+            <p:selectOneMenu id="quadro_nomeQuadro" value="#{quadroController.nomeQuadro}" >
+                <!--opção nula: padrão para forçar o usuário a selecionar outro valor válido-->
+                <f:selectItem itemValue="#{null}" noSelectionOption="true" itemLabel="Selecione um quadro..."/>
+                <!--aqui o jsf se encarrega de criar uma lista de opções para o usuário através da listaQuadro-->
+                <f:selectItems value="#{quadroController.init()}" var="quadro_nomeQuadro" itemLabel="#{quadro.sigla}" itemValue="#{quadro}"/>
+                <p:ajax update=":form1"  listener="#{quadroController.listarFormularios()}"  process="quadro_nomeQuadro" /> 
+
+            </p:selectOneMenu>
+    </cc:implementation>
+</html>

@@ -1,0 +1,627 @@
+/*!jonimar.titan@gmail.com*/
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}td{vertical-align: middle;}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1.618em}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}table{border-collapse:collapse;border-spacing:0}html{min-height:100%;position:relative;}body{margin:0 0 100px}
+/*cabeçalho*/
+header{
+    margin:0 auto;
+    padding: 5px 0;
+    height:50px;
+    transition:all .5s;
+}   
+header .logo{
+    float:left;
+    padding:0;
+    height:40px;
+    width:40px;
+    transition:all .5s
+}
+header .logo img{
+    width:40px;
+    transition:all .5s
+}
+header a{
+    text-decoration:none;
+}
+header a.logo{
+    margin:5px 10px;
+    padding:0
+}
+header h1{
+    font-size:150%;
+    font-weight:bold;
+}
+header h2{
+}
+/*logotipo*/
+header .logo{
+    background-image: url("#{resource['images/aede.svg']}");
+    background-size: 200% auto;
+    background-position: center top -20px;
+}
+
+/*menu*/
+nav{
+    margin:0 auto;
+    max-width:800px
+}
+nav ul ul{
+    display:none
+}
+nav ul li:hover>ul,nav ul li:focus>ul{
+    display:block
+}
+nav ul{
+    padding:0 5px;
+    list-style:none;
+    position:relative
+}
+nav ul:after{
+    content:"";
+    clear:both;
+    display:block
+}
+nav ul li{
+    float:left
+}
+nav ul li:hover,nav ul li:focus{
+}
+nav ul li:hover a,nav ul li:focus a{
+}
+nav ul li a{
+    display:block;
+    padding:5px 7px;
+    text-decoration:none
+}
+nav ul li a:focus{
+}
+nav ul ul{
+    padding:0;
+    position:absolute
+}
+nav ul ul li{
+    float:none;
+    position:relative;
+    max-width:200px
+}
+nav ul ul li a{
+    padding:5px 10px;
+    transition:all .3s
+}
+nav ul ul li a:hover,nav ul ul li a:focus{
+}
+nav ul ul ul{
+    position:absolute;
+    left:100%;
+    top:0
+}
+main{
+    max-width:1000px;
+    margin: 50px auto 0;
+    clear: both;
+}
+/*rodapé*/
+footer{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height: auto;
+    text-align: center;
+}
+footer a{
+}
+footer a:hover{
+}
+footer a:active{
+}
+footer address{
+    padding:5px 10px;
+
+}
+body{
+    margin: 0 auto;
+}
+.center{
+    margin: 0 auto;
+}
+
+/*informação*/
+details {
+    display: block;
+    padding: 10px;
+    width: 80%;
+    margin: 0 auto;
+}
+details summary{
+    font-weight: bold;
+    font-size: 120%;
+}
+
+/*Fontes*/
+small{
+    font-size: 50%;
+}
+footer small{
+    font-size: 70%;
+}
+
+/*PrimeFaces*/
+.ui-menu{
+    padding: 0;
+    margin: 0 auto;
+}
+.ui-menu-list{
+}
+.ui-menu, .ui-menu .ui-menu-child{
+    border: 0;
+}
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
+    border: 0;
+    box-shadow: none;
+    border-radius: 0;
+}
+.ui-menubar .ui-menuitem-link{
+    line-height: 25px;
+}
+.ui-corner-all{
+    border-radius: 0;
+}
+/*widget*/
+.ui-widget-header,
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{
+    border: 0;
+    text-shadow: none;
+}
+/*focus*/
+.ui-inputfield.ui-state-focus, .ui-widget-content .ui-inputfield.ui-state-focus, .ui-widget-header .ui-inputfield.ui-state-focus{
+
+}
+
+.ui-widget-header .ui-inputfield, .ui-widget-content .ui-inputfield,
+.ui-widget input{
+    line-height: 30px;
+}
+.ui-widget input{
+    border: 0;
+}
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight{
+    text-shadow: none;
+}
+
+.ui-panel{
+    margin-bottom: 105px;
+}
+/*paginação*/
+.ui-paginator .ui-icon{
+    height: 16px !important;
+}
+.ui-paginator .ui-paginator-page, .ui-paginator .ui-paginator-next, .ui-paginator .ui-paginator-last, .ui-paginator .ui-paginator-first, .ui-paginator .ui-paginator-prev{
+    height: 30px;
+}
+.ui-paginator .ui-paginator-current, .ui-paginator .ui-paginator-rpp-options{
+}
+
+/*table*/
+table{
+    width: 100%;
+}
+table label{
+    box-sizing: border-box;
+    padding: 0 10px;
+    display: inline-block;
+    line-height: 38px;
+    width: 100%;
+    min-width: 100px;
+    text-align: right;
+}
+
+#welcome table label{
+    width: auto;
+    text-align: initial;
+}
+.ui-outputlabel{
+}
+.ui-selectonemenu{
+    display: flex !important;
+    display: -moz-box !important;
+}
+.ui-selectonemenu-panel{
+}
+.ui-selectonemenu .ui-selectonemenu-label{
+    text-align: initial;
+}
+li.ui-selectonemenu-item.ui-selectonemenu-list-item.ui-corner-all.ui-state-hover{
+    color: #fff;
+}
+li.ui-selectonemenu-item.ui-selectonemenu-list-item.ui-corner-all.ui-state-highlight{
+    color: #fff;
+    background: #4CAF50;
+}
+table input{
+    width: 100%;
+}
+table tbody tr{
+    line-height: 45px;
+}
+.ui-fieldset{
+    margin-bottom: 15px;
+}
+/*botões*/
+.ui-button, .botao{
+}
+.botao2{
+    padding: 10px;
+    background: #00796b;
+}
+a.botao2{
+    padding-left: 30px !important;
+    text-decoration: none !important;
+    color: #fff !important;
+    
+}
+
+.ui-button:hover, .botao:hover{
+}
+.ui-button:active,  .botao:active{
+}
+.ui-state-default .ui-icon,
+.ui-widget-content .ui-icon{
+    background-image: url("#{facesContext.externalContext.requestContextPath}/javax.faces.resource/images/ui-icons_ffffff_256x240.png.xhtml?ln=primefaces-aristo");
+}
+.ui-button-icon-only .ui-icon, .ui-button-text-icon-left .ui-icon, .ui-button-text-icon-right .ui-icon{
+    margin-top: -15px !important;
+}
+.ui-button-icon-only:hover .ui-icon, .ui-button-text-icon-left:hover .ui-icon, .ui-button-text-icon-right:hover .ui-icon{
+    background-color: #4CAF50;
+}
+.ui-button-icon-only .ui-icon, .ui-button-text-icon-left .ui-icon, .ui-button-text-icon-right .ui-icon{
+    height: 30px;
+    width: 30px;
+}
+/*Login*/
+#welcome{
+    max-width: 295px;
+    padding: 10px;
+    margin: 0 auto;
+    margin-top: 200px;
+    display: table;
+}
+/*focus*/
+.ui-inputfield.ui-state-focus, .ui-widget-content .ui-inputfield.ui-state-focus, .ui-widget-header .ui-inputfield.ui-state-focus{
+
+}
+/*formulario*/
+.ui-inputfield{
+    box-sizing: border-box;
+}
+
+/*ícones*/
+.ui-datatable .ui-row-editor .ui-icon-close,
+.ui-datatable .ui-row-editor .ui-icon-check,
+.ui-datatable .ui-row-editor .ui-icon-pencil,
+.iconebt{
+    background-position: center top 4px !important;
+    background-size: 80% auto !important;
+    background-repeat: no-repeat !important;
+    transition: all 0.3s ease 0s !important;
+    height: 40px !important;
+    width: 40px !important;
+    display: inline-block;
+    vertical-align: middle;
+}
+.icone2{
+    background-position: top 2px left !important;
+    background-size: 30px auto !important;
+    background-repeat: no-repeat !important;
+    transition: all 0.3s ease 0s !important;
+    padding-left: 12px !important;
+}
+.icone3{
+    background-position: top -1px left !important;
+    background-size: 35px auto !important;
+    background-repeat: no-repeat !important;
+    transition: all 0.3s ease 0s !important;
+    padding-left: 30px !important;
+}
+.editar{
+    background-image: url("#{resource['images/editar.svg']}") !important;
+}
+.excluir{
+    background-image: url("#{resource['images/excluir.svg']}") !important;
+}
+.novo{
+    background-image: url("#{resource['images/novo.svg']}") !important;
+}
+.salvar{
+    background-image: url("#{resource['images/salvar.svg']}") !important;
+}
+.voltar{
+    background-image: url("#{resource['images/voltar.svg']}") !important;
+}
+.pesquisar{
+    background-image: url("#{resource['images/pesquisar.svg']}") !important;
+}
+.limpar{
+    background-image: url("#{resource['images/limpar.svg']}") !important;
+}
+.visto{
+    background-image: url("#{resource['images/visto.svg']}") !important;
+}
+.epraja{
+    background-image: url("#{resource['images/epraja.svg']}") !important;
+}
+
+/*posicionamento, posições*/
+.esq{
+    float: left;
+}
+.dir{
+    float: right;
+}
+.textini{
+    text-align: initial
+}
+
+/*multi-selector*/
+.ui-selectonemenu .ui-selectonemenu-trigger{
+    height: 40px !important;
+    position: initial !important;
+}
+
+/*temporario*/
+.ui-datatable .ui-row-editor .ui-icon-pencil{
+}
+
+/*perfil*/
+.perfil img{
+}
+.perfil .ui-panel-content{
+    padding: 0 !important;
+}
+.perfil{
+    display: block;
+    height: 46px;
+    width: 150px;
+    right: 0;
+    position: absolute;
+    font-size: 13px;
+    overflow: hidden;
+    transition:  all .5s;
+    z-index: 3;
+    border: 0;
+    line-height: 20px;
+}
+.perfil:hover{
+    height: 200px;
+}
+.perfil:hover li{
+}
+.perfil:focus, .perfil:active{
+}
+.perfil li{
+    padding-left: 7px;
+    list-style: none;
+    margin-bottom: 5px;
+}
+.perfil:focus li, .perfil:active li{
+}
+.perfil .sair a{
+    display: none;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 5px 7px;
+    text-decoration: none;
+}
+.perfil:hover .sair a{
+    display: block;
+}
+.perfil .usuario{
+    text-transform: capitalize !important;
+    line-height: 15px;
+    max-width: 143px;
+    max-height: 15px;
+    overflow: hidden;
+}
+.sair a:hover{
+}
+.sair a:focus, .sair a:active{
+}
+.perfil .avatar{
+    background-image: url("#{resource['images/pessoa.svg']}");
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: 50px;
+    width: 50px;
+    height: 50px;
+    float: right;
+    transition:  all .3s;
+}
+.perfil .avatar img{
+    width: 45px;
+    height: 45px;
+}
+.perfil:hover .avatar{
+    background-position: center;
+    background-size: 50px;
+}
+.perfil:focus .avatar,.perfil:active .avatar{
+    background-position: bottom;
+    background-size: 50px;
+}
+/*Calendário*/
+.ui-datepicker .ui-datepicker-header{
+}
+.ui-datepicker td{
+    padding: 0 !important;
+}
+.ui-datepicker .ui-state-default{
+    background: transparent;
+}
+.ui-datepicker td:hover{
+}
+/*messages*/
+.ui-messages-info, .ui-message-info,
+.ui-messages-error, .ui-message-error{
+    border: 0 !important;
+}
+.ui-messages-info, .ui-message-info,
+.ui-messages-error, .ui-message-error{
+    background-image: url("#{resource['images/atencao2.svg']}") !important;
+    background-size: 70px auto;
+    background-repeat: no-repeat;
+    background-position: left -10px bottom -12px;
+}
+.ui-messages-error, .ui-message-error{
+    background-position: left -10px top -10px;
+    background-color: #cd0a0a !important;
+    color: #fff !important;
+}
+.ui-messages-info-icon,
+.ui-messages-error-icon{
+    background: none !important;
+}
+/*ocultar filtros de coluna*/
+.ui-column-filter{
+    display: none !important;
+}
+/*upload de image*/
+.ui-fileupload-buttonbar .ui-fileupload-choose input{
+    transform: initial !important;
+}
+.none{
+    float: none;
+}
+.ui-datatable .ui-row-editor .ui-icon-pencil{
+    background-image: url("#{resource['images/editar.svg']}") !important;
+    border-radius: 0;
+}
+.ui-datatable .ui-row-editor .ui-icon-check{
+    background-image: url("#{resource['images/visto.svg']}") !important;
+    border-radius: 0;
+    display: none;
+}
+.ui-datatable .ui-row-editor .ui-icon-close{
+    background-image: url("#{resource['images/excluir.svg']}") !important;
+    border-radius: 0;
+    display: none;
+}
+.avaliar .ui-chkbox .ui-chkbox-box{
+    width: 80px !important;
+    height: 54px !important;
+    background: #ccc;
+    opacity: 1;
+}
+.otimo .ui-state-default .ui-icon {
+        background-image: url("#{resource['images/otimo.svg']}") !important;
+    background-size: 80px auto!important;
+    background-position: top -14px center !important;
+    width: 80px !important;
+    height: 54px !important;
+    border-radius: 0;
+}
+.bom .ui-state-default .ui-icon {
+    background-image: url("#{resource['images/bom.svg']}") !important;
+    background-size: 80px auto!important;
+    background-position: top -14px center !important;
+    width: 80px !important;
+    height: 54px !important;
+    border-radius: 0;
+}
+
+.regular .ui-state-default .ui-icon {
+    background-image: url("#{resource['images/regular.svg']}") !important;
+    background-size: 80px auto!important;
+    background-position: bottom 67px center !important;
+    width: 80px !important;
+    height: 54px !important;
+    border-radius: 0;
+}
+.ruim .ui-state-default .ui-icon {
+    background-image: url("#{resource['images/ruim.svg']}") !important;
+    background-size: 80px auto!important;
+    background-position: top -14px center !important;
+    width: 80px !important;
+    height: 54px !important;
+    border-radius: 0;
+}
+.ui-tree{
+    width: auto !important;
+    line-height: 30px;
+    font-size: 20px !important;
+}
+/*checkbox*/
+.ui-chkbox .ui-chkbox-box{
+    background: #ccc;
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 0;
+    cursor: pointer;
+}
+.ui-icon.ui-icon-check{
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 0;
+    background-image: url("#{resource['images/visto.svg']}") !important;
+    background-size: 100%;
+    background-position: top center;
+    
+}
+.ui-icon.ui-icon-close{
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 0;
+    background-image: url("#{resource['images/excluir.svg']}") !important;
+    background-size: 100%;
+    background-position: top center;
+    
+}
+.ui-panelgrid td{
+    border-color: #f3f3f3 !important;
+}
+/*relogio*/
+.ui-clock{
+    background: transparent !important;
+    color: #fff;
+}
+.w100{
+    width: 100% !important;
+}
+.ui-inputtextarea{
+    width: 100% !important;
+}
+.ui-wizard-step-title{
+    background-color: #B2DFDB !important;
+    color: #fff !important;
+}
+.ui-wizard-step-title.ui-state-highlight{
+    background-color: #00796b !important;
+}
+@media only screen and (max-width:1000px){
+    table label{
+        max-width: 160px;
+        width: auto;
+    }   
+}
+@media only screen and (min-width: 900px){
+    .perfil{
+        margin-top: -55px;
+        
+    }
+}
+@media only screen and (max-width: 500px){
+    #welcome{
+        margin-top: 50px;
+    }
+    header{
+        height: auto;
+    }
+    .perfil{
+        margin-top: 5px;
+    }
+}
+@media only screen and (max-width: 345px){
+    header{
+    }
+    header h2{
+        display: none;
+    }
+}
