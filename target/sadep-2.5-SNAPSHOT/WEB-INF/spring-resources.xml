@@ -13,31 +13,16 @@
     <!--<security:debug />-->
     <!--BANCO DE DADOS-->
     <bean id="dataSourceAede" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="url" value="jdbc:postgresql://10.121.0.9:5433/bcoproducao"/> 
-        <property name="username" value="sadep_user"/>
-        <property name="password" value="sadep_user"/>
         
-         <!--<property name="url" value="jdbc:postgresql://10.121.1.61:5433/bcoproducao"/> 
-         <property name="username" value="alex_santos"/>
-        <property name="password" value="alex_santos"/>-->
-    
-        <property name="driverClassName" value="org.postgresql.Driver"/>
+            <property name="driverClassName" value="org.postgresql.Driver"/>
 
     </bean>
-    <bean id="dataSourceErgon" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="url" value="jdbc:oracle:thin:@10.121.0.10:1521:producao"/>
-        <property name="username" value="c_dti"/>
-        <property name="password" value="c_dti123"/>
-        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-
-    </bean>
+    >
     <!--PostProcessor-->
     <bean id="jtaPersistenceUnitPostProcessor1" class="br.gov.to.secad.seg.util.JtaPersistenceUnitPostProcessor">
         <property name="jtaDataSource" ref="dataSourceAede" />
     </bean>
-    <bean id="jtaPersistenceUnitPostProcessor2" class="br.gov.to.secad.seg.util.JtaPersistenceUnitPostProcessor">
-        <property name="jtaDataSource" ref="dataSourceErgon" />
-    </bean>
+  
     <bean id="entityManagerFactoryAede" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml" />
         <property name="persistenceUnitName" value="segPU"/>
